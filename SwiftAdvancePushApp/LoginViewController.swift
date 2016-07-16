@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  SwiftAdvancePushApp
 //
-//  Created by Ikeda Natsumo on 2016/07/06.
+//  Created by Ikeda Natsumo on 2016/07/16.
 //  Copyright © 2016年 NIFTY Corporation. All rights reserved.
 //
 
@@ -15,7 +15,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     // パスワード入力欄
     @IBOutlet weak var password: UITextField!
     // ステータス表示用ラベル
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     // AppDelegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -35,7 +35,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         closeKeyboad()
         // 入力確認
         if address.text!.isEmpty || password.text!.isEmpty {
-            label.text = "未入力の項目があります"
+            statusLabel.text = "未入力の項目があります"
             // TextFieldを空に
             cleanTextField()
             
@@ -46,7 +46,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             if error != nil {
                 // ログイン失敗時の処理
                 print("ログインに失敗しました:\(error.code)")
-                self.label.text = "ログインに失敗しました:\(error.code)"
+                self.statusLabel.text = "ログインに失敗しました:\(error.code)"
             }else{
                 // ログイン成功時の処理
                 print("ログインに成功しました:\(user.objectId)")
@@ -54,8 +54,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 self.appDelegate.currentUser = user
                 // TextFieldを空にする
                 self.cleanTextField()
-                // labelを空にする
-                self.label.text = ""
+                // statusLabelを空にする
+                self.statusLabel.text = ""
                 // 画面遷移
                 self.performSegueWithIdentifier("login", sender: self)
             }
@@ -66,8 +66,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     @IBAction func toSignUp(sender: UIButton) {
         // TextFieldを空にする
         cleanTextField()
-        // labelを空にする
-        label.text = ""
+        // statusLabelを空にする
+        statusLabel.text = ""
         // キーボードを閉じる
         closeKeyboad()
     }

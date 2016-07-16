@@ -2,7 +2,7 @@
 //  ShopViewController.swift
 //  SwiftAdvancePushApp
 //
-//  Created by Ikeda Natsumo on 2016/07/06.
+//  Created by Ikeda Natsumo on 2016/07/16.
 //  Copyright © 2016年 NIFTY Corporation. All rights reserved.
 //
 
@@ -13,9 +13,9 @@ class ShopViewController: UIViewController {
     // Shop画像を表示するView
     @IBOutlet weak var shopView: UIImageView!
     // お気に入りBarButtonItem
-    @IBOutlet weak var favorite: UIBarButtonItem!
+    @IBOutlet weak var favoriteBarButton: UIBarButtonItem!
     // Top画面のリストから取得したindex格納用
-    var shopNumber: Int!
+    var shopIndex: Int!
     // AppDelegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -23,7 +23,7 @@ class ShopViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // 【mBaaS：ファイルストア】Shop画像ファイルの取得
-        let imageName = appDelegate.shopList[shopNumber].objectForKey("shop_image") as! String
+        let imageName = appDelegate.shopList[shopIndex].objectForKey("shop_image") as! String
         let imageFile = NCMBFile.fileWithName(imageName, data: nil)
         imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Void in
             if error != nil {
@@ -40,36 +40,38 @@ class ShopViewController: UIViewController {
         }
         
         // お気に入りBarButtonItemの初期設定
-        favorite.image = UIImage(named: "favorite_off") // 「♡」
-        favorite.tag = 0
-        let favoriteArray = appDelegate.currentUser.objectForKey("favorite") as! Array<String>
+        favoriteBarButton.image = UIImage(named: "favorite_off") // 「♡」
+        favoriteBarButton.tag = 0
+        let favoriteObjectIdArray = appDelegate.currentUser.objectForKey("favorite") as! Array<String>
         // お気に入り登録されている場合の設定
-        for objId in favoriteArray {
-            if objId == appDelegate.shopList[shopNumber].objectId {
-                favorite.image = UIImage(named: "favorite_on") // 「♥」
-                favorite.tag = 1
+        for objId in favoriteObjectIdArray {
+            if objId == appDelegate.shopList[shopIndex].objectId {
+                favoriteBarButton.image = UIImage(named: "favorite_on") // 「♥」
+                favoriteBarButton.tag = 1
             }
         }
     }
     
     // 「お気に入り」ボタン押下時の処理
-    @IBAction func tapFavorite(sender: UIBarButtonItem) {
-        var favoriteArray = appDelegate.currentUser.objectForKey("favorite") as! Array<String>
-        let objectId = appDelegate.shopList[shopNumber].objectId
+    @IBAction func tapFavoriteBtn(sender: UIBarButtonItem) {
+        var favoriteObjectIdArray = appDelegate.currentUser.objectForKey("favorite") as! Array<String>
+        let objeId = appDelegate.shopList[shopIndex].objectId
         // お気に入り状況に応じて処理
-        if favorite.tag == 0 {
-            favorite.image = UIImage(named: "favorite_on") // 「♥」
-            favorite.tag = 1
-            // 登録
-            favoriteArray.append(objectId)
+        if sender.tag == 0 {
+            sender.image = UIImage(named: "favorite_on") // 「♥」
+            sender.tag = 1
+            // 追加
+            favoriteObjectIdArray.append(objeId)
         } else {
-            favorite.image = UIImage(named: "favorite_off") // 「♡」
-            favorite.tag = 0
-            for var i = 0; i<favoriteArray.count; i++ {
-                if favoriteArray[i] == objectId {
+            sender.image = UIImage(named: "favorite_off") // 「♡」
+            sender.tag = 0
+            var i = 0
+            for element in favoriteObjectIdArray {
+                if element == objeId {
                     // 削除
-                    favoriteArray.removeAtIndex(i)
+                    favoriteObjectIdArray.removeAtIndex(i)
                 }
+                i += 1
             }
         }
         
@@ -77,7 +79,7 @@ class ShopViewController: UIViewController {
         // ログイン中のユーザーを取得
         let user = NCMBUser.currentUser()
         // favoriteに更新された値を設定
-        user.setObject(favoriteArray, forKey: "favorite")
+        user.setObject(favoriteObjectIdArray, forKey: "favorite")
         // ユーザー情報を更新
         user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
             if error != nil {
@@ -86,7 +88,9 @@ class ShopViewController: UIViewController {
             } else {
                 // 更新に成功した場合の処理
                 print("お気に入り情報更新に成功しました")
+                // AppDelegateに保持していたユーザー情報の更新
+                self.appDelegate.currentUser = user
             }
         }
-    }  
+    }
 }

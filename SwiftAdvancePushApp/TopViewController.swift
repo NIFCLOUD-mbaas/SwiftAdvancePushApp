@@ -2,7 +2,7 @@
 //  TopViewController.swift
 //  SwiftAdvancePushApp
 //
-//  Created by Ikeda Natsumo on 2016/07/06.
+//  Created by Ikeda Natsumo on 2016/07/16.
 //  Copyright © 2016年 NIFTY Corporation. All rights reserved.
 //
 
@@ -11,21 +11,21 @@ import NCMB
 
 class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     // ニックネーム表示用ラベル
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var nicknameLabel: UILabel!
     // Shop一覧表示用テーブル
     @IBOutlet weak var shopTableView: UITableView!
     // テーブル表示件数
-    var numberOfShops = 4
+    var NUMBER_OF_SHOPS = 4
     // AppDelegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     /** ▼初回ユーザー情報登録画面用▼ **/
     var registerView: UIView!
     var viewLabel: UILabel!
-    var nicknameTextField: UITextField!
-    var postcodeTextField: UITextField!
+    var nickname: UITextField!
+    var postcode: UITextField!
     var genderSegCon: UISegmentedControl!
-    let genderArray = ["男性","女性"]
+    let GENDER_CONFIG = ["男性","女性"]
     /** ▲初回ユーザー情報登録画面用▲**/
     
     // インスタンス化された直後、初回のみ実行されるメソッド
@@ -39,7 +39,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
             // ユーザー情報登録Viewを表示
             self.userRegisterView()
         } else {
-            label.text = "\(appDelegate.currentUser.objectForKey("nickname"))さん、こんにちは！"
+            nicknameLabel.text = "\(appDelegate.currentUser.objectForKey("nickname"))さん、こんにちは！"
         }
     }
     
@@ -71,7 +71,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     
     // shopTableViewのセル表示数を設定
     func tableView(table: UITableView, numberOfRowsInSection section:Int) -> Int {
-        return numberOfShops
+        return NUMBER_OF_SHOPS
     }
     
     // shopTableViewのセルの内容を設定
@@ -85,7 +85,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         }
         // cellにデータを設定
         if let unwrapObject  = object {
-            cell.setCell(unwrapObject)
+            cell.setCell_top(unwrapObject)
         }
         return cell
     }
@@ -102,7 +102,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         if segue.identifier == "toShopPage" {
             //　TableViewのindex.rowの値をShopViewへ渡す
             let shopViewController: ShopViewController = segue.destinationViewController as! ShopViewController
-            shopViewController.shopNumber = sender as! Int
+            shopViewController.shopIndex = sender as! Int
         }
     }
     
@@ -133,21 +133,19 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         nicknameLabel.textAlignment = NSTextAlignment.Left
         nicknameLabel.textColor = UIColor.whiteColor()
         nicknameLabel.font = UIFont.boldSystemFontOfSize(10)
-        // nicknameTextFieldを生成
-        nicknameTextField = UITextField(frame: CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.33, width: (self.view.bounds.size.width)*0.65, height: 30))
-        nicknameTextField.borderStyle = UITextBorderStyle.RoundedRect
-        nicknameTextField.font = UIFont.systemFontOfSize(14)
-        nicknameTextField.backgroundColor = UIColor.whiteColor()
-        nicknameTextField.delegate = self
+        // nicknameを生成
+        nickname = UITextField(frame: CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.33, width: (self.view.bounds.size.width)*0.65, height: 30))
+        nickname.borderStyle = UITextBorderStyle.RoundedRect
+        nickname.font = UIFont.systemFontOfSize(14)
+        nickname.backgroundColor = UIColor.whiteColor()
+        nickname.delegate = self
         // genderLabelを生成
         let genderLabel = UILabel(frame: CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.40, width: 75, height: 20))
         genderLabel.text = "性別"
         genderLabel.textAlignment = NSTextAlignment.Left
         genderLabel.textColor = UIColor.whiteColor()
         genderLabel.font = UIFont.boldSystemFontOfSize(10)
-        // genderSegmentedControlを生成
-        let genderArray = ["男性","女性"]
-        genderSegCon = UISegmentedControl(items: genderArray as [AnyObject])
+        genderSegCon = UISegmentedControl(items: GENDER_CONFIG as [AnyObject])
         genderSegCon.frame = CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.44, width: (self.view.bounds.size.width)*0.65, height: 30)
         genderSegCon.addTarget(self, action: "segConChanged:", forControlEvents: UIControlEvents.ValueChanged)
         genderSegCon.tintColor = UIColor(red: 0.243, green: 0.627, blue: 0.929, alpha: 1) // R:62 G:160 B:237
@@ -157,13 +155,13 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         postcodeLabel.textAlignment = NSTextAlignment.Left
         postcodeLabel.textColor = UIColor.whiteColor()
         postcodeLabel.font = UIFont.boldSystemFontOfSize(10)
-        // postcodeTextFieldを生成
-        postcodeTextField = UITextField(frame: CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.56, width: (self.view.bounds.size.width)*0.65, height: 30))
-        postcodeTextField.borderStyle = UITextBorderStyle.RoundedRect
-        postcodeTextField.font = UIFont.systemFontOfSize(14)
-        postcodeTextField.backgroundColor = UIColor.whiteColor()
-        postcodeTextField.delegate = self
-        postcodeTextField.keyboardType = UIKeyboardType.NumberPad
+        // postcodeを生成
+        postcode = UITextField(frame: CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.56, width: (self.view.bounds.size.width)*0.65, height: 30))
+        postcode.borderStyle = UITextBorderStyle.RoundedRect
+        postcode.font = UIFont.systemFontOfSize(14)
+        postcode.backgroundColor = UIColor.whiteColor()
+        postcode.delegate = self
+        postcode.keyboardType = UIKeyboardType.NumberPad
         // viewLabelを生成
         viewLabel = UILabel(frame: CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.65, width: (self.view.bounds.size.width)*0.65, height: 30))
         viewLabel.font = UIFont.systemFontOfSize(15)
@@ -173,18 +171,18 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         let regsterButton = UIButton(frame: CGRect(x: 0, y: 0, width: 115, height: 48))
         regsterButton.center = CGPoint(x: self.view.bounds.size.width/2, y: (self.view.bounds.size.height)*0.8)
         regsterButton.setImage(UIImage(named: "setup"), forState: UIControlState.Normal)
-        regsterButton.addTarget(self, action: "tapRegsterButton:", forControlEvents: .TouchUpInside)
+        regsterButton.addTarget(self, action: "userInfoRegister:", forControlEvents: .TouchUpInside)
         // gestureを生成
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapScreen:")
         // Viewに設定
         self.view.addSubview(registerView)
         self.registerView.addSubview(titleLabel)
         self.registerView.addSubview(nicknameLabel)
-        self.registerView.addSubview(nicknameTextField)
+        self.registerView.addSubview(nickname)
         self.registerView.addSubview(genderSegCon)
         self.registerView.addSubview(genderLabel)
         self.registerView.addSubview(postcodeLabel)
-        self.registerView.addSubview(postcodeTextField)
+        self.registerView.addSubview(postcode)
         self.registerView.addSubview(viewLabel)
         self.registerView.addSubview(regsterButton)
         self.registerView.addGestureRecognizer(tapGestureRecognizer)
@@ -203,11 +201,11 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     }
     
     // 「登録」ボタン押下時の処理
-    internal func tapRegsterButton(sender: UIButton) {
+    internal func userInfoRegister(sender: UIButton) {
         // キーボードを閉じる
         closeKeyboad()
         // 入力確認
-        if nicknameTextField.text!.isEmpty || postcodeTextField.text!.isEmpty || genderSegCon.selectedSegmentIndex == -1 {
+        if nickname.text!.isEmpty || postcode.text!.isEmpty || genderSegCon.selectedSegmentIndex == -1 {
             viewLabel.text = "未入力の項目があります"
             return
         }
@@ -226,9 +224,9 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
                 // 検索失敗時の処理
                 print("検索に成功しました")
                 // ユーザー情報を設定
-                user.setObject(self.nicknameTextField.text, forKey: "nickname")
-                user.setObject(self.genderArray[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
-                user.setObject(self.postcodeTextField.text, forKey: "postcode")
+                user.setObject(self.nickname.text, forKey: "nickname")
+                user.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
+                user.setObject(self.postcode.text, forKey: "postcode")
                 user.setObject([] as Array<String>, forKey: "favorite")
                 // user情報の更新
                 user.saveInBackgroundWithBlock({(save_error: NSError!) -> Void in
@@ -244,7 +242,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
                         // 画面を閉じる
                         self.registerView.hidden = true
                         // ニックネーム表示用ラベルの更新
-                        self.label.text = "\(self.appDelegate.currentUser.objectForKey("nickname"))さん、こんにちは！"
+                        self.nicknameLabel.text = "\(self.appDelegate.currentUser.objectForKey("nickname"))さん、こんにちは！"
                     }
                 })
             }
@@ -259,9 +257,9 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     
     // キーボードを閉じる
     func closeKeyboad(){
-        nicknameTextField.resignFirstResponder()
-        postcodeTextField.resignFirstResponder()
-        label.resignFirstResponder()
+        nickname.resignFirstResponder()
+        postcode.resignFirstResponder()
+        nicknameLabel.resignFirstResponder()
     }
     
     // キーボードの「Return」押下時の処理

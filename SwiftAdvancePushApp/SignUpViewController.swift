@@ -2,7 +2,7 @@
 //  SignUpViewController.swift
 //  SwiftAdvancePushApp
 //
-//  Created by Ikeda Natsumo on 2016/07/06.
+//  Created by Ikeda Natsumo on 2016/07/16.
 //  Copyright © 2016年 NIFTY Corporation. All rights reserved.
 //
 
@@ -13,11 +13,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     // メールアドレス入力欄
     @IBOutlet weak var address: UITextField!
     // ステータス表示用ラベル
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     
     // インスタンス化された直後、初回のみ実行されるメソッド
     override func viewDidLoad() {
         super.viewDidLoad()
+        // TextFieldにdelegateを設定
         address.delegate = self
     }
     
@@ -26,7 +27,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         // キーボードを閉じる
         closeKeyboad()
         if address.text!.isEmpty {
-            label.text = "メールアドレスを入力してください"
+            statusLabel.text = "メールアドレスを入力してください"
             return
         }
         
@@ -36,11 +37,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         if error != nil {
             // 会員登録用メールの要求失敗時の処理
             print("エラーが発生しました：\(error!.code)")
-            label.text = "エラーが発生しました：\(error!.code)"
+            statusLabel.text = "エラーが発生しました：\(error!.code)"
         } else {
             // 会員登録用メールの要求失敗時の処理
             print("登録用メールを送信しました")
-            label.text = "登録用メールを送信しました"
+            statusLabel.text = "登録用メールを送信しました"
         }
         // TextFieldを空にする
         address.text = ""
@@ -54,7 +55,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     // キーボードを閉じる
     func closeKeyboad(){
         address.resignFirstResponder()
-        label.resignFirstResponder()
+        statusLabel.resignFirstResponder()
     }
     
     // キーボードの「Return」押下時の処理

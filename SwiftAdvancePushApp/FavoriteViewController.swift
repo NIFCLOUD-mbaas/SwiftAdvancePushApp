@@ -2,7 +2,7 @@
 //  FavoriteViewController.swift
 //  SwiftAdvancePushApp
 //
-//  Created by Ikeda Natsumo on 2016/07/06.
+//  Created by Ikeda Natsumo on 2016/07/16.
 //  Copyright © 2016年 NIFTY Corporation. All rights reserved.
 //
 
@@ -13,15 +13,15 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
     // お気に入り一覧表示用テーブル
     @IBOutlet weak var favoriteTableView: UITableView!
     // テーブル表示件数
-    let numberOfShops = 4
+    let NUMBER_OF_SHOPS = 4
     // AppDelegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     // インスタンス化された直後、初回のみ実行されるメソッド
     override func viewDidLoad() {
         super.viewDidLoad()
-        // favoriteTemporaryArrayを空にする
-        appDelegate.favoriteTemporaryArray = []
+        // favoriteObjectIdTemporaryArrayにuserのお気に入り情報を設定
+        appDelegate.favoriteObjectIdTemporaryArray = appDelegate.currentUser.objectForKey("favorite") as! Array<String>
         // tableViewの設定
         favoriteTableView.delegate = self
         favoriteTableView.dataSource = self
@@ -29,22 +29,21 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
     
     // favoriteTableViewのセルの表示数を設定
     func tableView(table: UITableView, numberOfRowsInSection section:Int) -> Int {
-        return numberOfShops
+        return NUMBER_OF_SHOPS
     }
     
     // favoriteTableViewのセルの内容を設定
     func tableView(table: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // cellデータを取得
         let cell: CustomCell = favoriteTableView.dequeueReusableCellWithIdentifier("favoriteTableCell", forIndexPath: indexPath) as! CustomCell
-        var object: NCMBObject?
-        
         // 「表示件数」＜「取得件数」の場合objectを作成
+        var object: NCMBObject?
         if indexPath.row < self.appDelegate.shopList.count {
             object = self.appDelegate.shopList[indexPath.row]
         }
         // cellにデータを設定
-        if let unwrapObject  = object {
-            cell.setCell_favorite(unwrapObject, index: indexPath.row)
+        if let unwrapObject = object {
+            cell.setCell_favorite(unwrapObject)
         }
         return cell
     }
@@ -55,7 +54,7 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         // ログイン中のユーザーを取得
         let user = NCMBUser.currentUser()
         // favoriteに更新された値を設定
-        user.setObject(appDelegate.favoriteTemporaryArray, forKey: "favorite")
+        user.setObject(appDelegate.favoriteObjectIdTemporaryArray, forKey: "favorite")
         // ユーザー情報を更新
         user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
             if error != nil {
@@ -64,7 +63,9 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
             } else {
                 // 更新に成功した場合の処理
                 print("お気に入り情報更新に成功しました")
+                // AppDelegateに保持していたユーザー情報の更新
+                self.appDelegate.currentUser = user
             }
         }
-    }  
+    }
 }

@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  SwiftAdvancePushApp
 //
-//  Created by Ikeda Natsumo on 2016/07/06.
+//  Created by Ikeda Natsumo on 2016/07/16.
 //  Copyright © 2016年 NIFTY Corporation. All rights reserved.
 //
 
@@ -21,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var shopList: Array<NCMBObject> = []
     // mBaaSから取得した「User」情報データ格納用
     var currentUser: NCMBUser!
-    // お気に入り仮情報格納用
-    var favoriteTemporaryArray: Array<String>!
+    // お気に入り情報一時格納用
+    var favoriteObjectIdTemporaryArray: Array<String>!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         //********** SDKの初期化 **********
