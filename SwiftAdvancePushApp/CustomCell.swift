@@ -22,7 +22,7 @@ class CustomCell: UITableViewCell {
     // Shop名表示用ラベル
     @IBOutlet weak var shopName_favorite: UILabel!
     // お気に入りON/OFF設定用スイッチ
-    @IBOutlet weak var favoriteSwitch_favorite: UISwitch!
+    @IBOutlet weak var switch_favorite: UISwitch!
     // スイッッチ選択時objectId一時保管用
     var objectIdTemporary: String!
     
@@ -59,14 +59,14 @@ class CustomCell: UITableViewCell {
         // objectIdを保持
         objectIdTemporary = objId
         // スイッチ選択時に実行されるメソッドの設定
-        favoriteSwitch_favorite.addTarget(self, action: "switchChenged:", forControlEvents: UIControlEvents.ValueChanged)
+        switch_favorite.addTarget(self, action: "switchChenged:", forControlEvents: UIControlEvents.ValueChanged)
         // スイッチの初期設定
-        favoriteSwitch_favorite.on = false
+        switch_favorite.on = false
         // お気に入り登録されている場合はスイッチをONに設定
-        let favoriteArray = appDelegate.currentUser.objectForKey("favorite") as! Array<String>
-        for element in favoriteArray {
+        let favoriteArray = appDelegate.current_user.objectForKey("favorite") as! Array<String>
+        for element in favoriteArray{
             if element == objId {
-                favoriteSwitch_favorite.on = true
+                switch_favorite.on = true
             }
         }
     }

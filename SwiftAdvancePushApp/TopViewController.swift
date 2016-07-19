@@ -35,17 +35,18 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         shopTableView.delegate = self
         shopTableView.dataSource = self
         // ユーザー情報が未登録の場合
-        if appDelegate.currentUser.objectForKey("nickname") == nil {
+        if appDelegate.current_user.objectForKey("nickname") == nil {
             // ユーザー情報登録Viewを表示
             self.userRegisterView()
         } else {
-            nicknameLabel.text = "\(appDelegate.currentUser.objectForKey("nickname"))さん、こんにちは！"
+            nicknameLabel.text = "\(appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
+            checkShop()
         }
     }
     
     // 画面が表示される直前に実行されるメソッド
     override func viewWillAppear(animated: Bool) {
-        checkShop()
+//        checkShop()
     }
     
     //　mBaaSに登録されているShop情報を取得してテーブルに表示する
@@ -78,6 +79,8 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     func tableView(table: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // cellデータを取得
         let cell: CustomCell = shopTableView.dequeueReusableCellWithIdentifier("shopTableCell", forIndexPath: indexPath) as! CustomCell
+        // cell
+        
         // 「表示件数」＜「取得件数」の場合objectを作成
         var object: NCMBObject?
         if indexPath.row < self.appDelegate.shopList.count {
@@ -210,10 +213,8 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
             return
         }
         // 【mBaaS：会員管理】ユーザー情報更新
-        // userインスタンスの生成
-        let user = NCMBUser()
-        // currentUserのobjectIdを設定
-        user.objectId = appDelegate.currentUser.objectId
+        // ログイン中のユーザーを取得
+        let user = NCMBUser.currentUser()
         // userの検索
         user.fetchInBackgroundWithBlock { (fetch_error: NSError!) -> Void in
             if fetch_error != nil {
@@ -232,17 +233,18 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
                 user.saveInBackgroundWithBlock({(save_error: NSError!) -> Void in
                     if save_error != nil {
                         // 更新失敗時の処理
-                        print("更新に失敗しました:\(save_error.code)")
+                        print("ユーザー情報更新に失敗しました:\(save_error.code)")
                         self.viewLabel.text = "登録に失敗しました（更新）:\(save_error.code)"
                     } else {
                         // 更新成功時の処理
-                        print("更新に成功しました")
+                        print("ユーザー情報更新に成功しました")
                         // AppDelegateに保持していたユーザー情報の更新
-                        self.appDelegate.currentUser = user
+                        self.appDelegate.current_user = user as NCMBUser
                         // 画面を閉じる
                         self.registerView.hidden = true
                         // ニックネーム表示用ラベルの更新
-                        self.nicknameLabel.text = "\(self.appDelegate.currentUser.objectForKey("nickname"))さん、こんにちは！"
+                        self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
+                        self.checkShop()
                     }
                 })
             }

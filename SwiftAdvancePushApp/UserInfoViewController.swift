@@ -25,9 +25,9 @@ class UserInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // 各ラベルに値を設定
-        mailAddress.text = appDelegate.currentUser.objectForKey("mailAddress") as? String
-        nickname.text = appDelegate.currentUser.objectForKey("nickname") as? String
-        gender.text = appDelegate.currentUser.objectForKey("gender") as? String
-        postcode.text = appDelegate.currentUser.objectForKey("postcode") as? String
+        mailAddress.text = appDelegate.current_user.objectForKey("mailAddress") as? String
+        nickname.text = appDelegate.current_user.objectForKey("nickname") as? String
+        gender.text = appDelegate.current_user.objectForKey("gender") as? String
+        postcode.text = appDelegate.current_user.objectForKey("postcode") as? String
     }
 }

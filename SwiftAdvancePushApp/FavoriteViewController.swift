@@ -12,8 +12,12 @@ import NCMB
 class FavoriteViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     // お気に入り一覧表示用テーブル
     @IBOutlet weak var favoriteTableView: UITableView!
+    // ステータス表示用ラベル
+    @IBOutlet weak var statusLabel: UILabel!
     // テーブル表示件数
     let NUMBER_OF_SHOPS = 4
+    // 変更前のお気に入り情報保管用
+    var temporaryArray: Array<String>!
     // AppDelegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -21,7 +25,9 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         // favoriteObjectIdTemporaryArrayにuserのお気に入り情報を設定
-        appDelegate.favoriteObjectIdTemporaryArray = appDelegate.currentUser.objectForKey("favorite") as! Array<String>
+        appDelegate.favoriteObjectIdTemporaryArray = appDelegate.current_user.objectForKey("favorite") as! Array<String>
+        // バックアップ
+        temporaryArray = appDelegate.current_user.objectForKey("favorite") as! Array<String>
         // tableViewの設定
         favoriteTableView.delegate = self
         favoriteTableView.dataSource = self
@@ -60,11 +66,30 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
             if error != nil {
                 // 更新に失敗した場合の処理
                 print("お気に入り情報更新に失敗しました:\(error.code)")
+                self.statusLabel.text = "お気に入り情報更新に失敗しました:\(error.code)"
+                // 3秒後にstatusLabelを空にする
+                let deley = 3 * Double(NSEC_PER_SEC)
+                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(deley))
+                dispatch_after(time, dispatch_get_main_queue(), { () -> Void in
+                    self.statusLabel.text = ""
+                })
+                // AppDelegateに保持していたユーザー情報を戻す
+                user.setObject(self.temporaryArray, forKey: "favorite")
+                self.appDelegate.current_user = user
             } else {
                 // 更新に成功した場合の処理
                 print("お気に入り情報更新に成功しました")
+                self.statusLabel.text = "お気に入り情報更新に成功しました"
+                // 3秒後にstatusLabelを空にする
+                let deley = 3 * Double(NSEC_PER_SEC)
+                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(deley))
+                dispatch_after(time, dispatch_get_main_queue(), { () -> Void in
+                    self.statusLabel.text = ""
+                })
                 // AppDelegateに保持していたユーザー情報の更新
-                self.appDelegate.currentUser = user
+                self.appDelegate.current_user = user
+                // バックアップ
+                self.temporaryArray = self.appDelegate.favoriteObjectIdTemporaryArray
             }
         }
     }

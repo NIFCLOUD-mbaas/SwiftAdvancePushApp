@@ -51,7 +51,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 // ログイン成功時の処理
                 print("ログインに成功しました:\(user.objectId)")
                 // AppDelegateにユーザー情報を保持
-                self.appDelegate.currentUser = user
+                self.appDelegate.current_user = user as NCMBUser
                 // TextFieldを空にする
                 self.cleanTextField()
                 // statusLabelを空にする
