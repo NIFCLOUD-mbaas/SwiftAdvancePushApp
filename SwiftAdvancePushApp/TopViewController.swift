@@ -211,60 +211,49 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         // 【mBaaS：会員管理③】ユーザー情報更新
         // ログイン中のユーザーを取得
         let user = NCMBUser.currentUser()
-        // userの検索
-        user.fetchInBackgroundWithBlock { (fetch_error: NSError!) -> Void in
-            if fetch_error != nil {
-                // 検索失敗時の処理
-                print("検索に失敗しました:\(fetch_error.code)")
-                self.viewLabel.text = "登録に失敗しました（検索）:\(fetch_error.code)"
+        // ユーザー情報を設定
+        user.setObject(self.nickname.text, forKey: "nickname")
+        user.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
+        user.setObject(self.postcode.text, forKey: "postcode")
+        user.setObject([] as Array<String>, forKey: "favorite")
+        // user情報の更新
+        user.saveInBackgroundWithBlock({(error: NSError!) -> Void in
+            if error != nil {
+                // 更新失敗時の処理
+                print("ユーザー情報更新に失敗しました:\(error.code)")
+                self.viewLabel.text = "登録に失敗しました（更新）:\(error.code)"
             } else {
-                // 検索失敗時の処理
-                print("検索に成功しました")
-                // ユーザー情報を設定
-                user.setObject(self.nickname.text, forKey: "nickname")
-                user.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
-                user.setObject(self.postcode.text, forKey: "postcode")
-                user.setObject([] as Array<String>, forKey: "favorite")
-                // user情報の更新
-                user.saveInBackgroundWithBlock({(save_error: NSError!) -> Void in
-                    if save_error != nil {
-                        // 更新失敗時の処理
-                        print("ユーザー情報更新に失敗しました:\(save_error.code)")
-                        self.viewLabel.text = "登録に失敗しました（更新）:\(save_error.code)"
-                    } else {
-                        // 更新成功時の処理
-                        print("ユーザー情報更新に成功しました")
-                        // AppDelegateに保持していたユーザー情報の更新
-                        self.appDelegate.current_user = user as NCMBUser
-                        // 【mBaaS：プッシュ通知①】installationにユーザー情報を紐づける
-                        let installation = NCMBInstallation.currentInstallation()
-                        if installation != nil {
-                            // ユーザー情報を設定
-                            installation.setObject(self.nickname.text, forKey: "nickname")
-                            installation.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
-                            installation.setObject(self.postcode.text, forKey: "postcode")
-                            installation.setObject([] as Array<String>, forKey: "favorite")
-                            // installation情報の更新
-                            installation.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
-                                if error != nil {
-                                    // installation更新失敗時の処理
-                                    print("installation更新(ユーザー登録)に失敗しました:\(error.code)")
-                                } else {
-                                    // installation更新成功時の処理
-                                    print("installation更新(ユーザー登録)に成功しました")
-                                }
-                            })
+                // 更新成功時の処理
+                print("ユーザー情報更新に成功しました")
+                // AppDelegateに保持していたユーザー情報の更新
+                self.appDelegate.current_user = user as NCMBUser
+                // 【mBaaS：プッシュ通知①】installationにユーザー情報を紐づける
+                let installation = NCMBInstallation.currentInstallation()
+                if installation != nil {
+                    // ユーザー情報を設定
+                    installation.setObject(self.nickname.text, forKey: "nickname")
+                    installation.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
+                    installation.setObject(self.postcode.text, forKey: "postcode")
+                    installation.setObject([] as Array<String>, forKey: "favorite")
+                    // installation情報の更新
+                    installation.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
+                        if error != nil {
+                            // installation更新失敗時の処理
+                            print("installation更新(ユーザー登録)に失敗しました:\(error.code)")
+                        } else {
+                            // installation更新成功時の処理
+                            print("installation更新(ユーザー登録)に成功しました")
                         }
-                        // 画面を閉じる
-                        self.registerView.hidden = true
-                        // ニックネーム表示用ラベルの更新
-                        self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
-                        // 画面更新
-                        self.checkShop()
-                    }
-                })
+                    })
+                }
+                // 画面を閉じる
+                self.registerView.hidden = true
+                // ニックネーム表示用ラベルの更新
+                self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
+                // 画面更新
+                self.checkShop()
             }
-        }
+        })
     }
     /** ▲初回ユーザー情報登録画面の処理▲ **/
     

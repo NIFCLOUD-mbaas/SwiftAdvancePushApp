@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  LoginViewController.swift
 //  SwiftAdvancePushApp
 //
 //  Created by Ikeda Natsumo on 2016/07/16.
