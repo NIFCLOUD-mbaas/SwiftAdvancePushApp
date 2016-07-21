@@ -47,7 +47,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     
     //　mBaaSに登録されているShop情報を取得してテーブルに表示する
     func checkShop() {
-        // 【mBaaS：データストア①】「Shop」クラスのデータを取得
+        // 【mBaaS：データストア】「Shop」クラスのデータを取得
         // 「Shop」クラスのクエリを作成
         let query = NCMBQuery(className: "Shop")
         // データストアを検索

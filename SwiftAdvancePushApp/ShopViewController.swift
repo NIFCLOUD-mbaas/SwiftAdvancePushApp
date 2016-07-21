@@ -24,7 +24,7 @@ class ShopViewController: UIViewController {
     // インスタンス化された直後、初回のみ実行されるメソッド
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 【mBaaS：ファイルストア】Shop画像ファイルの取得
+        // 【mBaaS：ファイルストア②】Shop画像ファイルの取得
         let imageName = appDelegate.shopList[shopIndex].objectForKey("shop_image") as! String
         let imageFile = NCMBFile.fileWithName(imageName, data: nil)
         imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Void in
