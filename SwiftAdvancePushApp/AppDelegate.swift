@@ -13,24 +13,21 @@ import NCMB
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    //********** APIキーの設定 **********
+    // 【mBaaS】 APIキーの設定
     let applicationkey = "YOUR_NCMB_APPLICATIONKEY"
     let clientkey      = "YOUR_NCMB_CLIENTKEY"
-        
     // mBaaSから取得した「Shop」クラスのデータ格納用
     var shopList: Array<NCMBObject> = []
     // mBaaSから取得した「User」情報データ格納用
     var current_user: NCMBUser!
     // お気に入り情報一時格納用
     var favoriteObjectIdTemporaryArray: Array<String>!
-    // installationクラスに登録された端末のobjectiId格納用
-    var current_installation: NCMBInstallation!
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        //********** SDKの初期化 **********
+        // 【mBaaS】SDKの初期化
         NCMB.setApplicationKey(applicationkey, clientKey: clientkey)
         
-        // 【mBaaS：プッシュ通知】デバイストークンの取得
+        // 【mBaaS：プッシュ通知④】デバイストークンの取得
         // デバイストークンの要求
         if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
             /** iOS8以上 **/
@@ -46,11 +43,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let type : UIRemoteNotificationType = [.Alert, .Badge, .Sound]
             UIApplication.sharedApplication().registerForRemoteNotificationTypes(type)
         }
+        // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
+        if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
+            print(remoteNotification)
+            NCMBPush.handleRichPush(remoteNotification as [NSObject : AnyObject])
+        }
         
         return true
     }
     
-    // 【mBaaS：プッシュ通知】デバイストークンの取得後に呼び出されるメソッド
+    // 【mBaaS：プッシュ通知⑤】デバイストークンの取得後に呼び出されるメソッド
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData){
         // 端末情報を扱うNCMBInstallationのインスタンスを作成
         let installation = NCMBInstallation.currentInstallation()
@@ -65,18 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // 端末情報の登録に成功した時の処理
                 print("デバイストークン取得に成功しました")
             }
-        }
-    }
-    
-    // 【mBaaS：プッシュ通知】ペイロード（サーバーから配信されたプッシュ通知を受信すると呼び出されるメソッド）
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-        // ペイロードから配信時間を取得
-        let deliveryTime = userInfo["deliveryTime"] as! String
-        // 時間が有効か確認
-        if deliveryTime.isEmpty {
-            print("時間設定がされていません")
-        } else {
-            print("時間設定がされています")
         }
     }
 }

@@ -109,6 +109,22 @@ class ShopViewController: UIViewController {
                 print("お気に入り情報更新に成功しました")
                 // AppDelegateに保持していたユーザー情報の更新
                 self.appDelegate.current_user = user
+                // 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
+                let installation = NCMBInstallation.currentInstallation()
+                if installation != nil {
+                    // お気に入り情報を設定
+                    installation.setObject(favoriteObjectIdArray, forKey: "favorite")
+                    // installation情報の更新
+                    installation.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
+                        if error != nil {
+                            // installation更新失敗時の処理
+                            print("installation更新(お気に入り)に失敗しました:\(error.code)")
+                        } else {
+                            // installation更新成功時の処理
+                            print("installation更新(お気に入り)に成功しました")
+                        }
+                    })
+                }
             }
         }
         

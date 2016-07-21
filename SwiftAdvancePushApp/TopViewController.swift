@@ -40,18 +40,14 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
             self.userRegisterView()
         } else {
             nicknameLabel.text = "\(appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
+            // 画面更新
             checkShop()
         }
     }
     
-    // 画面が表示される直前に実行されるメソッド
-    override func viewWillAppear(animated: Bool) {
-//        checkShop()
-    }
-    
     //　mBaaSに登録されているShop情報を取得してテーブルに表示する
     func checkShop() {
-        // 【mBaaS：データストア】「Shop」クラスのデータを取得
+        // 【mBaaS：データストア①】「Shop」クラスのデータを取得
         // 「Shop」クラスのクエリを作成
         let query = NCMBQuery(className: "Shop")
         // データストアを検索
@@ -129,7 +125,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         titleLabel.text = "♡ユーザー情報登録♡"
         titleLabel.textAlignment = NSTextAlignment.Center
         titleLabel.textColor = UIColor.whiteColor()
-        titleLabel.font = UIFont.boldSystemFontOfSize(28)
+        titleLabel.font = UIFont.boldSystemFontOfSize(25)
         // nicknameLabelを生成
         let nicknameLabel = UILabel(frame: CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.29, width: 75, height: 20))
         nicknameLabel.text = "ニックネーム"
@@ -212,7 +208,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
             viewLabel.text = "未入力の項目があります"
             return
         }
-        // 【mBaaS：会員管理】ユーザー情報更新
+        // 【mBaaS：会員管理③】ユーザー情報更新
         // ログイン中のユーザーを取得
         let user = NCMBUser.currentUser()
         // userの検索
@@ -240,10 +236,30 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
                         print("ユーザー情報更新に成功しました")
                         // AppDelegateに保持していたユーザー情報の更新
                         self.appDelegate.current_user = user as NCMBUser
+                        // 【mBaaS：プッシュ通知①】installationにユーザー情報を紐づける
+                        let installation = NCMBInstallation.currentInstallation()
+                        if installation != nil {
+                            // ユーザー情報を設定
+                            installation.setObject(self.nickname.text, forKey: "nickname")
+                            installation.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
+                            installation.setObject(self.postcode.text, forKey: "postcode")
+                            installation.setObject([] as Array<String>, forKey: "favorite")
+                            // installation情報の更新
+                            installation.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
+                                if error != nil {
+                                    // installation更新失敗時の処理
+                                    print("installation更新(ユーザー登録)に失敗しました:\(error.code)")
+                                } else {
+                                    // installation更新成功時の処理
+                                    print("installation更新(ユーザー登録)に成功しました")
+                                }
+                            })
+                        }
                         // 画面を閉じる
                         self.registerView.hidden = true
                         // ニックネーム表示用ラベルの更新
                         self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
+                        // 画面更新
                         self.checkShop()
                     }
                 })

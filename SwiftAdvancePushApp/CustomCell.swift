@@ -31,7 +31,7 @@ class CustomCell: UITableViewCell {
     
     /** Top画面のTableViewのcell **/
     func setCell_top(object: NCMBObject) {
-        // 【mBaaS：ファイルストア】icon画像の取得
+        // 【mBaaS：ファイルストア①】icon画像の取得
         let imageName = object.objectForKey("icon_image") as! String
         let imageFile = NCMBFile.fileWithName(imageName, data: nil)
         imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Void in

@@ -41,7 +41,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             
             return
         }
-        // 【mBaaS：会員管理】メールアドレスとパスワードでログイン
+        // 【mBaaS：会員管理②】メールアドレスとパスワードでログイン
         NCMBUser.logInWithMailAddressInBackground(address.text, password: password.text) { (user: NCMBUser!, error: NSError!) -> Void in
             if error != nil {
                 // ログイン失敗時の処理

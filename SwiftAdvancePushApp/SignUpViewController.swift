@@ -31,7 +31,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        // 【mBaaS：会員管理】会員登録用メールを要求する
+        // 【mBaaS：会員管理①】会員登録用メールを要求する
         var error: NSError? = nil
         NCMBUser.requestAuthenticationMail(address.text, error: &error)
         if error != nil {
