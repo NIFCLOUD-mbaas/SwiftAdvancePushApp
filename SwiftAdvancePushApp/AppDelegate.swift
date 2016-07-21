@@ -13,9 +13,6 @@ import NCMB
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    // 【mBaaS】 APIキーの設定
-    let applicationkey = "YOUR_NCMB_APPLICATIONKEY"
-    let clientkey      = "YOUR_NCMB_CLIENTKEY"
     // mBaaSから取得した「Shop」クラスのデータ格納用
     var shopList: Array<NCMBObject> = []
     // mBaaSから取得した「User」情報データ格納用
@@ -24,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var favoriteObjectIdTemporaryArray: Array<String>!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // 【mBaaS】SDKの初期化
-        NCMB.setApplicationKey(applicationkey, clientKey: clientkey)
+        // 【mBaaS】 APIキーの設定とSDKの初期化
+        NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
         
         // 【mBaaS：プッシュ通知④】デバイストークンの取得
         // デバイストークンの要求
