@@ -56,10 +56,10 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
     
     // 「登録」ボタン押下時の処理
     @IBAction func savefavorite(sender: UIButton) {
-        // 【mBaaS：会員管理】ユーザー情報の更新
+        // 【mBaaS：会員管理④】ユーザー情報の更新
         // ログイン中のユーザーを取得
         let user = NCMBUser.currentUser()
-        // favoriteに更新された値を設定
+        // 更新された値を設定
         user.setObject(appDelegate.favoriteObjectIdTemporaryArray, forKey: "favorite")
         // ユーザー情報を更新
         user.saveInBackgroundWithBlock { (error: NSError!) -> Void in

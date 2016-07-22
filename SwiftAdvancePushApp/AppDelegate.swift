@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 【mBaaS】 APIキーの設定とSDKの初期化
         NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
         
-        // 【mBaaS：プッシュ通知④】デバイストークンの取得
+        // 【mBaaS：プッシュ通知①】デバイストークンの取得
         // デバイストークンの要求
         if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
             /** iOS8以上 **/
@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    // 【mBaaS：プッシュ通知⑤】デバイストークンの取得後に呼び出されるメソッド
+    // 【mBaaS：プッシュ通知②】デバイストークンの取得後に呼び出されるメソッド
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData){
         // 端末情報を扱うNCMBInstallationのインスタンスを作成
         let installation = NCMBInstallation.currentInstallation()

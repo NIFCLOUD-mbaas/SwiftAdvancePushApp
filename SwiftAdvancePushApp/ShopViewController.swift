@@ -24,8 +24,8 @@ class ShopViewController: UIViewController {
     // インスタンス化された直後、初回のみ実行されるメソッド
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 【mBaaS：ファイルストア②】Shop画像ファイルの取得
-        // 取得した「Shop」クラスデータからshopページ用の画像名を取得
+        // 【mBaaS：ファイルストア②】Shop画像の取得
+        // 取得した「Shop」クラスデータからShop画面用の画像名を取得
         let imageName = appDelegate.shopList[shopIndex].objectForKey("shop_image") as! String
         // ファイル名を設定
         let imageFile = NCMBFile.fileWithName(imageName, data: nil)
@@ -79,10 +79,10 @@ class ShopViewController: UIViewController {
                 i += 1
             }
         }
-        // 【mBaaS：会員管理】ユーザー情報の更新
+        // 【mBaaS：会員管理⑤】ユーザー情報の更新
         // ログイン中のユーザーを取得
         let user = NCMBUser.currentUser()
-        // favoriteに更新された値を設定
+        // 更新された値を設定
         user.setObject(favoriteObjectIdArray, forKey: "favorite")
         // ユーザー情報を更新
         user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
