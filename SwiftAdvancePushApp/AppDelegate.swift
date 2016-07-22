@@ -23,7 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // 【mBaaS】 APIキーの設定とSDKの初期化
         NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
-        
         // 【mBaaS：プッシュ通知①】デバイストークンの取得
         // デバイストークンの要求
         if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
@@ -42,7 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
         if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
-            print(remoteNotification)
             NCMBPush.handleRichPush(remoteNotification as [NSObject : AnyObject])
         }
         

@@ -23,7 +23,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     var registerView: UIView!
     var viewLabel: UILabel!
     var nickname: UITextField!
-    var postcode: UITextField!
+    var prefecture: UITextField!
     var genderSegCon: UISegmentedControl!
     let GENDER_CONFIG = ["男性","女性"]
     /** ▲初回ユーザー情報登録画面用▲**/
@@ -148,19 +148,19 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         genderSegCon.frame = CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.44, width: (self.view.bounds.size.width)*0.65, height: 30)
         genderSegCon.addTarget(self, action: "segConChanged:", forControlEvents: UIControlEvents.ValueChanged)
         genderSegCon.tintColor = UIColor(red: 0.243, green: 0.627, blue: 0.929, alpha: 1) // R:62 G:160 B:237
-        // postcodeLabelを生成
-        let postcodeLabel = UILabel(frame: CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.52, width: 75, height: 20))
-        postcodeLabel.text = "郵便番号"
-        postcodeLabel.textAlignment = NSTextAlignment.Left
-        postcodeLabel.textColor = UIColor.whiteColor()
-        postcodeLabel.font = UIFont.boldSystemFontOfSize(10)
-        // postcodeを生成
-        postcode = UITextField(frame: CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.56, width: (self.view.bounds.size.width)*0.65, height: 30))
-        postcode.borderStyle = UITextBorderStyle.RoundedRect
-        postcode.font = UIFont.systemFontOfSize(14)
-        postcode.backgroundColor = UIColor.whiteColor()
-        postcode.delegate = self
-        postcode.keyboardType = UIKeyboardType.NumberPad
+        // prefectureLabelを生成
+        let prefectureLabel = UILabel(frame: CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.52, width: 75, height: 20))
+        prefectureLabel.text = "都道府県"
+        prefectureLabel.textAlignment = NSTextAlignment.Left
+        prefectureLabel.textColor = UIColor.whiteColor()
+        prefectureLabel.font = UIFont.boldSystemFontOfSize(10)
+        // prefectureを生成
+        prefecture = UITextField(frame: CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.56, width: (self.view.bounds.size.width)*0.65, height: 30))
+        prefecture.borderStyle = UITextBorderStyle.RoundedRect
+        prefecture.font = UIFont.systemFontOfSize(14)
+        prefecture.backgroundColor = UIColor.whiteColor()
+        prefecture.delegate = self
+        prefecture.keyboardType = UIKeyboardType.NumberPad
         // viewLabelを生成
         viewLabel = UILabel(frame: CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.65, width: (self.view.bounds.size.width)*0.65, height: 30))
         viewLabel.font = UIFont.systemFontOfSize(15)
@@ -180,8 +180,8 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         self.registerView.addSubview(nickname)
         self.registerView.addSubview(genderSegCon)
         self.registerView.addSubview(genderLabel)
-        self.registerView.addSubview(postcodeLabel)
-        self.registerView.addSubview(postcode)
+        self.registerView.addSubview(prefectureLabel)
+        self.registerView.addSubview(prefecture)
         self.registerView.addSubview(viewLabel)
         self.registerView.addSubview(regsterButton)
         self.registerView.addGestureRecognizer(tapGestureRecognizer)
@@ -204,7 +204,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         // キーボードを閉じる
         closeKeyboad()
         // 入力確認
-        if nickname.text!.isEmpty || postcode.text!.isEmpty || genderSegCon.selectedSegmentIndex == -1 {
+        if nickname.text!.isEmpty || prefecture.text!.isEmpty || genderSegCon.selectedSegmentIndex == -1 {
             viewLabel.text = "未入力の項目があります"
             return
         }
@@ -214,7 +214,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         // ユーザー情報を設定
         user.setObject(self.nickname.text, forKey: "nickname")
         user.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
-        user.setObject(self.postcode.text, forKey: "postcode")
+        user.setObject(self.prefecture.text, forKey: "prefecture")
         user.setObject([] as Array<String>, forKey: "favorite")
         // user情報の更新
         user.saveInBackgroundWithBlock({(error: NSError!) -> Void in
@@ -232,7 +232,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
                 // ユーザー情報を設定
                 installation.setObject(self.nickname.text, forKey: "nickname")
                 installation.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
-                installation.setObject(self.postcode.text, forKey: "postcode")
+                installation.setObject(self.prefecture.text, forKey: "prefecture")
                 installation.setObject([] as Array<String>, forKey: "favorite")
                 // installation情報の更新
                 installation.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
@@ -263,7 +263,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     // キーボードを閉じる
     func closeKeyboad(){
         nickname.resignFirstResponder()
-        postcode.resignFirstResponder()
+        prefecture.resignFirstResponder()
         nicknameLabel.resignFirstResponder()
     }
     

@@ -16,9 +16,10 @@ class UserInfoViewController: UIViewController {
     @IBOutlet weak var nickname: UILabel!
     // 性別表示用ラベル
     @IBOutlet weak var gender: UILabel!
-    // 郵便番号表示用ラベル
-    @IBOutlet weak var postcode: UILabel!
+    // 都道府県表示用ラベル
+    @IBOutlet weak var prefecture: UILabel!
     // AppDelegate
+    
     var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     // インスタンス化された直後、初回のみ実行されるメソッド
@@ -28,6 +29,6 @@ class UserInfoViewController: UIViewController {
         mailAddress.text = appDelegate.current_user.objectForKey("mailAddress") as? String
         nickname.text = appDelegate.current_user.objectForKey("nickname") as? String
         gender.text = appDelegate.current_user.objectForKey("gender") as? String
-        postcode.text = appDelegate.current_user.objectForKey("postcode") as? String
+        prefecture.text = appDelegate.current_user.objectForKey("prefecture") as? String
     }
 }

@@ -310,7 +310,7 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="郵便番号" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7yp-fY-fNw">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="都道府県" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7yp-fY-fNw">
                                 <rect key="frame" x="33" y="398" width="75" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
@@ -335,7 +335,7 @@
                         <outlet property="gender" destination="Uev-qY-z7T" id="RLb-xL-Lid"/>
                         <outlet property="mailAddress" destination="eBr-0P-RDN" id="ee9-7L-KC6"/>
                         <outlet property="nickname" destination="e09-Xp-eeu" id="9h7-G1-e7i"/>
-                        <outlet property="postcode" destination="X7F-hj-VJa" id="8T1-PO-JgX"/>
+                        <outlet property="prefecture" destination="X7F-hj-VJa" id="MSj-JZ-42O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dpv-Wl-jFV" userLabel="First Responder" sceneMemberID="firstResponder"/>
