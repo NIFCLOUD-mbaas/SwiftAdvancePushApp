@@ -1,4 +1,4 @@
-    //
+//
 //  ShopViewController.swift
 //  SwiftAdvancePushApp
 //
@@ -25,8 +25,11 @@ class ShopViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // 【mBaaS：ファイルストア②】Shop画像ファイルの取得
+        // 取得した「Shop」クラスデータからshopページ用の画像名を取得
         let imageName = appDelegate.shopList[shopIndex].objectForKey("shop_image") as! String
+        // ファイル名を設定
         let imageFile = NCMBFile.fileWithName(imageName, data: nil)
+        // ファイルを検索
         imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Void in
             if error != nil {
                 // ファイル取得失敗時の処理
