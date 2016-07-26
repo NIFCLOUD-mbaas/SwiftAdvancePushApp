@@ -228,22 +228,24 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
                 // AppDelegateに保持していたユーザー情報の更新
                 self.appDelegate.current_user = user as NCMBUser
                 // 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
-                let installation = NCMBInstallation.currentInstallation()
-                // ユーザー情報を設定
-                installation.setObject(self.nickname.text, forKey: "nickname")
-                installation.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
-                installation.setObject(self.prefecture.text, forKey: "prefecture")
-                installation.setObject([] as Array<String>, forKey: "favorite")
-                // installation情報の更新
-                installation.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
-                    if error != nil {
-                        // installation更新失敗時の処理
-                        print("installation更新(ユーザー登録)に失敗しました:\(error.code)")
-                    } else {
-                        // installation更新成功時の処理
-                        print("installation更新(ユーザー登録)に成功しました")
-                    }
-                })
+                let installation: NCMBInstallation? = NCMBInstallation.currentInstallation()
+                if installation != nil {
+                    // ユーザー情報を設定
+                    installation!.setObject(self.nickname.text, forKey: "nickname")
+                    installation!.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
+                    installation!.setObject(self.prefecture.text, forKey: "prefecture")
+                    installation!.setObject([] as Array<String>, forKey: "favorite")
+                    // installation情報の更新
+                    installation!.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
+                        if error != nil {
+                            // installation更新失敗時の処理
+                            print("installation更新(ユーザー登録)に失敗しました:\(error.code)")
+                        } else {
+                            // installation更新成功時の処理
+                            print("installation更新(ユーザー登録)に成功しました")
+                        }
+                    })
+                }
                 // 画面を閉じる
                 self.registerView.hidden = true
                 // ニックネーム表示用ラベルの更新
