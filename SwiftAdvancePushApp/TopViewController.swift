@@ -48,22 +48,8 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     //　mBaaSに登録されているShop情報を取得してテーブルに表示する
     func checkShop() {
         // 【mBaaS：データストア】「Shop」クラスのデータを取得
-        // 「Shop」クラスのクエリを作成
-        let query = NCMBQuery(className: "Shop")
-        // データストアを検索
-        query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error: NSError!) -> Void in
-            if error != nil {
-                // 検索失敗時の処理
-                print("検索に失敗しました:\(error.code)")
-            } else {
-                // 検索成功時の処理
-                print("検索に成功しました")
-                // AppDelegateに「Shop」クラスの情報を保持
-                self.appDelegate.shopList = objects as! Array
-                // テーブルの更新
-                self.shopTableView.reloadData()
-            }
-        })
+        
+        
     }
     
     // shopTableViewのセル表示数を設定
@@ -209,49 +195,8 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
             return
         }
         // 【mBaaS：会員管理③】ユーザー情報更新
-        // ログイン中のユーザーを取得
-        let user = NCMBUser.currentUser()
-        // ユーザー情報を設定
-        user.setObject(self.nickname.text, forKey: "nickname")
-        user.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
-        user.setObject(self.prefecture.text, forKey: "prefecture")
-        user.setObject([] as Array<String>, forKey: "favorite")
-        // user情報の更新
-        user.saveInBackgroundWithBlock({(error: NSError!) -> Void in
-            if error != nil {
-                // 更新失敗時の処理
-                print("ユーザー情報更新に失敗しました:\(error.code)")
-                self.viewLabel.text = "登録に失敗しました（更新）:\(error.code)"
-            } else {
-                // 更新成功時の処理
-                print("ユーザー情報更新に成功しました")
-                // AppDelegateに保持していたユーザー情報の更新
-                self.appDelegate.current_user = user as NCMBUser
-                // 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
-                let installation = NCMBInstallation.currentInstallation()
-                // ユーザー情報を設定
-                installation.setObject(self.nickname.text, forKey: "nickname")
-                installation.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
-                installation.setObject(self.prefecture.text, forKey: "prefecture")
-                installation.setObject([] as Array<String>, forKey: "favorite")
-                // installation情報の更新
-                installation.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
-                    if error != nil {
-                        // installation更新失敗時の処理
-                        print("installation更新(ユーザー登録)に失敗しました:\(error.code)")
-                    } else {
-                        // installation更新成功時の処理
-                        print("installation更新(ユーザー登録)に成功しました")
-                    }
-                })
-                // 画面を閉じる
-                self.registerView.hidden = true
-                // ニックネーム表示用ラベルの更新
-                self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
-                // 画面更新
-                self.checkShop()
-            }
-        })
+        
+        
     }
     /** ▲初回ユーザー情報登録画面の処理▲ **/
     

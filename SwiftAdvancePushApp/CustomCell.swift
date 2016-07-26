@@ -32,22 +32,8 @@ class CustomCell: UITableViewCell {
     /** Top画面のTableViewのcell **/
     func setCell_top(object: NCMBObject) {
         // 【mBaaS：ファイルストア①】icon画像の取得
-        // 取得した「Shop」クラスデータからicon名を取得
-        let imageName = object.objectForKey("icon_image") as! String
-        // ファイル名を設定
-        let imageFile = NCMBFile.fileWithName(imageName, data: nil)
-        // ファイルを検索
-        imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Void in
-            if error != nil {
-                // ファイル取得失敗時の処理
-                print("icon画像の取得に失敗しました:\(error.code)")
-            } else {
-                // ファイル取得成功時の処理
-                print("icon画像の取得に成功しました")
-                // icon画像を設定
-                self.iconImageView_top.image = UIImage.init(data: data)
-            }
-        }
+        
+        
         // Shop名を設定
         shopName_top.text = object.objectForKey("name") as? String
         // categoryを設定

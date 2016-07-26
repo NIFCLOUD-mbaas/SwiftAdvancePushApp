@@ -42,24 +42,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             return
         }
         // 【mBaaS：会員管理②】メールアドレスとパスワードでログイン
-        NCMBUser.logInWithMailAddressInBackground(address.text, password: password.text) { (user: NCMBUser!, error: NSError!) -> Void in
-            if error != nil {
-                // ログイン失敗時の処理
-                print("ログインに失敗しました:\(error.code)")
-                self.statusLabel.text = "ログインに失敗しました:\(error.code)"
-            }else{
-                // ログイン成功時の処理
-                print("ログインに成功しました:\(user.objectId)")
-                // AppDelegateにユーザー情報を保持
-                self.appDelegate.current_user = user as NCMBUser
-                // TextFieldを空にする
-                self.cleanTextField()
-                // statusLabelを空にする
-                self.statusLabel.text = ""
-                // 画面遷移
-                self.performSegueWithIdentifier("login", sender: self)
-            }
-        }
+        
+        
     }
     
     // 「会員登録」ボタン押下時の処理

@@ -26,7 +26,7 @@ class ShopViewController: UIViewController {
         super.viewDidLoad()
         // 【mBaaS：ファイルストア②】Shop画像の取得
         // 取得した「Shop」クラスデータからShop画面用の画像名を取得
-        let imageName = appDelegate.shopList[shopIndex].objectForKey("shop_image") as! String
+        let imageName = appDelegate.shopList[shopIndex].objectForKey("*****Shop画像名*****") as! String
         // ファイル名を設定
         let imageFile = NCMBFile.fileWithName(imageName, data: nil)
         // ファイルを検索
