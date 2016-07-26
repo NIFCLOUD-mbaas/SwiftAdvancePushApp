@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 【mBaaS】 APIキーの設定とSDKの初期化
         NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
         
+        
         // 【mBaaS：プッシュ通知①】デバイストークンの取得
         
         
