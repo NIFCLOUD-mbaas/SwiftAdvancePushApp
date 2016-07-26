@@ -90,7 +90,7 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
                 self.appDelegate.current_user = user
                 // バックアップ
                 self.temporaryArray = self.appDelegate.favoriteObjectIdTemporaryArray
-                // 【mBaaS：プッシュ通知②】installationにユーザー情報を紐づける
+                // 【mBaaS：プッシュ通知④】installationにユーザー情報を紐づける
                 let installation = NCMBInstallation.currentInstallation()
                 if installation != nil {
                     // お気に入り情報を設定

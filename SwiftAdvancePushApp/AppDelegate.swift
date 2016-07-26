@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // 【mBaaS】 APIキーの設定とSDKの初期化
         NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
+        
         // 【mBaaS：プッシュ通知①】デバイストークンの取得
         // デバイストークンの要求
         if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
