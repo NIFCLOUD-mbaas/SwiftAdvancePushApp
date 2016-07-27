@@ -83,7 +83,7 @@ class ShopViewController: UIViewController {
         // ログイン中のユーザーを取得
         let user = NCMBUser.currentUser()
         // 更新された値を設定
-        user.setObject(favoriteObjectIdArray, forKey: "favorite")
+        user.setObject(favoriteObjectIdArray, forKey: "*****お気に入り情報*****")
         // ユーザー情報を更新
         user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
             if error != nil {
