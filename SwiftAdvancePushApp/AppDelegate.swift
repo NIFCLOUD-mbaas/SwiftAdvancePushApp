@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var current_user: NCMBUser!
     // お気に入り情報一時格納用
     var favoriteObjectIdTemporaryArray: Array<String>!
+    // プッシュ通知で取得したペイロード
+    var payloadData: AnyObject!
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // 【mBaaS】 APIキーの設定とSDKの初期化
@@ -41,9 +43,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let type : UIRemoteNotificationType = [.Alert, .Badge, .Sound]
             UIApplication.sharedApplication().registerForRemoteNotificationTypes(type)
         }
-        // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
+        
         if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
+            // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
             NCMBPush.handleRichPush(remoteNotification as [NSObject : AnyObject])
+            
+            // 【mBaaS：プッシュ通知⑦】アプリが起動されたときにプッシュ通知の情報（ペイロード）からデータを取得する
+            // プッシュ通知情報の取得
+            let payload = remoteNotification.objectForKey("deliveryTime")
+            if payload != nil {
+                // 値を取得した後の処理
+                print("ペイロードを取得しました：\(payload)")
+                // 値の取得
+                payloadData = payload
+            }
         }
         
         return true
@@ -66,4 +79,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    // 【mBaaS：プッシュ通知⑧】アプリが起動中にプッシュ通知の情報（ペイロード）からデータを取得する
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        // プッシュ通知情報の取得
+        let payload = userInfo["deliveryTime"]
+        if payload != nil {
+            // 値を取得した後の処理
+            print("ペイロードを取得しました：\(payload)")
+            // 値の取得
+            payloadData = payload
+        }
+    }
+    
+    
 }

@@ -19,6 +19,7 @@
 		BDD82E891D2CC0EA00795557 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD82E881D2CC0EA00795557 /* FavoriteViewController.swift */; };
 		BDD82E8D1D2CC52F00795557 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD82E8C1D2CC52F00795557 /* UserInfoViewController.swift */; };
 		BDD82E8F1D2CC54100795557 /* ShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD82E8E1D2CC54100795557 /* ShopViewController.swift */; };
+		BDF233911D488847004A7D0E /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF233901D488847004A7D0E /* LocalNotificationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		BDD82E881D2CC0EA00795557 /* FavoriteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		BDD82E8C1D2CC52F00795557 /* UserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		BDD82E8E1D2CC54100795557 /* ShopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
+		BDF233901D488847004A7D0E /* LocalNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				BDD82E721D2CBDCE00795557 /* AppDelegate.swift */,
+				BDF233901D488847004A7D0E /* LocalNotificationManager.swift */,
 				BDD82E741D2CBDCE00795557 /* LoginViewController.swift */,
 				BDD82E841D2CC06D00795557 /* SignUpViewController.swift */,
 				BDD82E861D2CC0B200795557 /* TopViewController.swift */,
@@ -144,7 +147,7 @@
 						DevelopmentTeam = 796KW2587D;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.Push = {
 								enabled = 0;
@@ -243,6 +246,7 @@
 				BDD82E8F1D2CC54100795557 /* ShopViewController.swift in Sources */,
 				BDD82E751D2CBDCE00795557 /* LoginViewController.swift in Sources */,
 				BDD82E731D2CBDCE00795557 /* AppDelegate.swift in Sources */,
+				BDF233911D488847004A7D0E /* LocalNotificationManager.swift in Sources */,
 				BD10C9441D372D3500320945 /* CustomCell.swift in Sources */,
 				BDD82E891D2CC0EA00795557 /* FavoriteViewController.swift in Sources */,
 			);
@@ -359,13 +363,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SwiftAdvancePushApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.natsumo.ikeda.ncmb.push.SwiftAdvancePushApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "eb35da4a-6912-41f0-8e75-f503a11cbcf1";
+				PROVISIONING_PROFILE = "dcada765-b80f-4866-83cd-6e690a3962a3";
 			};
 			name = Debug;
 		};
@@ -375,13 +379,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SwiftAdvancePushApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.natsumo.ikeda.ncmb.push.SwiftAdvancePushApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "eb35da4a-6912-41f0-8e75-f503a11cbcf1";
+				PROVISIONING_PROFILE = "dcada765-b80f-4866-83cd-6e690a3962a3";
 			};
 			name = Release;
 		};
