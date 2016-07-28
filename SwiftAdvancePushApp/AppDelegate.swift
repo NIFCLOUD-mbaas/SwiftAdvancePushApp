@@ -50,8 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             // 【mBaaS：プッシュ通知⑦】アプリが起動されたときにプッシュ通知の情報（ペイロード）からデータを取得する
             // プッシュ通知情報の取得
-            let payload = remoteNotification.objectForKey("deliveryTime")
-            if payload != nil {
+            let payload = remoteNotification.objectForKey("deliveryTime") as! String
+            if !payload.isEmpty {
                 // 値を取得した後の処理
                 print("ペイロードを取得しました：\(payload)")
                 // 値の取得
@@ -83,8 +83,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // 【mBaaS：プッシュ通知⑧】アプリが起動中にプッシュ通知の情報（ペイロード）からデータを取得する
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         // プッシュ通知情報の取得
-        let payload = userInfo["deliveryTime"]
-        if payload != nil {
+        let payload = userInfo["deliveryTime"] as! String
+        if !payload.isEmpty {
             // 値を取得した後の処理
             print("ペイロードを取得しました：\(payload)")
             // 値の取得
