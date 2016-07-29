@@ -28,8 +28,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 【mBaaS：プッシュ通知①】デバイストークンの取得
         
         
-        // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
-        
+        if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
+            print(remoteNotification)
+            // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
+            
+            
+            // 【mBaaS：プッシュ通知⑦】アプリが起動されたときにプッシュ通知の情報（ペイロード）からデータを取得する
+            
+            
+        }
         
         return true
     }
@@ -37,4 +44,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // 【mBaaS：プッシュ通知②】デバイストークンの取得後に呼び出されるメソッド
     
     
+    // 【mBaaS：プッシュ通知⑧】アプリが起動中にプッシュ通知の情報（ペイロード）からデータを取得する
+    
+    
+    // プッシュ通知が許可された場合に呼ばれるメソッド
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        let allowedType = notificationSettings.types
+        switch allowedType {
+        case UIUserNotificationType.None:
+            print("端末側でプッシュ通知が拒否されました")
+        default:
+            print("端末側でプッシュ通知が許可されました")
+        }
+    }
+    
+    // LocalNotification配信
+    func localNotificationDeliver (deliveryTime: String, message: String) {
+        // 配信時間(String→NSDate)
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let deliveryTime = formatter.dateFromString(deliveryTime)
+        print(deliveryTime)
+        LocalNotificationManager.scheduleLocalNotificationAtData(deliveryTime!, alertBody: message, userInfo: nil)
+    }    
 }
