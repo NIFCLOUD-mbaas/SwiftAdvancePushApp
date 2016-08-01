@@ -64,7 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let deliveryTime = formatter.dateFromString(deliveryTime)
-        print(deliveryTime)
         LocalNotificationManager.scheduleLocalNotificationAtData(deliveryTime!, alertBody: message, userInfo: nil)
     }    
 }
