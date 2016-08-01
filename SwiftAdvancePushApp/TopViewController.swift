@@ -208,7 +208,6 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     func closeKeyboad(){
         nickname.resignFirstResponder()
         prefecture.resignFirstResponder()
-        nicknameLabel.resignFirstResponder()
     }
     
     // キーボードの「Return」押下時の処理

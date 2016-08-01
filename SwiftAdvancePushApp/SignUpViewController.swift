@@ -46,7 +46,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     // キーボードを閉じる
     func closeKeyboad(){
         address.resignFirstResponder()
-        statusLabel.resignFirstResponder()
     }
     
     // キーボードの「Return」押下時の処理
