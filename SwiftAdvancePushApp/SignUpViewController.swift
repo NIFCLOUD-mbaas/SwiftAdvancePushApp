@@ -41,11 +41,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 // 会員登録用メールの要求失敗時の処理
                 print("登録用メールを送信しました")
                 self.statusLabel.text = "登録用メールを送信しました"
+                // TextFieldを空にする
+                self.address.text = ""
             }
         }
-        
-        // TextFieldを空にする
-        address.text = ""
     }
     
     // 背景タップ時にキーボードを隠す

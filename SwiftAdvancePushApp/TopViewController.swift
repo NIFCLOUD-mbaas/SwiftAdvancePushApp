@@ -160,7 +160,6 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         prefecture.font = UIFont.systemFontOfSize(14)
         prefecture.backgroundColor = UIColor.whiteColor()
         prefecture.delegate = self
-        prefecture.keyboardType = UIKeyboardType.NumberPad
         // viewLabelを生成
         viewLabel = UILabel(frame: CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.65, width: (self.view.bounds.size.width)*0.65, height: 30))
         viewLabel.font = UIFont.systemFontOfSize(15)

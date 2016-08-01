@@ -42,18 +42,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
-            print(remoteNotification)
             // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
             NCMBPush.handleRichPush(remoteNotification as [NSObject : AnyObject])
             
             // 【mBaaS：プッシュ通知⑦】アプリが起動されたときにプッシュ通知の情報（ペイロード）からデータを取得する
             // プッシュ通知情報の取得
-            let deliveryTime = remoteNotification.objectForKey("deliveryTime") as! String
-            let message = remoteNotification.objectForKey("message") as! String
-            // 値を取得した後の処理
-            if !deliveryTime.isEmpty && !message.isEmpty {
-                // ローカルプッシュ配信
-                localNotificationDeliver(deliveryTime, message: message)
+            if let deliveryTime = remoteNotification.objectForKey("deliveryTime") as? String {
+                if let message = remoteNotification.objectForKey("message") as? String {
+                    // ローカルプッシュ配信
+                    localNotificationDeliver(deliveryTime, message: message)
+                }
+                
             }
         }
         
@@ -108,7 +107,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let deliveryTime = formatter.dateFromString(deliveryTime)
-        print(deliveryTime)
         LocalNotificationManager.scheduleLocalNotificationAtData(deliveryTime!, alertBody: message, userInfo: nil)
     }    
 }
