@@ -51,7 +51,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         // 「Shop」クラスのクエリを作成
         let query = NCMBQuery(className: "Shop")
         // データストアを検索
-        query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error: NSError!) -> Void in
+        query.findObjectsInBackgroundWithBlock({ (objects: Array!, error: NSError!) -> Void in
             if error != nil {
                 // 検索失敗時の処理
                 print("検索に失敗しました:\(error.code)")
@@ -242,15 +242,15 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
                         } else {
                             // installation更新成功時の処理
                             print("installation更新(ユーザー登録)に成功しました")
+                            // 画面を閉じる
+                            self.registerView.hidden = true
+                            // ニックネーム表示用ラベルの更新
+                            self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
+                            // 画面更新
+                            self.checkShop()
                         }
                     })
                 }
-                // 画面を閉じる
-                self.registerView.hidden = true
-                // ニックネーム表示用ラベルの更新
-                self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
-                // 画面更新
-                self.checkShop()
             }
         })
     }
@@ -265,7 +265,6 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     func closeKeyboad(){
         nickname.resignFirstResponder()
         prefecture.resignFirstResponder()
-        nicknameLabel.resignFirstResponder()
     }
     
     // キーボードの「Return」押下時の処理
