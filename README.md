@@ -13,10 +13,9 @@ layout: false
 [ホームページ](http://mb.cloud.nifty.com/about.htm)右上にある「無料登録」ボタンをクリックして、<br>
 アカウント登録を実施してください
 
-![mBaaS検索.png](/readme-image/mBaaS検索.png)
+<img src="/readme-image/mBaaS検索.png" alt="mBaaS検索">
 
 ---
-
 ## 事前準備
 
 ![mBaaS無料登録.png](https://qiita-image-store.s3.amazonaws.com/0/112032/4bd94adc-e914-b908-8530-3ae192dfc7a7.png)
