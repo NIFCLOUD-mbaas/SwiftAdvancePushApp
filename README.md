@@ -15,14 +15,62 @@ layout: false
 
 ![mBaaS検索](readme-image/mBaaS検索.png)
 
----
-## 事前準備
-
 ![mBaaS無料登録](readme-image/mBaaS無料登録.png)
 
 ---
+## 今回のハンズオンセミナーについて
+### セミナーの形式
+
+.left-column[
+  .center[
+  180分でアプリ完成させます
+  ![180分セミナー](readme-image/seminar/180分セミナー.png)
+  ]
+]
+.right-column[
+  .center[
+  講義形式で説明と演習を繰り返して<br>アプリを作成します<br><br>
+  ![講義形式セミナー2](readme-image/seminar/講義形式セミナー2.png)
+  ]
+]
+
+
+---
+## 今回のハンズオンセミナーについて
+### 学ぶ内容
+
+「mBaaS Shop List」アプリの作成を通して、アクティブユーザー率を上げる<br>
+効率的なプッシュ通知の組み込み方を学びます
+
+.center[
+![セグメント配信](readme-image/seminar/セグメント配信.png)
+]
+
+---
+## 今回のハンズオンセミナーについて
+### 学ぶ内容
+
+「mBaaS Shop List」アプリの作成を通して、アクティブユーザー率を上げる<br>
+効率的なプッシュ通知の組み込み方を学びます<br>
+
+.center[
+![リッチプッシュ](readme-image/seminar/リッチプッシュ.png)
+]
+
+---
+## 今回のハンズオンセミナーについて
+### 学ぶ内容
+
+「mBaaS Shop List」アプリの作成を通して、アクティブユーザー率を上げる<br>
+効率的なプッシュ通知の組み込み方を学びます<br><br>
+
+.center[
+![ペイロード](readme-image/seminar/ペイロード.png)
+]
+
+---
 ## ニフティクラウド mobile backendとは
-__サービス紹介__
+### サービス紹介
 
 * スマホアプリで汎用的に実装される機能を、クラウドサービスとして提供しているサービスです
  * 通称「mBaaS」と呼びます
@@ -31,16 +79,11 @@ __サービス紹介__
 
 ---
 ## ニフティクラウド mobile backendとは
-__iOS SDKの特徴__
+### iOS SDKの特徴
 
 * SDKのインストールが必要です
  * 今回は実装済み
  * 参考：[クイックスタート](http://mb.cloud.nifty.com/doc/current/introduction/quickstart_ios.html)
-
----
-## ニフティクラウド mobile backendとは
-__iOS SDKの特徴__
-
 * SDKの初期化処理が必要です
  * 後で処理を実装します
 
@@ -50,7 +93,7 @@ NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTK
 
 ---
 ## ニフティクラウド mobile backendとは
-__iOS SDKの特徴__
+### iOS SDKの特徴
 
 * サーバへリクエスト処理には、__同期処理__と__非同期処理__があります
 
@@ -62,38 +105,35 @@ save(nil)
 saveInBackgroundWithBlock(nil)
 ```
 
----
-## ニフティクラウド mobile backendとは
-__iOS SDKの特徴__
-
 * 同期処理と非同期処理
  * 同期処理はその処理が完了するまで、次の処理が実行されません
  * 非同期処理はバックグラウンドで処理を実行し、次の処理を実行します
 
 ---
-## ハンズオンセミナーの概要
-__「mBaaS Shop List」アプリ__
+## ハンズオンの概要
+### 「mBaaS Shop List」アプリを作ろう！
 
 * クーポン配信アプリをイメージした「mBaaS Shop List」アプリの作成を通して、mBaaSの機能を理解していきます
 * mBaaSの連携部分をコーディングし、アプリを完成させ、次の内容を実現していきます
-
----
-## ハンズオンセミナーの概要
-__「mBaaS Shop List」アプリ__
-
  * 会員登録をするとお店情報を見ることができます
  * お店のお気に入り登録ができ、お気に入り登録をしたお店からプッシュ通知で届きます
  * 性別や都道府県限定のプッシュ通知ができます
  * お店からのプッシュ通知でクーポンを直接配信することができます
+ * 決まった時間に通知を出すようにプッシュ通知を仕掛けることができます
 
 ---
-## ハンズオンセミナーの概要
-__「mBaaS Shop List」アプリ__
+## ハンズオンの概要
+### 「mBaaS Shop List」アプリを作ろう！
 
+.center[
 ![mBaaS_shop_List](readme-image/mBaaS_shop_List.png)
+]
 
 ---
-## ハンズオンセミナーの具体的なの流れ
+## ハンズオンの流れ
+### 「mBaaS Shop List」アプリを作ろう！
+
+.size_large[
 1. ハンズオンの準備
 1. 会員管理機能の作成
 1. Shop情報の設定
@@ -101,24 +141,22 @@ __「mBaaS Shop List」アプリ__
 1. プッシュ通知を送信①セグメント配信
 1. プッシュ通知を送信②リッチプッシュ
 1. プッシュ通知を送信③ペイロード
+]
 
 ---
 ## ハンズオンの準備
-__Xcodeプロジェクトをダウンロード__
+### Xcodeプロジェクトをダウンロード
 
-* 下記リンクをクリックして、ZIPファイルでダウンロードしてください
-
+下記リンクをクリックして、ZIPファイルでダウンロードしてください▼<br>
+.size_large[
 　　　 __[SwiftAdvancePushApp](https://github.com/natsumo/SwiftAdvancePushApp/archive/seminar_version.zip)__
-
----
-## ハンズオンの準備
-__Xcodeプロジェクトをダウンロード__
+]
 
 * ディレクトリにある「__SwiftAdvancePushApp.xcworkspace__」をダブルクリックして、Xcodeを開いてください
 
 ---
 ## ハンズオンの準備
-__プロジェクトにあらかじめ実施していること__
+### プロジェクトにあらかじめ実施していること
 
 * mBaaS iOS SDKのインストール
 * mBaaSとの連携以外の処理のコーディング
@@ -126,128 +164,99 @@ __プロジェクトにあらかじめ実施していること__
 
 ---
 ## ハンズオンの準備
-__mBaaSの準備__
+### mBaaSの準備
 
 * [mBaaS](http://mb.cloud.nifty.com)にログインしてアプリを作成します
+
 ![mBaaSアプリ作成](readme-image/mBaaSアプリ作成.png)
 
 ---
 ## ハンズオンの準備
-__APIキーの設定とSDKの初期化__
+### APIキーの設定とSDKの初期化
 
 * `AppDelegate.swift`を開きます
-* `applications(_:didFinishLaunchingWithOptions)`メソッド内に処理を実装します
+* `applications(_:didFinishLaunchingWithOptions)`メソッド内に処理を実装します[一部実装済み]
 
----
-
-## ハンズオンの準備
-__APIキーの設定とSDKの初期化__
-
-```swift:AppDelegate.Swift
+```swift
 // 【mBaaS】 APIキーの設定とSDKの初期化
 NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
 ```
 
----
-
-## ハンズオンの準備
-__APIキーの設定とSDKの初期化__
-
-* 「`YOUR_NCMB_APPLICATIONKEY`」，「`YOUR_NCMB_CLIENTKEY`」の部分にはアプリ作成時に発行されたAPIキーに書き換えてください
+* 初期化処理の「`YOUR_NCMB_APPLICATIONKEY`」，「`YOUR_NCMB_CLIENTKEY`」の部分をアプリ作成時に発行されたAPIキーに書き換えてください
  * APIキーは、mBaaSのダッシュボードから「アプリ設定」→「基本」にあります
 
 ---
-
 ## 会員管理機能の作成
-
-__mBaaSの設定__
+### mBaaSの設定
 
 * 会員管理設定の「メールアドレス/パスワード認証」を許可します
 
----
-
-## 会員管理機能の作成
-
-__mBaaSの設定__
-
-![mBaaS会員設定.png](https://qiita-image-store.s3.amazonaws.com/0/112032/c2466a52-6257-2222-102b-39ed78e4c770.png)
-
+![mBaaS会員設定](readme-image/mBaaS会員設定.png)
 
 ---
 ## 会員管理機能の作成
 
-__会員管理①：会員登録用メールを要求する__
+### 会員管理①：会員登録用メールを要求する[実装済み]
 
-![SignUpViewController.png](https://qiita-image-store.s3.amazonaws.com/0/112032/46fd82eb-d19e-a329-c42f-64db9b5e706c.png)
+.center[
+![SignUpViewController](readme-image/SignUpViewController.png)
+]
 
 ---
 ## 会員管理機能の作成
-__会員管理①：会員登録用メールを要求する__
+### 会員管理①：会員登録用メールを要求する[実装済み]
 
 * `SignUpViewController.swift`を開きます
-* 会員登録処理を実装します
+* 会員登録処理は以下のように実装されます
 
----
-## 会員管理機能の作成
-__会員管理①：会員登録用メールを要求する__
-
-```swift:SignUpViewController.swift
+```swift
 // 【mBaaS：会員管理①】会員登録用メールを要求する
 NCMBUser.requestAuthenticationMailInBackground(address.text) { (error: NSError!) -> Void in
     if error != nil {
         // 会員登録用メールの要求失敗時の処理
-        print("エラーが発生しました：\(error!.code)")
-        self.statusLabel.text = "エラーが発生しました：\(error!.code)"
+
     } else {
         // 会員登録用メールの要求失敗時の処理
-        print("登録用メールを送信しました")
-        self.statusLabel.text = "登録用メールを送信しました"
+
     }
 }
 ```
 
 ---
 ## 会員管理機能の作成
-__会員管理①：会員登録用メールを要求する__
+### 会員管理①：会員登録用メールを要求する[実装済み]
 
-* それぞれ処理を追記します
+* それぞれ処理を追記しています
 
 ```swift
 // 会員登録用メールの要求失敗時の処理
 print("エラーが発生しました：\(error!.code)")
-statusLabel.text = "エラーが発生しました：\(error!.code)"
+self.statusLabel.text = "エラーが発生しました：\(error!.code)"
 ```
-
----
-## 会員管理機能の作成
-__会員管理①：会員登録用メールを要求する__
-
-* それぞれ処理を追記します
-
 
 ```swift
 // 会員登録用メールの要求失敗時の処理
 print("登録用メールを送信しました")
-statusLabel.text = "登録用メールを送信しました"
+self.statusLabel.text = "登録用メールを送信しました"
+// TextFieldを空にする
+self.address.text = ""
 ```
 ---
 ## 会員管理機能の作成
-__会員管理②：メールアドレスとパスワードでログイン__
+### 会員管理②：メールアドレスとパスワードでログイン<br>[実装済み]
 
-![UserInfoRegistration](readme-image/UserInfoRegistration.png)
+.center[
+![LoginViewController](readme-image/LoginViewController.png)
+]
 
 ---
 ## 会員管理機能の作成
-__会員管理②：メールアドレスとパスワードでログイン__
+### 会員管理②：メールアドレスとパスワードでログイン<br>[実装済み]
 
 * `LoginViewController.swift`を開きます
-* ログイン処理を実装します
+* ログイン処理は以下のように実装されます
 
----
-## 会員管理機能の作成
-__会員管理②：メールアドレスとパスワードでログイン__
-
-```swift:LoginViewController.swift
+```swift
 // 【mBaaS：会員管理②】メールアドレスとパスワードでログイン
 NCMBUser.logInWithMailAddressInBackground(address.text, password: password.text) { (user: NCMBUser!, error: NSError!) -> Void in
     if error != nil {
@@ -262,21 +271,15 @@ NCMBUser.logInWithMailAddressInBackground(address.text, password: password.text)
 
 ---
 ## 会員管理機能の作成
-__会員管理②：メールアドレスとパスワードでログイン__
+### 会員管理②：メールアドレスとパスワードでログイン<br>[実装済み]
 
-* それぞれ処理を追記します
+* それぞれ処理を追記しています
 
 ```swift
 // ログイン失敗時の処理
 print("ログインに失敗しました:\(error.code)")
 self.statusLabel.text = "ログインに失敗しました:\(error.code)"
 ```
-
----
-## 会員管理機能の作成
-__会員管理②：メールアドレスとパスワードでログイン__
-
-* それぞれ処理を追記します
 
 ```swift
 // ログイン成功時の処理
@@ -293,51 +296,69 @@ self.performSegueWithIdentifier("login", sender: self)
 
 ---
 ## 会員管理機能の作成
-__動作確認(1)ログインをしてみましょう__
+### 動作確認(1)ログインをしてみましょう
 
 * ログイン画面で「会員登録」をタップします
 * 会員登録画面でメールアドレスを入力し、「登録メールを送信」をタップします
 
----
-## 会員管理機能の作成
-__動作確認(1)ログインをしてみましょう__
-
+.center[
 ![動作確認①ログイン](readme-image/動作確認①ログイン.png)
+]
 
 ---
 ## 会員管理機能の作成
-__動作確認(1)ログインをしてみましょう__
+### 動作確認(1)ログインをしてみましょう
 
 * 会員登録メールが届くので、パスワード設定します
 
+.center[
 ![動作確認①パスワード登録](readme-image/動作確認①パスワード登録.png)
+]
 
 ---
 ## 会員管理機能の作成
-__動作確認(1)ログインをしてみましょう__
+### 動作確認(1)ログインをしてみましょう
 
 * 再びログイン画面に戻り「メールアドレス」と「パスワード」でログインします
 * ログを確認してください
  * [エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+* mBaaSのダッシュボードを確認してください
+ * 会員管理にユーザーが登録されました
+
+.center[
+![動作確認①会員登録完了](readme-image/動作確認①会員登録完了.png)
+]
+
 
 ---
 ## 会員管理機能の作成
-__会員管理③：ユーザー情報更新__
+### 会員管理③：ユーザー情報更新
 
+.center[
 ![UserInfoRegistration](readme-image/UserInfoRegistration.png)
+]
 
 ---
 ## 会員管理機能の作成
-__会員管理③：ユーザー情報更新__
+### 会員管理③：ユーザー情報更新
+
 
 * `TopViewController.swift`を開きます
 * 初回のみ表示されるユーザー情報登録画面に入力した情報をmBaaSのユーザー情報に追加する処理を実装します
+* コメントの下にコードを追記していきます
+
+```swift
+// 【mBaaS：会員管理③】ユーザー情報更新
+
+```
+
+* かなり下の方にあります
 
 ---
 ## 会員管理機能の作成
-__会員管理③：ユーザー情報更新__
+### 会員管理③：ユーザー情報更新
 
-```swift:TopViewController.swift
+```swift
 // 【mBaaS：会員管理③】ユーザー情報更新
 // ログイン中のユーザーを取得
 let user = NCMBUser.currentUser()
@@ -360,7 +381,7 @@ user.saveInBackgroundWithBlock({(error: NSError!) -> Void in
 
 ---
 ## 会員管理機能の作成
-__会員管理③：ユーザー情報更新__
+### 会員管理③：ユーザー情報更新
 
 * それぞれ処理を追記します
 
@@ -370,12 +391,6 @@ print("ユーザー情報更新に失敗しました:\(error.code)")
 self.viewLabel.text = "登録に失敗しました（更新）:\(error.code)"
 ```
 
----
-## 会員管理機能の作成
-__会員管理③：ユーザー情報更新__
-
-* それぞれ処理を追記します
-
 ```swift
 // 更新成功時の処理
 print("ユーザー情報更新に成功しました")
@@ -383,7 +398,6 @@ print("ユーザー情報更新に成功しました")
 self.appDelegate.current_user = user as NCMBUser
 // 【mBaaS：プッシュ通知①】installationにユーザー情報を紐づける
   /*****後でここに処理を記述します*****/
-
 // 画面を閉じる
 self.registerView.hidden = true
 // ニックネーム表示用ラベルの更新
@@ -394,90 +408,60 @@ self.checkShop()
 
 ---
 ## Shop情報の設定
-__mBaaSにShop情報を用意する（データストア）__
+### mBaaSにShop情報を用意する（データストア）
 
-次の手順でアプリで使用するShop情報をmBaaSに設定します
+* ニフティクラウド mobile backendのダッシュボードから「データストア」を開き、「＋作成▼」ボタンをクリックし、「インポート」をクリックします
+* クラス名に「__Shop__」と入力します
+* ダウンロードしたサンプルプロジェクトにあるSettingフォルダ内の「__Shop.json__」を選択してアップロードします
 
----
-## Shop情報の設定
-__mBaaSにShop情報を用意する（データストア）__
-
-* ニフティクラウド mobile backendのダッシュボードから「データストア」を開く
-* 「＋作成▼」ボタンをクリックし、「インポート」をクリックします
-
----
-## Shop情報の設定
-__mBaaSにShop情報を用意する（データストア）__
-
- * クラス名に「__Shop__」と入力します
- * ダウンロードしたサンプルプロジェクトにあるSettingフォルダ内の「__Shop.json__」を選択してアップロードします
-
----
-## Shop情報の設定
-__mBaaSにShop情報を用意する（データストア）__
-
+.center[
 ![ShopClass](readme-image/ShopClass.png)
+]
 
 ---
 ## Shop情報の設定
-__mBaaSにShop情報を用意する（データストア）__
+### mBaaSにShop情報を用意する（データストア）
 
-* こんな感じでインポートされます
+こんな感じでインポートされます
 
+.center[
 ![mBaaS_ShopData](readme-image/mBaaS_ShopData.png)
+]
 
 ---
 ## Shop情報の設定
-__mBaaSにShop情報を用意する（ファイルストア）__
+### mBaaSにShop情報を用意する（ファイルストア）
 
-次の手順で各icon・Shop画面・リッチプッシュで使用する画像をmBaaSに設定します
-
-* ニフティクラウド mobile backendのダッシュボードから「ファイルストア」を開く
-* 「↑アップロード」ボタンをクリックします
-
----
-## Shop情報の設定
-__mBaaSにShop情報を用意する（ファイルストア）__
-
+* ニフティクラウド mobile backendのダッシュボードから「ファイルストア」を開き、「↑アップロード」ボタンをクリックします
 * ダウンロードしたサンプルプロジェクトにあるSettingフォルダ内の「icon」「Shop」「Sale」内にあるファイルをすべてをアップロードします
 
----
-## Shop情報の設定
-__mBaaSにShop情報を用意する（ファイルストア）__
-
+.center[
 ![imageUpload](readme-image/imageUpload.png)
+]
 
 ---
 ## Shop情報の設定
-__mBaaSにShop情報を用意する（ファイルストア）__
+### mBaaSにShop情報を用意する（ファイルストア）
 
 * こんな感じでアップロードされます
 
+.center[
 ![UploadImage](readme-image/UploadImage.png)
+]
 
 ---
 ## Shop情報の設定
-__データストア：「Shop」クラスのデータを取得__
-
-* アプリ側で先ほどmBaaSに設定したShopデータとimageデータを取得します
-
----
-## Shop情報の設定
-__データストア：「Shop」クラスのデータを取得__
+### データストア：「Shop」クラスのデータを取得
 
 * `TopViewController.swift`を開きます
 * インポートしたShopクラスのデータを取得する処理を実装します
 
----
-## Shop情報の設定
-__データストア：「Shop」クラスのデータを取得__
-
-```swift:TopViewController.swift
+```swift
 // 【mBaaS：データストア】「Shop」クラスのデータを取得
 // 「Shop」クラスのクエリを作成
 let query = NCMBQuery(className: "Shop")
 // データストアを検索
-query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error: NSError!) -> Void in
+query.findObjectsInBackgroundWithBlock({ (objects: Array!, error: NSError!) -> Void in
     if error != nil {
         // 検索失敗時の処理
 
@@ -490,7 +474,7 @@ query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error: NSError!
 
 ---
 ## Shop情報の設定
-__データストア：「Shop」クラスのデータを取得__
+### データストア：「Shop」クラスのデータを取得
 
 * それぞれ処理を追記します
 
@@ -498,12 +482,6 @@ __データストア：「Shop」クラスのデータを取得__
 // 検索失敗時の処理
 print("検索に失敗しました:\(error.code)")
 ```
-
----
-## Shop情報の設定
-__データストア：「Shop」クラスのデータを取得__
-
-* それぞれ処理を追記します
 
 ```swift
 // 検索成功時の処理
@@ -516,23 +494,21 @@ self.shopTableView.reloadData()
 
 ---
 ## Shop情報の設定
-__ファイルストア①：icon画像の取得__
+### ファイルストア①：icon画像の取得
 
+.center[
 ![icon](readme-image/icon.png)
+]
 
 ---
 ## Shop情報の設定
-__ファイルストア①：icon画像の取得__
+### ファイルストア①：icon画像の取得
 
 * `CustomCell.swift`を開きます
  * `CustomCell.swift`はテーブルのセルを作成するファイルです
 * トップ画面に各ショップのアイコンをmBaaSから取得して表示する処理を実装します
 
----
-## Shop情報の設定
-__ファイルストア①：icon画像の取得__
-
-```swift:CustomCell.swift
+```swift
 // 【mBaaS：ファイルストア①】icon画像の取得
 // 取得した「Shop」クラスデータからicon名を取得
 let imageName = object.objectForKey("icon_image") as! String
@@ -552,7 +528,7 @@ imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Voi
 
 ---
 ## Shop情報の設定
-__ファイルストア①：icon画像の取得__
+### ファイルストア①：icon画像の取得
 
 * それぞれ処理を追記します
 
@@ -560,12 +536,6 @@ __ファイルストア①：icon画像の取得__
 // ファイル取得失敗時の処理
 print("icon画像の取得に失敗しました:\(error.code)")
 ```
-
----
-## Shop情報の設定
-__ファイルストア①：icon画像の取得__
-
-* それぞれ処理を追記します
 
 ```swift
 // ファイル取得成功時の処理
@@ -575,31 +545,18 @@ self.iconImageView_top.image = UIImage.init(data: data)
 ```
 ---
 ## Shop情報の設定
-__ファイルストア②：Shop画面画像の取得__
+### ファイルストア②：Shop画像の取得
 
+.center[
 ![Shop](readme-image/Shop.png)
+]
 
 ---
 ## Shop情報の設定
-__ファイルストア②：Shop画像の取得__
+### ファイルストア②：Shop画像の取得[実装済み]
 
 * `ShopViewController.swift`を開きます
-* Shop画面に各ショップの画像をmBaaSから取得して表示する処理を実装します
- * 「`*****Shop画像名*****`」を「`shop_image`」に書き換えます
-
----
-## Shop情報の設定
-__ファイルストア②：Shop画像の取得__
-
-```swift:ShopViewController.swift
-// 【mBaaS：ファイルストア②】Shop画像の取得
-// 取得した「Shop」クラスデータからShop画面用の画像名を取得
-let imageName = appDelegate.shopList[shopIndex].objectForKey("*****Shop画像名*****") as! String
-```
-
----
-## Shop情報の設定
-__ファイルストア②：Shop画像の取得__
+* Shop画面に各ショップの画像をmBaaSから取得して表示する処理も同様に実装できます
 
 ```swift
 // 【mBaaS：ファイルストア②】Shop画像の取得

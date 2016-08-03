@@ -8,11 +8,12 @@
 
     body { font-family: 'arial', sans-serif; }
     h1, h2, h3 {
+      color: #006cb4;
       font-weight: 700;
     }
     .remark-slide-content h1 { font-size: 3em; }
     .remark-slide-content h2 { font-size: 2em; }
-    .remark-slide-content h3 { font-size: 1.6em; }
+    .remark-slide-content h3 { font-size: 1.4em; }
     .footnote {
       position: absolute;
       bottom: 3em;
@@ -28,8 +29,9 @@
     code {
         background: #e7e8e2;
         border-radius: 5px;
+        -web-border-radius: 5px;
       }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; border: 1px solid #555; }
       .remark-code-line-highlighted     { background-color: #e7e8e2; }
       .pull-left {
         float: left;
@@ -91,20 +93,22 @@
       background: #fff;
       z-index: 0;
     }
-    /* Two-column layout */
+    /* 左右二段表示 */
     .left-column {
-      color: #777;
-      width: 20%;
-      height: 92%;
+      width: 48%;
       float: left;
     }
-      .left-column h2:last-of-type, .left-column h3:last-child {
-        color: #000;
-      }
     .right-column {
-      width: 75%;
+      width: 48%;
       float: right;
-      padding-top: 1em;
+    }
+    /* センター寄せ */
+    .center {
+      text-align: center;
+    }
+    /* サイズ変更 */
+    .size_large {
+      font-size: 1.5em;
     }
     </style>
 </head>
