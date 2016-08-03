@@ -9,9 +9,11 @@ class: center, middle, inverse
 ---
 layout: false
 ## 事前準備
-* ニフティクラウドmobile backendのアカウント登録がお済みでない方は、[ホームページ](http://mb.cloud.nifty.com/about.htm)右上にある「無料登録」ボタンをクリックして、アカウント登録を実施してください
+ニフティクラウドmobile backendのアカウント登録がお済みでない方は、<br>
+[ホームページ](http://mb.cloud.nifty.com/about.htm)右上にある「無料登録」ボタンをクリックして、<br>
+アカウント登録を実施してください
 
-![mBaaS検索.png](https://qiita-image-store.s3.amazonaws.com/0/112032/1c4f2a30-aab6-b13f-6e0e-9fc40761da5e.png)
+![mBaaS検索.png](/readme-image/mBaaS検索.png)
 
 ---
 
