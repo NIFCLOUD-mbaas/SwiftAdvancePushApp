@@ -14,8 +14,6 @@ class ShopViewController: UIViewController {
     @IBOutlet weak var shopView: UIImageView!
     // お気に入りBarButtonItem
     @IBOutlet weak var favoriteBarButton: UIBarButtonItem!
-    // ステータス表示用ラベル
-    @IBOutlet weak var statusLabel: UILabel!
     // Top画面のリストから取得したindex格納用
     var shopIndex: Int!
     // AppDelegate
@@ -130,6 +128,5 @@ class ShopViewController: UIViewController {
                 }
             }
         }
-        
     }
 }
