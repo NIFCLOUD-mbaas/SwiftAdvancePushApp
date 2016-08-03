@@ -13,26 +13,23 @@ layout: false
 [ホームページ](http://mb.cloud.nifty.com/about.htm)右上にある「無料登録」ボタンをクリックして、<br>
 アカウント登録を実施してください
 
-<img src="/readme-image/mBaaS検索.png" alt="mBaaS検索">
+![mBaaS検索](readme-image/mBaaS検索.png)
 
 ---
 ## 事前準備
 
-![mBaaS無料登録.png](https://qiita-image-store.s3.amazonaws.com/0/112032/4bd94adc-e914-b908-8530-3ae192dfc7a7.png)
+![mBaaS無料登録](readme-image/mBaaS無料登録.png)
 
 ---
-
 ## ニフティクラウド mobile backendとは
 __サービス紹介__
 
 * スマホアプリで汎用的に実装される機能を、クラウドサービスとして提供しているサービスです
  * 通称「mBaaS」と呼びます
 
-![mBaaS紹介.png](https://qiita-image-store.s3.amazonaws.com/0/112032/6ee565c4-fc81-111e-4178-d9e4fdb5c7af.png)
-
+![mBaaS紹介](readme-image/mBaaS紹介.png)
 
 ---
-
 ## ニフティクラウド mobile backendとは
 __iOS SDKの特徴__
 
@@ -41,7 +38,6 @@ __iOS SDKの特徴__
  * 参考：[クイックスタート](http://mb.cloud.nifty.com/doc/current/introduction/quickstart_ios.html)
 
 ---
-
 ## ニフティクラウド mobile backendとは
 __iOS SDKの特徴__
 
@@ -53,7 +49,6 @@ NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTK
 ```
 
 ---
-
 ## ニフティクラウド mobile backendとは
 __iOS SDKの特徴__
 
@@ -68,7 +63,6 @@ saveInBackgroundWithBlock(nil)
 ```
 
 ---
-
 ## ニフティクラウド mobile backendとは
 __iOS SDKの特徴__
 
@@ -77,7 +71,6 @@ __iOS SDKの特徴__
  * 非同期処理はバックグラウンドで処理を実行し、次の処理を実行します
 
 ---
-
 ## ハンズオンセミナーの概要
 __「mBaaS Shop List」アプリ__
 
@@ -85,7 +78,6 @@ __「mBaaS Shop List」アプリ__
 * mBaaSの連携部分をコーディングし、アプリを完成させ、次の内容を実現していきます
 
 ---
-
 ## ハンズオンセミナーの概要
 __「mBaaS Shop List」アプリ__
 
@@ -95,14 +87,12 @@ __「mBaaS Shop List」アプリ__
  * お店からのプッシュ通知でクーポンを直接配信することができます
 
 ---
-
 ## ハンズオンセミナーの概要
 __「mBaaS Shop List」アプリ__
 
-![mBaaS_shop_List.png](https://qiita-image-store.s3.amazonaws.com/0/112032/2745e25a-b1bb-ae10-9d6d-87e87ffadec0.png)
+![mBaaS_shop_List](readme-image/mBaaS_shop_List.png)
 
 ---
-
 ## ハンズオンセミナーの具体的なの流れ
 1. ハンズオンの準備
 1. 会員管理機能の作成
@@ -113,7 +103,6 @@ __「mBaaS Shop List」アプリ__
 1. プッシュ通知を送信③ペイロード
 
 ---
-
 ## ハンズオンの準備
 __Xcodeプロジェクトをダウンロード__
 
@@ -122,14 +111,12 @@ __Xcodeプロジェクトをダウンロード__
 　　　 __[SwiftAdvancePushApp](https://github.com/natsumo/SwiftAdvancePushApp/archive/seminar_version.zip)__
 
 ---
-
 ## ハンズオンの準備
 __Xcodeプロジェクトをダウンロード__
 
 * ディレクトリにある「__SwiftAdvancePushApp.xcworkspace__」をダブルクリックして、Xcodeを開いてください
 
 ---
-
 ## ハンズオンの準備
 __プロジェクトにあらかじめ実施していること__
 
@@ -138,15 +125,13 @@ __プロジェクトにあらかじめ実施していること__
  * アプリのデザインを`Main.storyboard`で作成し、処理は画面ごと`ViewController`にコーディングしています
 
 ---
-
 ## ハンズオンの準備
 __mBaaSの準備__
 
 * [mBaaS](http://mb.cloud.nifty.com)にログインしてアプリを作成します
-![mBaaSアプリ作成.png](https://qiita-image-store.s3.amazonaws.com/0/112032/b23d2eb1-c06f-fdee-ebbd-1c8c3ce95974.png)
+![mBaaSアプリ作成](readme-image/mBaaSアプリ作成.png)
 
 ---
-
 ## ハンズオンの準備
 __APIキーの設定とSDKの初期化__
 
@@ -249,7 +234,7 @@ statusLabel.text = "登録用メールを送信しました"
 ## 会員管理機能の作成
 __会員管理②：メールアドレスとパスワードでログイン__
 
-![UserInfoRegistration.png](https://qiita-image-store.s3.amazonaws.com/0/112032/119c9f88-c05a-5458-2446-98df32fe3851.png)
+![UserInfoRegistration](readme-image/UserInfoRegistration.png)
 
 ---
 ## 会員管理機能の作成
@@ -317,7 +302,7 @@ __動作確認(1)ログインをしてみましょう__
 ## 会員管理機能の作成
 __動作確認(1)ログインをしてみましょう__
 
-![動作確認①ログイン.png](https://qiita-image-store.s3.amazonaws.com/0/112032/50bafa23-a08b-c396-2f00-d10a507720d8.png)
+![動作確認①ログイン](readme-image/動作確認①ログイン.png)
 
 ---
 ## 会員管理機能の作成
@@ -325,7 +310,7 @@ __動作確認(1)ログインをしてみましょう__
 
 * 会員登録メールが届くので、パスワード設定します
 
-![動作確認①パスワード登録.png](https://qiita-image-store.s3.amazonaws.com/0/112032/61cb833b-5961-544e-6be6-e75b71a1563d.png)
+![動作確認①パスワード登録](readme-image/動作確認①パスワード登録.png)
 
 ---
 ## 会員管理機能の作成
@@ -339,7 +324,7 @@ __動作確認(1)ログインをしてみましょう__
 ## 会員管理機能の作成
 __会員管理③：ユーザー情報更新__
 
-![UserInfoRegistration.png](https://qiita-image-store.s3.amazonaws.com/0/112032/b7033b77-dfaf-f4cc-ee04-147b4a233608.png)
+![UserInfoRegistration](readme-image/UserInfoRegistration.png)
 
 ---
 ## 会員管理機能の作成
@@ -431,7 +416,7 @@ __mBaaSにShop情報を用意する（データストア）__
 ## Shop情報の設定
 __mBaaSにShop情報を用意する（データストア）__
 
-![ShopClass.png](https://qiita-image-store.s3.amazonaws.com/0/112032/61e9f156-568c-7397-54f5-ddda7aa86e48.png)
+![ShopClass](readme-image/ShopClass.png)
 
 ---
 ## Shop情報の設定
@@ -439,8 +424,7 @@ __mBaaSにShop情報を用意する（データストア）__
 
 * こんな感じでインポートされます
 
-![mBaaS_ShopData.PNG](https://qiita-image-store.s3.amazonaws.com/0/112032/17483205-b472-8496-0ec8-c9b4d24afe47.png)
-
+![mBaaS_ShopData](readme-image/mBaaS_ShopData.png)
 
 ---
 ## Shop情報の設定
@@ -461,7 +445,7 @@ __mBaaSにShop情報を用意する（ファイルストア）__
 ## Shop情報の設定
 __mBaaSにShop情報を用意する（ファイルストア）__
 
-![imageUpload.png](https://qiita-image-store.s3.amazonaws.com/0/112032/1dfc08a4-89a9-bcd6-d05b-cb5c3f1d5404.png)
+![imageUpload](readme-image/imageUpload.png)
 
 ---
 ## Shop情報の設定
@@ -469,7 +453,7 @@ __mBaaSにShop情報を用意する（ファイルストア）__
 
 * こんな感じでアップロードされます
 
-![UploadImage.png](https://qiita-image-store.s3.amazonaws.com/0/112032/9d200084-5752-e574-c8d5-1254e7db1dac.png)
+![UploadImage](readme-image/UploadImage.png)
 
 ---
 ## Shop情報の設定
@@ -534,7 +518,7 @@ self.shopTableView.reloadData()
 ## Shop情報の設定
 __ファイルストア①：icon画像の取得__
 
-![icon.png](https://qiita-image-store.s3.amazonaws.com/0/112032/c29a5b47-4799-828f-e0e8-f5a0edebbe50.png)
+![icon](readme-image/icon.png)
 
 ---
 ## Shop情報の設定
@@ -593,7 +577,7 @@ self.iconImageView_top.image = UIImage.init(data: data)
 ## Shop情報の設定
 __ファイルストア②：Shop画面画像の取得__
 
-![Shop.png](https://qiita-image-store.s3.amazonaws.com/0/112032/306b1a79-fab9-0804-b644-7735f96be301.png)
+![Shop](readme-image/Shop.png)
 
 ---
 ## Shop情報の設定
@@ -682,7 +666,7 @@ __動作確認(2)会員情報登録とShop情報表示__
 ## Shop情報の設定
 __動作確認(2)会員情報登録とShop情報表示__
 
-![動作確認②.png](https://qiita-image-store.s3.amazonaws.com/0/112032/54ba4fcc-724a-152c-2384-55972540b00e.png)
+![動作確認②](readme-image/動作確認②.png)
 
 ---
 ## お気に入り登録機能の作成
@@ -706,7 +690,7 @@ __お気に入り機能について__
 
 __お気に入り機能について__
 
-![favorite.png](https://qiita-image-store.s3.amazonaws.com/0/112032/db1062f8-8849-3854-f85d-c5f13efaceed.png)
+![favorite](readme-image/favorite.png)
 
 ---
 ## お気に入り登録機能の作成
@@ -786,8 +770,7 @@ __動作確認(3)お気に入り情報登録・更新__
 ## お気に入り登録機能の作成
 __動作確認(3)お気に入り情報登録・更新__
 
-![動作確認③.png](https://qiita-image-store.s3.amazonaws.com/0/112032/20208364-041e-e2f2-9693-7aa616f4127f.png)
-
+![動作確認③](readme-image/動作確認③.png)
 
 ---
 ## プッシュ通知を送信
@@ -810,7 +793,7 @@ __mBaaSの設定__
 
 * プッシュ通知の許可とAPNsの証明書(p12形式)のアップロードを行います
 
-![mBaaSプッシュ通知設定.png](https://qiita-image-store.s3.amazonaws.com/0/112032/99209ab7-9342-f965-f14b-3c2db24e6f9e.png)
+![mBaaSプッシュ通知設定](readme-image/mBaaSプッシュ通知設定.png)
 
 ---
 ## プッシュ通知を送信
@@ -1029,7 +1012,7 @@ __動作確認(4)mBaaS準備__
 ## プッシュ通知を送信①セグメント配信
 __動作確認(4)mBaaS準備__
 
-![動作確認④セグメント0.png](https://qiita-image-store.s3.amazonaws.com/0/112032/e01e4f5f-a2d0-e9ff-4dfa-94ee52669678.png)
+![動作確認④セグメント0](readme-image/動作確認④セグメント0.png)
 
 ---
 ## プッシュ通知を送信①セグメント配信
@@ -1071,7 +1054,7 @@ __動作確認(4)セグメント配信__
 ## プッシュ通知を送信①セグメント配信
 __動作確認(4)セグメント配信__
 
-![動作確認④セグメント2.png](https://qiita-image-store.s3.amazonaws.com/0/112032/70eff815-e9e3-65d2-1603-bcc0628fc692.png)
+![動作確認④セグメント2](readme-image/動作確認④セグメント2.png)
 
 ---
 ## プッシュ通知を送信①セグメント配信
@@ -1087,7 +1070,7 @@ __動作確認(4)セグメント配信__
 ## プッシュ通知を送信①セグメント配信
 __動作確認(4)セグメント配信__
 
-![動作確認④セグメント1.png](https://qiita-image-store.s3.amazonaws.com/0/112032/d5c5884d-5a11-7dff-0bcf-98baf7635d83.png)
+![動作確認④セグメント1](readme-image/動作確認④セグメント1.png)
 
 ---
 ## プッシュ通知を送信①セグメント配信
@@ -1101,7 +1084,7 @@ __動作確認(4)セグメント配信__
 ## プッシュ通知を送信①セグメント配信
 __動作確認(4)セグメント配信__
 
-![動作確認④セグメント3.png](https://qiita-image-store.s3.amazonaws.com/0/112032/b227bd42-07c0-d294-b06d-612a0c0e6265.png)
+![動作確認④セグメント3](readme-image/動作確認④セグメント3.png)
 
 ---
 ## プッシュ通知を送信①セグメント配信
@@ -1115,7 +1098,7 @@ __動作確認(4)セグメント配信__
 ## プッシュ通知を送信①セグメント配信
 __動作確認(4)セグメント配信__
 
-![動作確認④セグメント4.png](https://qiita-image-store.s3.amazonaws.com/0/112032/9cab1a38-ae31-5169-cfdb-fdef4a6f3f38.png)
+![動作確認④セグメント4](readme-image/動作確認④セグメント4.png)
 
 ---
 ## プッシュ通知を送信①セグメント配信
@@ -1142,7 +1125,7 @@ __リッチプッシュについて__
 
 * 今回はShopのセール画像を「公開ファイル」機能を利用して配信します
 
-![sale_image.png](https://qiita-image-store.s3.amazonaws.com/0/112032/1487da6d-b4e4-4337-1b87-098781ea3f78.png)
+![sale_image](readme-image/sale_image.png)
 
 ---
 ## プッシュ通知を送信②リッチプッシュ
@@ -1161,8 +1144,7 @@ __公開ファイル設定__
 ## プッシュ通知を送信②リッチプッシュ
 __公開ファイル設定__
 
-![公開ファイル確認.png](https://qiita-image-store.s3.amazonaws.com/0/112032/539c2789-54d6-c4a5-2842-c994b8cd8e46.png)
-
+![公開ファイル確認](readme-image/公開ファイル確認.png)
 
 ---
 ## プッシュ通知を送信②リッチプッシュ
@@ -1180,7 +1162,7 @@ __公開ファイル作成__
 
 * 「`*****アプリケーションID*****`」をmBaaSのアプリケーションIDに書き換えます
 
-![アプリケーションID確認.png](https://qiita-image-store.s3.amazonaws.com/0/112032/c6409f1a-41bb-8f99-b36f-35355765b46b.png)
+![アプリケーションID確認](readme-image/アプリケーションID確認.png)
 
 ---
 ## プッシュ通知を送信②リッチプッシュ
@@ -1188,7 +1170,7 @@ __公開ファイル作成__
 
 * 「`*****ファイル名*****`」はセール画像の名前を指定します
 
-![sale_image_name.png](https://qiita-image-store.s3.amazonaws.com/0/112032/21c7f1f8-2d5d-cdf8-5b09-b71abf5e9654.png)
+![sale_image_name](readme-image/sale_image_name.png)
 
 ---
 ## プッシュ通知を送信②リッチプッシュ
@@ -1196,7 +1178,7 @@ __公開ファイル作成__
 
 * 作成できたらブラウザでリンクをたたいて確認してください！
 
-![公開ファイル確認.png](https://qiita-image-store.s3.amazonaws.com/0/112032/6a02b418-c8f2-ad02-f9fd-7d8eb1d45673.png)
+![公開ファイル確認](readme-image/公開ファイル確認.png)
 
 ---
 ## プッシュ通知を送信②リッチプッシュ
@@ -1239,6 +1221,7 @@ __動作確認(5)リッチプッシュ__
 __動作確認(5)リッチプッシュ__
 
 ![動作確認⑤リッチプッシュ.png](https://qiita-image-store.s3.amazonaws.com/0/112032/430e4661-8627-a1a7-a82c-918f5dbf3aa3.png)
+![UserInfoRegistration](readme-image/UserInfoRegistration.png)
 
 ---
 ## プッシュ通知を送信③ペイロード
@@ -1367,7 +1350,7 @@ __動作確認(6)ペイロード（起動中）__
 * プッシュ通知を作成し、JSON形式のデータを貼り付けます
  * メッセージを入力が無い場合、サイレントプッシュとして送られます
 
-![動作確認⑥ペイロード1.png](https://qiita-image-store.s3.amazonaws.com/0/112032/65c73662-bc6a-d2cc-0f60-fb4d7181c3a5.png)
+![動作確認⑥ペイロード1](readme-image/動作確認⑥ペイロード1.png)
 
 ---
 ## プッシュ通知を送信③ペイロード
@@ -1404,7 +1387,7 @@ __動作確認(6)ペイロード（非起動時）__
 * JSON形式のデータを貼り付けます
  * 時間は今から５分以上未来の時間に変更してください
 
-![動作確認⑥ペイロード2.png](https://qiita-image-store.s3.amazonaws.com/0/112032/efc24f4a-57ed-87fd-43ce-b291580cb5d8.png)
+![動作確認⑥ペイロード2](readme-image/動作確認⑥ペイロード2.png)
 
 ---
 ## プッシュ通知を送信③ペイロード
@@ -1432,4 +1415,4 @@ __学んだこと__
 
 * コードは[GitHub](https://github.com/natsumo/SwiftAdvancePushApp)に公開しています
  * __master__：完成版
- * __seminar_version__：セミナー版(虫食い)
+ * __seminar_version__：セミナー版
