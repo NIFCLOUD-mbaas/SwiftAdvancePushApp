@@ -7,7 +7,7 @@ class: center, middle, inverse
 @natsumo
 
 .footnote[
-20160922作成
+20160804作成
 ]
 ---
 layout: false
