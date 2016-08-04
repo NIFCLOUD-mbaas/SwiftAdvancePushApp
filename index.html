@@ -16,34 +16,38 @@
     .remark-slide-content h3 { font-size: 1.4em; }
     .footnote {
       position: absolute;
-      bottom: 3em;
+      bottom: 1em;
     }
+    /* リスト */
     li { font-size: 1.0em;}
     li p { line-height: 2em; font-size: 1.5em; }
     .red { color: #fa0000; }
     .large { font-size: 2em; }
+    /* リンク */
     a, a > code {
       color: #ff1a75;
       text-decoration: none;
     }
+    /* コード */
     code {
-        background: #e7e8e2;
-        border-radius: 5px;
-        -web-border-radius: 5px;
-      }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; border: 1px solid #555; }
-      .remark-code-line-highlighted     { background-color: #e7e8e2; }
-      .pull-left {
-        float: left;
-        width: 47%;
-      }
-      .pull-right {
-        float: right;
-        width: 47%;
-      }
-      .pull-right ~ p {
-        clear: both;
-      }
+      font-family: 'Ubuntu Mono';
+      border-radius: 5px;
+      -web-border-radius: 5px;
+    }
+    .remark-code { background: #e7e8e2; font-size: 0.8em; border: 1px solid #555; display: block; }
+    .remark-inline-code { background: #e7e8e2; }
+    .remark-code-line-highlighted { background-color: #f5ff49; }
+    .pull-left {
+      float: left;
+      width: 47%;
+    }
+    .pull-right {
+      float: right;
+      width: 47%;
+    }
+    .pull-right ~ p {
+      clear: both;
+    }
     #slideshow .slide .content code {
       font-size: 1.2em;
     }
@@ -57,6 +61,15 @@
     }
     .inverse h1, .inverse h2 {
       color: #f3f3f3;
+      line-height: 1em;
+    }
+
+    .inverse_sub {
+      background: #49a7e5;
+      color: #fff;
+    }
+    .inverse_sub h1, .inverse_sub h2 {
+      color: #fff;
       line-height: 1em;
     }
     /* Slide-specific styling */

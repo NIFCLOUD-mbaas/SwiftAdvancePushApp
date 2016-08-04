@@ -6,6 +6,9 @@ class: center, middle, inverse
 
 @natsumo
 
+.footnote[
+20160922作成
+]
 ---
 layout: false
 ## 事前準備
@@ -111,7 +114,7 @@ saveInBackgroundWithBlock(nil)
 
 ---
 ## ハンズオンの概要
-### 「mBaaS Shop List」アプリを作ろう！
+### 作成するアプリについて
 
 * クーポン配信アプリをイメージした「mBaaS Shop List」アプリの作成を通して、mBaaSの機能を理解していきます
 * mBaaSの連携部分をコーディングし、アプリを完成させ、次の内容を実現していきます
@@ -123,7 +126,7 @@ saveInBackgroundWithBlock(nil)
 
 ---
 ## ハンズオンの概要
-### 「mBaaS Shop List」アプリを作ろう！
+### 作成するアプリについて
 
 .center[
 ![mBaaS_shop_List](readme-image/mBaaS_shop_List.png)
@@ -131,19 +134,42 @@ saveInBackgroundWithBlock(nil)
 
 ---
 ## ハンズオンの流れ
-### 「mBaaS Shop List」アプリを作ろう！
+
+__<font color="#49a7e5" size="5">前半&nbsp;</font><font size="6">「mBaaS Shop List」アプリを作ろう！</font>__
 
 .size_large[
 1. ハンズオンの準備
 1. 会員管理機能の作成
 1. Shop情報の設定
-1. お気に入り登録機能の作成
-1. プッシュ通知を送信①セグメント配信
-1. プッシュ通知を送信②リッチプッシュ
-1. プッシュ通知を送信③ペイロード
+1. お気に入り機能の作成
+]
+
+__<font color="#49a7e5" size="5">後半&nbsp;</font><font size="6">プッシュ通知を送ろう！</font>__
+.size_large[
+1. プッシュ通知の準備
+1. プッシュ通知を送信：セグメント配信
+1. プッシュ通知を送信：リッチプッシュ
+1. プッシュ通知を送信：ペイロード
 ]
 
 ---
+layout: true
+class: center, middle, inverse_sub
+---
+#「mBaaS Shop List」<br>アプリを作ろう！
+
+.size_large[
+＜前半＞
+]
+
+---
+layout: true
+class: center, middle, inverse
+---
+# 1.ハンズオンの準備
+
+---
+layout: false
 ## ハンズオンの準備
 ### Xcodeプロジェクトをダウンロード
 
@@ -186,6 +212,13 @@ NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTK
  * APIキーは、mBaaSのダッシュボードから「アプリ設定」→「基本」にあります
 
 ---
+layout: true
+class: center, middle, inverse
+---
+# 2.会員管理機能の作成
+
+---
+layout: false
 ## 会員管理機能の作成
 ### mBaaSの設定
 
@@ -298,11 +331,16 @@ self.performSegueWithIdentifier("login", sender: self)
 ## 会員管理機能の作成
 ### 動作確認(1)ログインをしてみましょう
 
+* ここではシュミレーターでビルドし、動作確認を行います
 * ログイン画面で「会員登録」をタップします
 * 会員登録画面でメールアドレスを入力し、「登録メールを送信」をタップします
+ * ログを確認してください
 
 .center[
 ![動作確認①ログイン](readme-image/動作確認①ログイン.png)
+]
+.footnote[
+[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
@@ -320,15 +358,16 @@ self.performSegueWithIdentifier("login", sender: self)
 ### 動作確認(1)ログインをしてみましょう
 
 * 再びログイン画面に戻り「メールアドレス」と「パスワード」でログインします
-* ログを確認してください
- * [エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+ * ログを確認してください
 * mBaaSのダッシュボードを確認してください
  * 会員管理にユーザーが登録されました
 
 .center[
 ![動作確認①会員登録完了](readme-image/動作確認①会員登録完了.png)
 ]
-
+.footnote[
+[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+]
 
 ---
 ## 会員管理機能の作成
@@ -396,7 +435,7 @@ self.viewLabel.text = "登録に失敗しました（更新）:\(error.code)"
 print("ユーザー情報更新に成功しました")
 // AppDelegateに保持していたユーザー情報の更新
 self.appDelegate.current_user = user as NCMBUser
-// 【mBaaS：プッシュ通知①】installationにユーザー情報を紐づける
+// 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
   /*****後でここに処理を記述します*****/
 // 画面を閉じる
 self.registerView.hidden = true
@@ -407,6 +446,13 @@ self.checkShop()
 ```
 
 ---
+layout: true
+class: center, middle, inverse
+---
+# 3.Shop情報の設定
+
+---
+layout: false
 ## Shop情報の設定
 ### mBaaSにShop情報を用意する（データストア）
 
@@ -578,104 +624,65 @@ imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Voi
 
 ---
 ## Shop情報の設定
-__動作確認(2)会員情報登録とShop情報表示__
+### 動作確認(2)会員情報登録とShop情報表示
 
-* ログインをします
+* 再びシュミレーターでビルドし、動作確認を行います
 * ログイン後初回のみ、ユーザー情報登録画面が表示されます
 * 入力し「登録」をタップします
  * このとき、会員情報が更新されますので、mBaaSのダッシュボードを確認してみましょう
+ * ログを確認してください
+
+.center[
+![動作確認②ユーザー情報追加](readme-image/動作確認②ユーザー情報追加.png)
+]
+.footnote[
+[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+]
 
 ---
 ## Shop情報の設定
-__動作確認(2)会員情報登録とShop情報表示__
+### 動作確認(2)会員情報登録とShop情報表示
 
-* ログを確認してください
- * [エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
-
----
-## Shop情報の設定
-__動作確認(2)会員情報登録とShop情報表示__
-
-* トップ画面が表示されます
- * このとき、 画面に「icon画像」「Shop名」「カテゴリ」が表示されます
-* ログを確認してください
- * [エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
-
----
-## Shop情報の設定
-__動作確認(2)会員情報登録とShop情報表示__
-
+* トップ画面に「icon画像」「Shop名」「カテゴリ」が表示されます
 * Shopを１つ選んでタップします
  * mBaaSに登録されているimageにアクセスし、Shopページ（画像）が表示されます
-* ログを確認してください
- * [エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
-
----
-## Shop情報の設定
-__動作確認(2)会員情報登録とShop情報表示__
-
 * 会員ページをタップします
- * 初回登録画面で登録した内容と、ログイン用のアドレスを表示しています　
-* ログを確認してください
- * [エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+ * ユーザー情報が表示されます
 
----
-## Shop情報の設定
-__動作確認(2)会員情報登録とShop情報表示__
-
+.center[
 ![動作確認②](readme-image/動作確認②.png)
+]
+.footnote[
+[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+]
 
 ---
-## お気に入り登録機能の作成
+layout: true
+class: center, middle, inverse
+---
+# 4.お気に入り機能の作成
 
-__お気に入り機能について__
+---
+layout: false
+## お気に入り機能の作成
+### お気に入り機能について
 
 * お気に入り機能は好きなShopをお気に入りとして保存できる機能です
- * 「お気に入り」画面と「Shop」画面で登録可能です
+ * 「お気に入り」画面ではSwitchと「登録」ボタンで設定します
+ * 「Shop」画面では右上のハートマークをタップすることでShop単位で設定できます(♥…ON,♡…OFF)
 
----
-## お気に入り登録機能の作成
-
-__お気に入り機能について__
-
-* 「お気に入り」画面ではSwitchのON/OFFを設定し、「登録」ボタンで設定します
-* 「Shop」画面では右上のハートマークをタップすることでShop単位で設定できます
- * 「♥」…ON　「♡」…OFF
-
----
-## お気に入り登録機能の作成
-
-__お気に入り機能について__
-
+.center[
 ![favorite](readme-image/favorite.png)
+]
 
 ---
-## お気に入り登録機能の作成
-
-__会員管理④：ユーザー情報の更新__
+## お気に入り機能の作成
+### 会員管理④：ユーザー情報の更新[実装済み]
 
 * `FavoriteViewController.swift`を開きます
-* mBaaSの会員データとして保持していた「favorite」データを、お気に入り画面で設定したデータに更新する処理を実装します
+* お気に入り画面からfavoriteデータの更新処理はユーザー情報の登録と同様にして実装できます
 
----
-## お気に入り登録機能の作成
-
-__会員管理④：ユーザー情報の更新__
-
-* 「`*****お気に入り情報*****`」を「`favorite`」に書き換えます
-
-```swift:FavoriteViewController.swift
-// 【mBaaS：会員管理④】ユーザー情報の更新
-// 更新された値を設定
-user.setObject(appDelegate.favoriteObjectIdTemporaryArray, forKey: "*****お気に入り情報*****")
-```
-
----
-## お気に入り登録機能の作成
-
-__会員管理④：ユーザー情報の更新__
-
-```swift:FavoriteViewController.swift
+```swift
 // 【mBaaS：会員管理④】ユーザー情報の更新
 // ログイン中のユーザーを取得
 let user = NCMBUser.currentUser()
@@ -685,85 +692,103 @@ user.setObject(appDelegate.favoriteObjectIdTemporaryArray, forKey: "favorite")
 user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
     if error != nil {
         // 更新に失敗した場合の処理
+        /* 省略 */
     } else {
         // 更新に成功した場合の処理
+        /* 省略 */
     }
 }
 ```
 
 ---
-## お気に入り登録機能の作成
+## お気に入り機能の作成
 
-__会員管理⑤：ユーザー情報の更新__
+### 会員管理⑤：ユーザー情報の更新[実装済み]
 
 * `ShopViewController.swift`を開きます
-* 同様にmBaaSの会員データとして保持していた「favorite」データを、Shop画面で設定したデータに更新する処理を実装します
- * 「`*****お気に入り情報*****`」を「`favorite`」に書き換えます
+* Shop画面からもfavoriteデータの更新処理はユーザー情報の登録と同様にして実装できます
 
-```swift:ShopViewController.swift
+```swift
 // 【mBaaS：会員管理⑤】ユーザー情報の更新
+// ログイン中のユーザーを取得
+let user = NCMBUser.currentUser()
 // 更新された値を設定
-user.setObject(favoriteObjectIdArray, forKey: "*****お気に入り情報*****")
+user.setObject(favoriteObjectIdArray, forKey: "favorite")
+// ユーザー情報を更新
+user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
+    if error != nil {
+        // 更新に失敗した場合の処理
+        /* 省略 */
+    } else {
+        // 更新に成功した場合の処理
+        /* 省略 */
+    }
+}
 ```
 
 ---
-## お気に入り登録機能の作成
-__動作確認(3)お気に入り情報登録・更新__
+## お気に入り機能の作成
+### 動作確認(3)お気に入り情報登録・更新
 
-* ログインをするとトップ画面が表示されます
-* 画面下の「お気に入り」をタップします
-* お気に入り画面が表示されます
- * お気に入り登録をしてみましょう
+* 再びシュミレーターでビルドし、動作確認を行います
+* ログイン後トップ画面下の「お気に入り」をタップします
+* お気に入り画面からお気に入り登録をしてみましょう
+* 各Shop画面からも同様に登録してみましょう
+ * ログを確認してください
 
----
-## お気に入り登録機能の作成
-__動作確認(3)お気に入り情報登録・更新__
-
-* 各Shop画面も開いて同様に登録してみましょう
-* ログを確認してください
- * [エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
-
----
-## お気に入り登録機能の作成
-__動作確認(3)お気に入り情報登録・更新__
-
+.center[
 ![動作確認③](readme-image/動作確認③.png)
+]
+
+.footnote[
+[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+]
 
 ---
-## プッシュ通知を送信
-__このあとのデバッグについて__
+layout: true
+class: center, middle, inverse_sub
+---
+# プッシュ通知を送ろう！
+
+.size_large[
+＜後半＞
+]
+
+---
+layout: true
+class: center, middle, inverse
+---
+# 1.プッシュ通知の準備
+
+---
+layout: false
+## プッシュ通知の準備
+### このあとのデバッグについて
 
 * 以下の用意が必要です
  * デバッグ用の実機
  * プッシュ通知用証明書(p12形式)
-
----
-## プッシュ通知を送信
-__このあとのデバッグについて__
-
 * 証明書の取得がまだの場合は下記をご参照ください
  * [【サンプル】アプリにプッシュ通知を組み込もう！](https://github.com/NIFTYCloud-mbaas/SwiftPushApp)
 
 ---
-## プッシュ通知を送信
-__mBaaSの設定__
+## プッシュ通知の準備
+### mBaaSの設定
 
 * プッシュ通知の許可とAPNsの証明書(p12形式)のアップロードを行います
 
+.center[
 ![mBaaSプッシュ通知設定](readme-image/mBaaSプッシュ通知設定.png)
+]
 
 ---
-## プッシュ通知を送信
-__プッシュ通知①：デバイストークンの取得__
+## プッシュ通知の準備
+### プッシュ通知①：デバイストークンの取得
 
 * `AppDelegate.swift`を開きます
 * `applications(_:didFinishLaunchingWithOptions)`メソッド内のSDKの初期化を実装した部分の直ぐ下に処理を実装します
 
----
-## プッシュ通知を送信
-__プッシュ通知①：デバイストークンの取得__
-
-```swift:AppDelegate.swift
+```swift
 // 【mBaaS：プッシュ通知①】デバイストークンの取得
 // デバイストークンの要求
 if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
@@ -783,17 +808,13 @@ if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
 ```
 
 ---
-## プッシュ通知を送信
-__プッシュ通知②：デバイストークンの取得後に呼び出されるメソッド__
+## プッシュ通知の準備
+### プッシュ通知②：デバイストークンの取得後に呼び出されるメソッド
 
-* `AppDelegate.swift`を開きます
+* 続けて`AppDelegate.swift`を編集します
 * `applications(_:didFinishLaunchingWithOptions)`メソッド下(外)に次のメソッドを実装します
 
----
-## プッシュ通知を送信
-__プッシュ通知②：デバイストークンの取得後に呼び出されるメソッド__
-
-```swift:AppDelegate.swift
+```swift
 // 【mBaaS：プッシュ通知②】デバイストークンの取得後に呼び出されるメソッド
 func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData){
     // 端末情報を扱うNCMBInstallationのインスタンスを作成
@@ -802,7 +823,7 @@ func application(application: UIApplication, didRegisterForRemoteNotificationsWi
     installation.setDeviceTokenFromData(deviceToken)
     // 端末情報をデータストアに登録
     installation.saveInBackgroundWithBlock { (error: NSError!) -> Void in
-        if (error != nil){
+        if error != nil {
             // 端末情報の登録に失敗した時の処理
 
         }else{
@@ -814,8 +835,8 @@ func application(application: UIApplication, didRegisterForRemoteNotificationsWi
 ```
 
 ---
-## プッシュ通知を送信
-__プッシュ通知②：デバイストークンの取得後に呼び出されるメソッド__
+## プッシュ通知の準備
+### プッシュ通知②：デバイストークンの取得後に呼び出されるメソッド
 
 * それぞれ処理を追記します
 
@@ -824,39 +845,47 @@ __プッシュ通知②：デバイストークンの取得後に呼び出され
 print("デバイストークン取得に失敗しました:\(error.code)")
 ```
 
----
-## プッシュ通知を送信
-__プッシュ通知②：デバイストークンの取得後に呼び出されるメソッド__
-
-* それぞれ処理を追記します
-
 ```swift
 // 端末情報の登録に成功した時の処理
 print("デバイストークン取得に成功しました")
 ```
 
 ---
-## プッシュ通知を送信①セグメント配信
-__プッシュ通知③：installationにユーザー情報を紐づける__
-
-* `TopViewController.swift`を開きます
-* セグメント配信のために必要なユーザー情報をinstallationに紐付けるための処理を実装します
+layout: true
+class: center, middle, inverse
+---
+# 2.プッシュ通知を送信<br>セグメント配信
 
 ---
-## プッシュ通知を送信①セグメント配信
-__プッシュ通知③：installationにユーザー情報を紐づける__
+layout: false
+## プッシュ通知を送信：セグメント配信
+### プッシュ通知③：installationにユーザー情報を紐づける
 
-* 実装箇所は「【mBaaS：会員管理③】ユーザー情報更新」の更新成功時の処理内です
+* `TopViewController.swift`を開きます
+* 「【mBaaS：会員管理③】ユーザー情報更新」の更新成功時の処理内にセグメント配信のために必要なユーザー情報をinstallationに紐付けるための処理を実装します
 
-```swift:TopViewController.swift
+```swift
 // 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
-/*****後でここに処理を記述します*****/
+  /*****後でここに処理を記述します*****/
+// 画面を閉じる
+self.registerView.hidden = true
+// ニックネーム表示用ラベルの更新
+self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
+// 画面更新
+self.checkShop()
+```
+* 上記コメントや処理を一度削除します
+
+```swift
+// 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
 
 ```
 
 ---
-## プッシュ通知を送信①セグメント配信
-__プッシュ通知③：installationにユーザー情報を紐づける__
+## プッシュ通知を送信：セグメント配信
+### プッシュ通知③：installationにユーザー情報を紐づける
+
+* 次のように追記します
 
 ```swift
 // 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
@@ -880,9 +909,8 @@ installation!.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
 ```
 
 ---
-## プッシュ通知を送信①セグメント配信
-
-__プッシュ通知③：installationにユーザー情報を紐づける__
+## プッシュ通知を送信：セグメント配信
+### プッシュ通知③：installationにユーザー情報を紐づける
 
 * それぞれ処理を追記します
 
@@ -891,29 +919,23 @@ __プッシュ通知③：installationにユーザー情報を紐づける__
 print("installation更新(ユーザー登録)に失敗しました:\(error.code)")
 ```
 
----
-## プッシュ通知を送信①セグメント配信
-
-__プッシュ通知③：installationにユーザー情報を紐づける__
-
-* それぞれ処理を追記します
-
 ```swift
 // installation更新成功時の処理
 print("installation更新(ユーザー登録)に成功しました")
+// 画面を閉じる
+self.registerView.hidden = true
+// ニックネーム表示用ラベルの更新
+self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
+// 画面更新
+self.checkShop()
 ```
 
 ---
-## プッシュ通知を送信①セグメント配信
-__プッシュ通知④⑤：installationにユーザー情報を紐づける[実装済み]__
+## プッシュ通知を送信：セグメント配信
+### プッシュ通知④：installationにユーザー情報を紐づける<br>[実装済み]
 
-* 同様に、お気に入り画面・Shop画面でお気に入り情報が更新されるたびに、installation情報も書き換えます
-
----
-## プッシュ通知を送信①セグメント配信
-__プッシュ通知④：installationにユーザー情報を紐づける[実装済み]__
-
-* `FavoriteViewController.swift`
+* `FavoriteViewController.swift`開きます
+* 同様に、お気に入り画面でお気に入り情報が更新されるたびに、installation情報を書き換えられます
 
 ```swift
 // 【mBaaS：プッシュ通知④】installationにユーザー情報を紐づける
@@ -925,20 +947,19 @@ if installation != nil {
     installation!.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
         if error != nil {
             // installation更新失敗時の処理
-            print("installation更新(お気に入り)に失敗しました:\(error.code)")
         } else {
             // installation更新成功時の処理
-            print("installation更新(お気に入り)に成功しました")
         }
     })
 }
 ```
 
 ---
-## プッシュ通知を送信①セグメント配信
-__プッシュ通知⑤：installationにユーザー情報を紐づける[実装済み]__
+## プッシュ通知を送信：セグメント配信
+### プッシュ通知⑤：installationにユーザー情報を紐づける<br>[実装済み]
 
-* `ShopViewController.swift`
+* `ShopViewController.swift`開きます
+* 同様に、Shop画面でもお気に入り情報が更新されるたびに、installation情報を書き換えるます
 
 ```swift
 // 【mBaaS：プッシュ通知⑤】installationにユーザー情報を紐づける
@@ -950,43 +971,48 @@ if installation != nil {
     installation!.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
         if error != nil {
             // installation更新失敗時の処理
-            print("installation更新(お気に入り)に失敗しました:\(error.code)")
         } else {
             // installation更新成功時の処理
-            print("installation更新(お気に入り)に成功しました")
         }
     })
 }
 ```
 ---
-## プッシュ通知を送信①セグメント配信
-__動作確認(4)mBaaS準備__
+## プッシュ通知を送信：セグメント配信
+### 動作確認のmBaaS準備
 
 * もう一度会員情報登録画面を表示するため、mBaaSの会員管理画面で「クラスの編集」をクリックします
 * 「nickname」にチェックを入れて上の「削除」ボタンで削除します
 
----
-## プッシュ通知を送信①セグメント配信
-__動作確認(4)mBaaS準備__
-
+.center[
 ![動作確認④セグメント0](readme-image/動作確認④セグメント0.png)
+]
 
 ---
-## プッシュ通知を送信①セグメント配信
-__動作確認(4)セグメント配信__
+## プッシュ通知を送信：セグメント配信
+### 動作確認(4)セグメント配信
 
 * 実機でアプリをビルドします
 * プッシュ通知の許可をして、ログを確認します
- * [エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 
 ```
 端末側でプッシュ通知が許可されました
 デバイストークン取得に成功しました
 ```
 
+* デバイストークンの取得に成功したら、mBaaSダッシュボードで確認します
+
+.center[
+![動作確認④デバイストークン](readme-image/動作確認④デバイストークン.png)
+]
+
+.footnote[
+[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+]
+
 ---
-## プッシュ通知を送信①セグメント配信
-__動作確認(4)セグメント配信__
+## プッシュ通知を送信：セグメント配信
+### (4)セグメント配信
 
 * ログインをし、再びユーザー登録をします
  * このとき、installationが更新されますのでダッシュボードを確認します
@@ -994,27 +1020,27 @@ __動作確認(4)セグメント配信__
  * [エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 
 ---
-## プッシュ通知を送信①セグメント配信
+## プッシュ通知を送信：セグメント配信
 __動作確認(4)セグメント配信__
 
 * shopBをお気に入り登録しているユーザーに絞り込んでプッシュ通知を配信してみましょう
 * 今回は登録ユーザーが１人(１端末)なので、あらかじめshopBをお気に入りに設定しておきます
 
 ---
-## プッシュ通知を送信①セグメント配信
+## プッシュ通知を送信：セグメント配信
 __動作確認(4)セグメント配信__
 
 * mBaaSのダッシュボードからShopクラスのデータを開きます
 * shopBの「objectId」をコピーします
 
 ---
-## プッシュ通知を送信①セグメント配信
+## プッシュ通知を送信：セグメント配信
 __動作確認(4)セグメント配信__
 
 ![動作確認④セグメント2](readme-image/動作確認④セグメント2.png)
 
 ---
-## プッシュ通知を送信①セグメント配信
+## プッシュ通知を送信：セグメント配信
 __動作確認(4)セグメント配信__
 
 * プッシュ通知を作成します
@@ -1024,13 +1050,13 @@ __動作確認(4)セグメント配信__
 * 「配信端末」を設定します
 
 ---
-## プッシュ通知を送信①セグメント配信
+## プッシュ通知を送信：セグメント配信
 __動作確認(4)セグメント配信__
 
 ![動作確認④セグメント1](readme-image/動作確認④セグメント1.png)
 
 ---
-## プッシュ通知を送信①セグメント配信
+## プッシュ通知を送信：セグメント配信
 __動作確認(4)セグメント配信__
 
 * 「installationクラスからの絞込み」を選択します
@@ -1038,13 +1064,13 @@ __動作確認(4)セグメント配信__
  * ここでコピーしたShopBのobjectIdを貼り付けます
 
 ---
-## プッシュ通知を送信①セグメント配信
+## プッシュ通知を送信：セグメント配信
 __動作確認(4)セグメント配信__
 
 ![動作確認④セグメント3](readme-image/動作確認④セグメント3.png)
 
 ---
-## プッシュ通知を送信①セグメント配信
+## プッシュ通知を送信：セグメント配信
 __動作確認(4)セグメント配信__
 
 * 「１端末に向けて送信されます」と表示されればOKです
@@ -1052,13 +1078,13 @@ __動作確認(4)セグメント配信__
 * 少し待つと配信されます→端末を確認！
 
 ---
-## プッシュ通知を送信①セグメント配信
+## プッシュ通知を送信：セグメント配信
 __動作確認(4)セグメント配信__
 
 ![動作確認④セグメント4](readme-image/動作確認④セグメント4.png)
 
 ---
-## プッシュ通知を送信①セグメント配信
+## プッシュ通知を送信：セグメント配信
 __動作確認(4)セグメント配信__
 
 * いろいろなパターンで送ってみましょう！
@@ -1068,7 +1094,7 @@ __動作確認(4)セグメント配信__
  * ShopDをお気に入り登録かつ東京都で絞込み
 
 ---
-## プッシュ通知を送信②リッチプッシュ
+## プッシュ通知を送信：リッチプッシュ
 __リッチプッシュについて__
 
 * プッシュ通知登録時にURLを指定することで、開封時にWebビューを表示できる機能です
@@ -1077,7 +1103,14 @@ __リッチプッシュについて__
 
 
 ---
-## プッシュ通知を送信②リッチプッシュ
+layout: true
+class: center, middle, inverse
+---
+# 2.プッシュ通知を送信<br>リッチプッシュ
+
+---
+layout: false
+## プッシュ通知を送信：リッチプッシュ
 __リッチプッシュについて__
 
 * 今回はShopのセール画像を「公開ファイル」機能を利用して配信します
@@ -1085,26 +1118,26 @@ __リッチプッシュについて__
 ![sale_image](readme-image/sale_image.png)
 
 ---
-## プッシュ通知を送信②リッチプッシュ
+## プッシュ通知を送信：リッチプッシュ
 __公開ファイルとは__
 
 * 「公開ファイル」機能とは、ファイルストアに保存した画像をリンクでアクセスできるようにする機能です
 * ファイルストアに登録した画像を「公開ファイル」にします
 
 ---
-## プッシュ通知を送信②リッチプッシュ
+## プッシュ通知を送信：リッチプッシュ
 __公開ファイル設定__
 
 * mBaaSのダッシュボードで、公開ファイル設定「HTTPでの取得」を有効にします
 
 ---
-## プッシュ通知を送信②リッチプッシュ
+## プッシュ通知を送信：リッチプッシュ
 __公開ファイル設定__
 
 ![公開ファイル確認](readme-image/公開ファイル確認.png)
 
 ---
-## プッシュ通知を送信②リッチプッシュ
+## プッシュ通知を送信：リッチプッシュ
 __公開ファイル作成__
 
 * リンクは以下のように作成できます
@@ -1114,7 +1147,7 @@ https://mb.api.cloud.nifty.com/2013-09-01/applications/*****アプリケーシ�
 ```
 
 ---
-## プッシュ通知を送信②リッチプッシュ
+## プッシュ通知を送信：リッチプッシュ
 __公開ファイル作成__
 
 * 「`*****アプリケーションID*****`」をmBaaSのアプリケーションIDに書き換えます
@@ -1122,7 +1155,7 @@ __公開ファイル作成__
 ![アプリケーションID確認](readme-image/アプリケーションID確認.png)
 
 ---
-## プッシュ通知を送信②リッチプッシュ
+## プッシュ通知を送信：リッチプッシュ
 __公開ファイル作成__
 
 * 「`*****ファイル名*****`」はセール画像の名前を指定します
@@ -1130,7 +1163,7 @@ __公開ファイル作成__
 ![sale_image_name](readme-image/sale_image_name.png)
 
 ---
-## プッシュ通知を送信②リッチプッシュ
+## プッシュ通知を送信：リッチプッシュ
 __公開ファイル作成__
 
 * 作成できたらブラウザでリンクをたたいて確認してください！
@@ -1138,14 +1171,14 @@ __公開ファイル作成__
 ![公開ファイル確認](readme-image/公開ファイル確認.png)
 
 ---
-## プッシュ通知を送信②リッチプッシュ
+## プッシュ通知を送信：リッチプッシュ
 __プッシュ通知⑥：リッチプッシュ通知を表示させる処理__
 
 * `AppDelegate.swift`を開きます
 * `applications(_:didFinishLaunchingWithOptions)`メソッド内、`【プッシュ通知①】デバイストークンの取得`の下に処理を実装します
 
 ---
-## プッシュ通知を送信②リッチプッシュ
+## プッシュ通知を送信：リッチプッシュ
 __プッシュ通知⑥：リッチプッシュ通知を表示させる処理__
 
 ```swift:AppDelegate.swift
@@ -1156,7 +1189,7 @@ if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotif
 ```
 
 ---
-## プッシュ通知を送信②リッチプッシュ
+## プッシュ通知を送信：リッチプッシュ
 __動作確認(5)リッチプッシュ__
 
 * 実機でアプリをビルドします
@@ -1166,7 +1199,7 @@ __動作確認(5)リッチプッシュ__
 デバイストークン取得に成功しました
 ```
 ---
-## プッシュ通知を送信②リッチプッシュ
+## プッシュ通知を送信：リッチプッシュ
 __動作確認(5)リッチプッシュ__
 
 * プッシュ通知を作成します
@@ -1174,20 +1207,27 @@ __動作確認(5)リッチプッシュ__
 * そのまま送信してみましょう
 
 ---
-## プッシュ通知を送信②リッチプッシュ
+## プッシュ通知を送信：リッチプッシュ
 __動作確認(5)リッチプッシュ__
 
 ![動作確認⑤リッチプッシュ.png](https://qiita-image-store.s3.amazonaws.com/0/112032/430e4661-8627-a1a7-a82c-918f5dbf3aa3.png)
 ![UserInfoRegistration](readme-image/UserInfoRegistration.png)
 
 ---
-## プッシュ通知を送信③ペイロード
+layout: true
+class: center, middle, inverse
+---
+# 2.プッシュ通知を送信<br>ペイロード
+
+---
+layout: false
+## プッシュ通知を送信：ペイロード
 __ペイロードについて__
 
 * プッシュ通知にはJSON形式で任意のデータを含めることができ、通知を受信した時に、そのデータを受け取って処理を行うことができる機能です
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __ペイロードについて__
 
 * データ取得の条件
@@ -1196,13 +1236,13 @@ __ペイロードについて__
 
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __ペイロードについて__
 
 * 今回は、配信時間とメッセージのデータを設定し、時限式でローカルプッシュを表示させる内容を実装します
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __ペイロードについて__
 
 * プッシュ通知に設定するJSON形式のデータ
@@ -1212,14 +1252,14 @@ __ペイロードについて__
 ```
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __プッシュ通知⑦：アプリが起動中にプッシュ通知の情報（ペイロード）からデータを取得する
 
 * `AppDelegate.swift`を開きます
 * `applications(_:didFinishLaunchingWithOptions)`メソッド外に次のメソッドを実装します
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __プッシュ通知⑦：アプリが起動中にプッシュ通知の情報（ペイロード）からデータを取得する
 
 ```swift:AppDelegate.swift
@@ -1238,14 +1278,14 @@ func application(application: UIApplication, didReceiveRemoteNotification userIn
 ```
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __プッシュ通知⑧：アプリが起動されたときにプッシュ通知の情報（ペイロード）からデータを取得する__
 
 * `AppDelegate.swift`を開きます
 * `applications(_:didFinishLaunchingWithOptions)`メソッド内、`【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理`の下に処理を実装します
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __プッシュ通知⑧：アプリが起動されたときにプッシュ通知の情報（ペイロード）からデータを取得する__
 
 ```swift:AppDelegate.swift
@@ -1260,7 +1300,7 @@ if let deliveryTime = remoteNotification.objectForKey("deliveryTime") as? String
 ```
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __参考：ローカルプッシュ[実装済み]__
 
 ```swift
@@ -1275,7 +1315,7 @@ func localNotificationDeliver (deliveryTime: String, message: String) {
 ```
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __動作確認(6)ペイロード（起動中）__
 
 * 実機でアプリをビルドします
@@ -1289,7 +1329,7 @@ __動作確認(6)ペイロード（起動中）__
 * そのままアプリを起動した状態にします
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __動作確認(6)ペイロード（起動中）__
 
 * プッシュ通知に設定するJSON形式のデータを作成します
@@ -1301,7 +1341,7 @@ __動作確認(6)ペイロード（起動中）__
 ```
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __動作確認(6)ペイロード（起動中）__
 
 * プッシュ通知を作成し、JSON形式のデータを貼り付けます
@@ -1310,7 +1350,7 @@ __動作確認(6)ペイロード（起動中）__
 ![動作確認⑥ペイロード1](readme-image/動作確認⑥ペイロード1.png)
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __動作確認(6)ペイロード（起動中）__
 
 * プッシュ通知を送信します
@@ -1323,20 +1363,20 @@ __動作確認(6)ペイロード（起動中）__
  * [エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __動作確認(6)ペイロード（起動中）__
 
 * 指定時間になるとプッシュ通知が表示されることを確認してください
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __動作確認(6)ペイロード（非起動時）__
 
 * アプリを完全に閉じます
 * 再びプッシュ通知を作成します
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __動作確認(6)ペイロード（非起動時）__
 
 * アプリを起動してもらう内容でプッシュ通知を作成します
@@ -1347,7 +1387,7 @@ __動作確認(6)ペイロード（非起動時）__
 ![動作確認⑥ペイロード2](readme-image/動作確認⑥ペイロード2.png)
 
 ---
-## プッシュ通知を送信③ペイロード
+## プッシュ通知を送信：ペイロード
 __動作確認(6)ペイロード（非起動時）__
 
 * プッシュ通知を受信したら、プッシュ通知からアプリを起動します
