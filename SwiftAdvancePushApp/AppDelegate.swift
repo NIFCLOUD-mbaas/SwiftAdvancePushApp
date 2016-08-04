@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
             NCMBPush.handleRichPush(remoteNotification as [NSObject : AnyObject])
             
-            // 【mBaaS：プッシュ通知⑦】アプリが起動されたときにプッシュ通知の情報（ペイロード）からデータを取得する
+            // 【mBaaS：プッシュ通知⑧】アプリが起動されたときにプッシュ通知の情報（ペイロード）からデータを取得する
             // プッシュ通知情報の取得
             if let deliveryTime = remoteNotification.objectForKey("deliveryTime") as? String {
                 if let message = remoteNotification.objectForKey("message") as? String {
@@ -77,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    // 【mBaaS：プッシュ通知⑧】アプリが起動中にプッシュ通知の情報（ペイロード）からデータを取得する
+    // 【mBaaS：プッシュ通知⑦】アプリが起動中にプッシュ通知の情報（ペイロード）からデータを取得する
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         // プッシュ通知情報の取得
         let deliveryTime = userInfo["deliveryTime"] as! String
