@@ -60,7 +60,7 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
         // ログイン中のユーザーを取得
         let user = NCMBUser.currentUser()
         // 更新された値を設定
-        user.setObject(appDelegate.favoriteObjectIdTemporaryArray, forKey: "*****お気に入り情報*****")
+        user.setObject(appDelegate.favoriteObjectIdTemporaryArray, forKey: "favorite")
         // ユーザー情報を更新
         user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
             if error != nil {

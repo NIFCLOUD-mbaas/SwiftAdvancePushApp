@@ -32,7 +32,19 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         
         // 【mBaaS：会員管理①】会員登録用メールを要求する
-        
+        NCMBUser.requestAuthenticationMailInBackground(address.text) { (error: NSError!) -> Void in
+            if error != nil {
+                // 会員登録用メールの要求失敗時の処理
+                print("エラーが発生しました：\(error!.code)")
+                self.statusLabel.text = "エラーが発生しました：\(error!.code)"
+            } else {
+                // 会員登録用メールの要求失敗時の処理
+                print("登録用メールを送信しました")
+                self.statusLabel.text = "登録用メールを送信しました"
+                // TextFieldを空にする
+                self.address.text = ""
+            }
+        }
         
         // TextFieldを空にする
         address.text = ""

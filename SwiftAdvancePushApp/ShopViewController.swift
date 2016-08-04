@@ -24,7 +24,7 @@ class ShopViewController: UIViewController {
         super.viewDidLoad()
         // 【mBaaS：ファイルストア②】Shop画像の取得
         // 取得した「Shop」クラスデータからShop画面用の画像名を取得
-        let imageName = appDelegate.shopList[shopIndex].objectForKey("*****Shop画像名*****") as! String
+        let imageName = appDelegate.shopList[shopIndex].objectForKey("shop_image") as! String
         // ファイル名を設定
         let imageFile = NCMBFile.fileWithName(imageName, data: nil)
         // ファイルを検索
@@ -81,7 +81,7 @@ class ShopViewController: UIViewController {
         // ログイン中のユーザーを取得
         let user = NCMBUser.currentUser()
         // 更新された値を設定
-        user.setObject(favoriteObjectIdArray, forKey: "*****お気に入り情報*****")
+        user.setObject(favoriteObjectIdArray, forKey: "favorite")
         // ユーザー情報を更新
         user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
             if error != nil {

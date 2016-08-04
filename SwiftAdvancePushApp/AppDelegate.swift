@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
             
             
-            // 【mBaaS：プッシュ通知⑦】アプリが起動されたときにプッシュ通知の情報（ペイロード）からデータを取得する
+            // 【mBaaS：プッシュ通知⑧】アプリが起動されたときにプッシュ通知の情報（ペイロード）からデータを取得する
             
             
         }
@@ -44,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // 【mBaaS：プッシュ通知②】デバイストークンの取得後に呼び出されるメソッド
     
     
-    // 【mBaaS：プッシュ通知⑧】アプリが起動中にプッシュ通知の情報（ペイロード）からデータを取得する
+    // 【mBaaS：プッシュ通知⑦】アプリが起動中にプッシュ通知の情報（ペイロード）からデータを取得する
     
     
     // プッシュ通知が許可された場合に呼ばれるメソッド
@@ -60,10 +60,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // LocalNotification配信
     func localNotificationDeliver (deliveryTime: String, message: String) {
-        // 配信時間(String→NSDate)
+        // 配信時間(String→NSDate)を設定
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let deliveryTime = formatter.dateFromString(deliveryTime)
+        // ローカルプッシュを作成
         LocalNotificationManager.scheduleLocalNotificationAtData(deliveryTime!, alertBody: message, userInfo: nil)
-    }    
+    }
 }
