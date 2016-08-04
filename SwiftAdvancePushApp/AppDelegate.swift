@@ -103,10 +103,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // LocalNotification配信
     func localNotificationDeliver (deliveryTime: String, message: String) {
-        // 配信時間(String→NSDate)
+        // 配信時間(String→NSDate)を設定
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let deliveryTime = formatter.dateFromString(deliveryTime)
+        // ローカルプッシュを作成
         LocalNotificationManager.scheduleLocalNotificationAtData(deliveryTime!, alertBody: message, userInfo: nil)
-    }    
+    }
 }
