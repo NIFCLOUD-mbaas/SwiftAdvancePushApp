@@ -473,7 +473,7 @@ layout: false
 こんな感じでインポートされます
 
 .center[
-![mBaaS_ShopData](readme-image/mBaaS_ShopData.png)
+![mBaaS_ShopData](readme-image/mBaaS_ShopData.PNG)
 ]
 
 ---
