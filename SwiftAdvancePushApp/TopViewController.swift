@@ -18,7 +18,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     var NUMBER_OF_SHOPS = 4
     // AppDelegate
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
+
     /** ▼初回ユーザー情報登録画面用▼ **/
     var registerView: UIView!
     var viewLabel: UILabel!
@@ -27,7 +27,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     var genderSegCon: UISegmentedControl!
     let GENDER_CONFIG = ["男性","女性"]
     /** ▲初回ユーザー情報登録画面用▲**/
-    
+
     // インスタンス化された直後、初回のみ実行されるメソッド
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +44,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
             checkShop()
         }
     }
-    
+
     //　mBaaSに登録されているShop情報を取得してテーブルに表示する
     func checkShop() {
         // 【mBaaS：データストア】「Shop」クラスのデータを取得
@@ -65,18 +65,18 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
             }
         })
     }
-    
+
     // shopTableViewのセル表示数を設定
     func tableView(table: UITableView, numberOfRowsInSection section:Int) -> Int {
         return NUMBER_OF_SHOPS
     }
-    
+
     // shopTableViewのセルの内容を設定
     func tableView(table: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // cellデータを取得
         let cell: CustomCell = shopTableView.dequeueReusableCellWithIdentifier("shopTableCell", forIndexPath: indexPath) as! CustomCell
         // cell
-        
+
         // 「表示件数」＜「取得件数」の場合objectを作成
         var object: NCMBObject?
         if indexPath.row < self.appDelegate.shopList.count {
@@ -88,13 +88,13 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         }
         return cell
     }
-    
+
     // cellを選択したときの処理
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // 画面遷移
         performSegueWithIdentifier("toShopPage", sender: indexPath.row)
     }
-    
+
     // segueの設定（全てのsegueで呼ばれるメソッド）
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // ShopViewへ画面遷移（toShopPage）する場合の処理
@@ -104,7 +104,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
             shopViewController.shopIndex = sender as! Int
         }
     }
-    
+
     // 「ログアウト」ボタン押下時の処理
     @IBAction func logOut(sender: UIBarButtonItem) {
         // ログアウト
@@ -112,7 +112,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         // 画面を閉じる
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
+
     /** ▼初回ユーザー情報登録画面の処理▼ **/
      // ユーザー情報登録画面の作成
     private func userRegisterView() {
@@ -185,7 +185,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         self.registerView.addSubview(regsterButton)
         self.registerView.addGestureRecognizer(tapGestureRecognizer)
     }
-    
+
     // genderSegConの値が変わったときに呼び出されるメソッド
     internal func segConChanged(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
@@ -197,7 +197,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
             print("NG")
         }
     }
-    
+
     // 「登録」ボタン押下時の処理
     internal func userInfoRegister(sender: UIButton) {
         // キーボードを閉じる
@@ -227,6 +227,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
                 // AppDelegateに保持していたユーザー情報の更新
                 self.appDelegate.current_user = user as NCMBUser
                 // 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
+                // 使用中端末のinstallation取得
                 let installation: NCMBInstallation? = NCMBInstallation.currentInstallation()
                 if installation != nil {
                     // ユーザー情報を設定
@@ -255,18 +256,18 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         })
     }
     /** ▲初回ユーザー情報登録画面の処理▲ **/
-    
+
     // 背景タップ時にキーボードを隠す
     func tapScreen(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
-    
+
     // キーボードを閉じる
     func closeKeyboad(){
         nickname.resignFirstResponder()
         prefecture.resignFirstResponder()
     }
-    
+
     // キーボードの「Return」押下時の処理
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         // キーボードを閉じる
