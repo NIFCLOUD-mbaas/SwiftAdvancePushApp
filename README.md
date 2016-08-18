@@ -7,7 +7,7 @@ class: center, middle, inverse
 @natsumo
 
 .footnote[
-20160804作成
+20160804作成(20160818更新)
 ]
 ---
 layout: false
@@ -203,7 +203,7 @@ layout: false
 ### APIキーの設定とSDKの初期化
 
 * `AppDelegate.swift`を開きます
-* `applications(_:didFinishLaunchingWithOptions)`メソッド内に処理を実装します[一部実装済み]
+* `application(_:didFinishLaunchingWithOptions)`メソッド内に処理を実装します[一部実装済み]
 
 ```swift
 // 【mBaaS】 APIキーの設定とSDKの初期化
@@ -788,7 +788,7 @@ layout: false
 ### プッシュ通知①：デバイストークンの取得
 
 * `AppDelegate.swift`を開きます
-* `applications(_:didFinishLaunchingWithOptions)`メソッド内のSDKの初期化を実装した部分の直ぐ下に処理を実装します
+* `application(_:didFinishLaunchingWithOptions)`メソッド内のSDKの初期化を実装した部分の直ぐ下に処理を実装します
 
 ```swift
 // 【mBaaS：プッシュ通知①】デバイストークンの取得
@@ -814,7 +814,7 @@ if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
 ### プッシュ通知②：デバイストークンの取得後に呼び出されるメソッド
 
 * 続けて`AppDelegate.swift`を編集します
-* `applications(_:didFinishLaunchingWithOptions)`メソッド下(外)に次のメソッドを実装します
+* `application(_:didFinishLaunchingWithOptions)`メソッド下(外)に次のメソッドを実装します
 
 ```swift
 // 【mBaaS：プッシュ通知②】デバイストークンの取得後に呼び出されるメソッド
@@ -869,6 +869,7 @@ layout: false
 ```swift
 // 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
   /*****後でここに処理を記述します*****/
+
 // 画面を閉じる
 self.registerView.hidden = true
 // ニックネーム表示用ラベルの更新
@@ -893,21 +894,21 @@ self.checkShop()
 // 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
 // 使用中端末のinstallation取得
 let installation: NCMBInstallation? = NCMBInstallation.currentInstallation()
+if installation != nil {
 // ユーザー情報を設定
-installation!.setObject(self.nickname.text, forKey: "nickname")
-installation!.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
-installation!.setObject(self.prefecture.text, forKey: "prefecture")
-installation!.setObject([] as Array<String>, forKey: "favorite")
-// installation情報の更新
-installation!.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
-    if error != nil {
-        // installation更新失敗時の処理
+    installation!.setObject(self.nickname.text, forKey: "nickname")
+    installation!.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
+    installation!.setObject([] as Array<String>, forKey: "favorite")
+    installation!.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
+        if error != nil {
+            // installation更新失敗時の処理
 
-    } else {
-        // installation更新成功時の処理
+        } else {
+            // installation更新成功時の処理
 
-    }
-})
+        }
+    })
+}
 ```
 
 ---
@@ -1162,7 +1163,7 @@ layout: false
 ### プッシュ通知⑥：リッチプッシュ通知を表示させる処理
 
 * `AppDelegate.swift`を開きます
-* `applications(_:didFinishLaunchingWithOptions)`メソッド内、`【プッシュ通知①】デバイストークンの取得`の下に処理を実装します
+* `application(_:didFinishLaunchingWithOptions)`メソッド内、`【プッシュ通知①】デバイストークンの取得`の下に処理を実装します
 
 ```swift
 if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
@@ -1246,7 +1247,7 @@ layout: false
 ### プッシュ通知⑦：アプリが起動中にプッシュ通知からデータを取得する
 
 * `AppDelegate.swift`を開きます
-* `applications(_:didFinishLaunchingWithOptions)`メソッド外に次のメソッドを実装します
+* `application(_:didFinishLaunchingWithOptions)`メソッド外に次のメソッドを実装します
 
 ```swift
 // 【mBaaS：プッシュ通知⑦】アプリが起動中にプッシュ通知からデータを取得する
@@ -1268,7 +1269,7 @@ func application(application: UIApplication, didReceiveRemoteNotification userIn
 ### プッシュ通知⑧：アプリが起動されたときにプッシュ通知からデータを取得する
 
 * `AppDelegate.swift`を開きます
-* `applications(_:didFinishLaunchingWithOptions)`メソッド内、`【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理`の下に処理を実装します
+* `application(_:didFinishLaunchingWithOptions)`メソッド内、`【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理`の下に処理を実装します
 
 ```swift
 // 【mBaaS：プッシュ通知⑧】アプリが起動されたときにプッシュ通知からデータを取得する
