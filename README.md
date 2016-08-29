@@ -4,10 +4,10 @@ class: center, middle, inverse
 ---
 # <span style="font-size: 30%">【Swift編】ニフティクラウドmobile backend レベルアップセミナー</span><br>__クーポン配信アプリ<br>を作ろう！__</span>
 
-@natsumo
+@ニフティ株式会社
 
 .footnote[
-20160804作成(20160818更新)
+20160804作成(20160829更新)
 ]
 ---
 layout: false
@@ -26,8 +26,8 @@ layout: false
 
 .left-column[
   .center[
-  180分でアプリ完成させます
-  ![180分セミナー](readme-image/seminar/180分セミナー.png)
+  150分でアプリ完成させます
+  ![150分セミナー](readme-image/seminar/150分セミナー.png)
   ]
 ]
 .right-column[
