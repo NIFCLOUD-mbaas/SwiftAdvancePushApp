@@ -1,5 +1,5 @@
-# <span style="font-size: 30%">【Swift編】ニフティクラウドmobile backend レベルアップセミナー</span><br>__クーポン配信アプリを作ろう！__</span>
-
+【Swift編】ニフティクラウドmobile backend レベルアップセミナー
+# __クーポン配信アプリを作ろう！__
 ## 事前準備
 ニフティクラウドmobile backendのアカウント登録がお済みでない方は、<br>
 [ホームページ](http://mb.cloud.nifty.com/about.htm)右上にある「無料登録」ボタンをクリックして、<br>
