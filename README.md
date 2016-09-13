@@ -7,7 +7,7 @@ class: center, middle, inverse
 @ニフティ株式会社
 
 .footnote[
-20160804作成(20160829更新)
+20160804作成(20160913更新)
 ]
 ---
 layout: false
@@ -1239,7 +1239,7 @@ layout: false
 * 今回は、配信時間とメッセージのデータを設定し、時限式でローカルプッシュを表示させる内容を実装します
  * プッシュ通知に設定するJSON形式のデータの例
  ```text
- {"deliveryTime":"2016-09-22 17:00:00", "message":"タイムセールスタート！"}
+ {"deliveryTime":"2016-09-13 17:00:00", "message":"タイムセールスタート！"}
  ```
 
 ---
@@ -1320,7 +1320,7 @@ func localNotificationDeliver (deliveryTime: String, message: String) {
  * JSONデータに設定する時間は、今から__５分以上未来の時間__に変更してください
  * JSONデータに設定するメッセージは、自由に変更してください
  ```text
- {"deliveryTime":"2016-09-22 17:00:00", "message":"タイムセールスタート！"}
+ {"deliveryTime":"2016-09-13 17:00:00", "message":"タイムセールスタート！"}
  ```
  * 作成したらコピーをしておいてください
 
@@ -1344,7 +1344,7 @@ func localNotificationDeliver (deliveryTime: String, message: String) {
 * プッシュ通知を受信（サイレント）すると次のログが表示されます
 
 ```text
-ペイロードを取得しました：deliveryTime[2016-09-22 17:00:00],message[タイムセールスタート！]
+ペイロードを取得しました：deliveryTime[2016-09-13 17:00:00],message[タイムセールスタート！]
 ```
 
 * 指定時間にプッシュ通知が表示されることを確認してください
@@ -1373,7 +1373,7 @@ func localNotificationDeliver (deliveryTime: String, message: String) {
 * JSON形式のデータを貼り付けます
  * JSONデータ作成　例）翌日のPM5時を設定
  ```text
- {"deliveryTime":"2016-09-22 17:00:00", "message":"タイムセールスタート！"}
+ {"deliveryTime":"2016-09-13 17:00:00", "message":"タイムセールスタート！"}
  ```
  * 時間は今から５分以上未来の時間に変更してください
 
