@@ -3,7 +3,7 @@
 //  SwiftAdvancePushApp
 //
 //  Created by Natsumo Ikeda on 2016/07/27.
-//  Copyright © 2016年 NIFTY Corporation. All rights reserved.
+//  Copyright 2017 FUJITSU CLOUD TECHNOLOGIES LIMITED All Rights Reserved.
 //
 
 import UIKit
