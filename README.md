@@ -2,18 +2,18 @@ name: inverse
 layout: true
 class: center, middle, inverse
 ---
-# <span style="font-size: 30%">【Swift編】ニフティクラウドmobile backend レベルアップセミナー</span><br>__クーポン配信アプリ<br>を作ろう！__</span>
+# <span style="font-size: 30%">【Swift編】</span><br>__クーポン配信アプリ<br>を作ろう！__</span>
 
-@ニフティ株式会社
+@富士通クラウドテクノロジーズ
 
 .footnote[
-20160804作成(20160913更新)
+20190115 前野 粒子
 ]
 ---
 layout: false
 ## 事前準備
-ニフティクラウドmobile backendのアカウント登録がお済みでない方は、<br>
-[ホームページ](http://mb.cloud.nifty.com/about.htm)右上にある「無料登録」ボタンをクリックして、<br>
+ニフクラ mobile backendのアカウント登録がお済みでない方は、<br>
+[ホームページ](https://mbaas.nifcloud.com/about.htm)右上にある「無料登録」ボタンをクリックして、<br>
 アカウント登録を実施してください
 
 ![mBaaS検索](readme-image/mBaaS検索.png)
@@ -72,7 +72,7 @@ layout: false
 ]
 
 ---
-## ニフティクラウド mobile backendとは
+## ニフクラ mobile backendとは
 ### サービス紹介
 
 * スマホアプリで汎用的に実装される機能を、クラウドサービスとして提供しているサービスです
@@ -83,12 +83,12 @@ layout: false
 ]
 
 ---
-## ニフティクラウド mobile backendとは
+## ニフクラ mobile backendとは
 ### iOS SDKの特徴
 
 * SDKのインストールが必要です
  * 今回は実装済み
- * 参考：[クイックスタート](http://mb.cloud.nifty.com/doc/current/introduction/quickstart_ios.html)
+ * 参考：[クイックスタート](https://mbaas.nifcloud.com/doc/current/introduction/quickstart_ios.html)
 * SDKの初期化処理が必要です
  * 後で処理を実装します
 
@@ -97,7 +97,7 @@ NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTK
 ```
 
 ---
-## ニフティクラウド mobile backendとは
+## ニフクラ mobile backendとは
 ### iOS SDKの特徴
 
 * サーバへリクエスト処理には、__同期処理__と__非同期処理__があります
@@ -194,7 +194,7 @@ layout: false
 ## ハンズオンの準備
 ### mBaaSの準備
 
-* [mBaaS](http://mb.cloud.nifty.com)にログインしてアプリを作成します
+* [mBaaS](https://mbaas.nifcloud.com/)にログインしてアプリを作成します
 
 ![mBaaSアプリ作成](readme-image/mBaaSアプリ作成.png)
 
@@ -342,7 +342,7 @@ self.performSegueWithIdentifier("login", sender: self)
 ![動作確認①ログイン](readme-image/動作確認①ログイン.png)
 ]
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
@@ -368,7 +368,7 @@ self.performSegueWithIdentifier("login", sender: self)
 ![動作確認①会員登録完了](readme-image/動作確認①会員登録完了.png)
 ]
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
@@ -458,7 +458,7 @@ layout: false
 ## Shop情報の設定
 ### mBaaSにShop情報を用意する（データストア）
 
-* ニフティクラウド mobile backendのダッシュボードから「データストア」を開き、「＋作成▼」ボタンをクリックし、「インポート」をクリックします
+* ニフクラ mobile backendのダッシュボードから「データストア」を開き、「＋作成▼」ボタンをクリックし、「インポート」をクリックします
 * クラス名に「__Shop__」と入力します
 * ダウンロードしたサンプルプロジェクトにあるSettingフォルダ内の「__Shop.json__」を選択してアップロードします
 
@@ -480,7 +480,7 @@ layout: false
 ## Shop情報の設定
 ### mBaaSにShop情報を用意する（ファイルストア）
 
-* ニフティクラウド mobile backendのダッシュボードから「ファイルストア」を開き、「↑アップロード」ボタンをクリックします
+* ニフクラ mobile backendのダッシュボードから「ファイルストア」を開き、「↑アップロード」ボタンをクリックします
 * ダウンロードしたサンプルプロジェクトにあるSettingフォルダ内の「icon」「Shop」「Sale」内にあるファイルをすべてをアップロードします
 
 .center[
@@ -638,7 +638,7 @@ imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Voi
 ![動作確認②ユーザー情報追加](readme-image/動作確認②ユーザー情報追加.png)
 ]
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
@@ -655,7 +655,7 @@ imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Voi
 ![動作確認②](readme-image/動作確認②.png)
 ]
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
@@ -743,7 +743,7 @@ user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
 ]
 
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
@@ -771,7 +771,7 @@ layout: false
  * デバッグ用の実機
  * プッシュ通知用証明書(p12形式)
 * 証明書の取得がまだの場合は下記をご参照ください
- * [【サンプル】アプリにプッシュ通知を組み込もう！](https://github.com/NIFTYCloud-mbaas/SwiftPushApp)
+ * [【サンプル】アプリにプッシュ通知を組み込もう！](https://github.com/NIFCloud-mbaas/SwiftPushApp)
 
 ---
 ## プッシュ通知の準備
@@ -1010,7 +1010,7 @@ if installation != nil {
 ]
 
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
@@ -1025,7 +1025,7 @@ if installation != nil {
 ![動作確認④installation追加](readme-image/動作確認④installation追加.png)
 ]
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
@@ -1350,7 +1350,7 @@ func localNotificationDeliver (deliveryTime: String, message: String) {
 * 指定時間にプッシュ通知が表示されることを確認してください
 
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 ---
 ## プッシュ通知を送信：ペイロード
