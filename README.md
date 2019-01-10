@@ -11,8 +11,8 @@ class: center, middle, inverse
 ]
 ---
 layout: false
-## 事前準備
-ニフクラ mobile backendのアカウント登録がお済みでない方は、<br>
+## サービス登録
+まず最初に、ニフクラ mobile backendの登録を行います。<br>
 [ホームページ](https://mbaas.nifcloud.com/about.htm)右上にある「無料登録」ボタンをクリックして、<br>
 アカウント登録を実施してください
 
@@ -21,12 +21,28 @@ layout: false
 ![mBaaS無料登録](readme-image/mBaaS無料登録.png)
 
 ---
+## サービス登録
+「会員登録（無料）」のボタンをクリックしてください。
+
+![mBaaSSNS登録](readme-image/mBaaSSNS登録.png)
+
+---
+## サービス登録
+持っているSNSアカウントでログインしてください。ログイン後、利用規約の同意およびメールアドレスの登録をおこなってください。<br>
+メールアドレスあてにメールが届きますので、メール内のURLをクリックしてください。
+
+![mBaaSSNS選択](readme-image/mBaaSSNS選択.png)
+
+---
 ## 今回のハンズオンセミナーについて
 ### セミナーの形式
 
+お疲れ様でした！では、アプリ開発を始めます。
+
 .left-column[
   .center[
-  40分でアプリ完成させます
+  ５0分でアプリ完成させます<br><br>
+  ![講義形式セミナー1](readme-image/seminar/講義形式セミナー1.png)
   ]
 ]
 .right-column[
@@ -36,17 +52,11 @@ layout: false
   ]
 ]
 
-
----
-## 今回のハンズオンセミナーについて
-### 学ぶ内容
-
-「mBaaS Shop List」アプリの作成を通して、ネットワークとデータベースを用いたアプリ開発について学びます。
-
 ---
 ## ニフクラ mobile backendとは
 ### サービス紹介
 
+* さきほどから何度もご紹介しておりますが、ねんのため復習です！
 * スマホアプリで汎用的に実装される機能を、クラウドサービスとして提供しているサービスです
  * 通称「mBaaS（＝mobile Backend as a Service)」と呼びます
 
@@ -58,7 +68,8 @@ layout: false
 ## ニフクラ mobile backendとは
 ### iOS SDKの特徴
 
-* SDKのインストールが必要です
+* SDKはObjective-Cを提供しています。Swiftはブリッジして使う必要があります。
+* 通常、SDKのインストールが必要です
  * 今回は実装済み
  * 参考：[クイックスタート](https://mbaas.nifcloud.com/doc/current/introduction/quickstart_ios.html)
 * SDKの初期化処理が必要です
@@ -69,28 +80,22 @@ NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTK
 ```
 
 ---
-## ニフクラ mobile backendとは
-### iOS SDKの特徴
-
-* サーバへリクエスト処理には、__同期処理__と__非同期処理__があります
-
-```swift
-// 例）保存の場合
-/* 同期処理 */
-save(nil)
-/* 非同期処理 */
-saveInBackgroundWithBlock(nil)
-```
-
-* 同期処理と非同期処理
- * 同期処理はその処理が完了するまで、次の処理が実行されません
- * 非同期処理はバックグラウンドで処理を実行し、次の処理を実行します
-
----
 ## ハンズオンの概要
 ### 作成するアプリについて
 
-* クーポン配信アプリをイメージした「mBaaS Shop List」アプリの作成を通して、mBaaSの機能を理解していきます
+* ショップアプリを想定しています。
+* メールアドレスを用いた会員登録、ログイン、クラウドと連携したショップ情報の表示を行います。（てんこもりです…！）
+
+.center[
+![mBaaS_shop_List](readme-image/mBaaS_shop_List.png)
+]
+
+---
+## 今回のハンズオンセミナーについて
+### 学ぶ内容
+
+「mBaaS Shop List」アプリの作成を通して、ネットワークとデータベースを用いたアプリ開発について学びます。
+
 * mBaaSの連携部分をコーディングし、アプリを完成させ、次の内容を実現していきます
  * メールアドレスを入力させて、該当メールアドレスが利用できるかどうかの確認（Confirm）を行えます
  * メールアドレスとパスワードで会員登録が行えます
@@ -98,23 +103,26 @@ saveInBackgroundWithBlock(nil)
  * クラウド上のデータを更新することで、アプリへ配信される情報も変化します
 
 ---
-## ハンズオンの概要
-### 作成するアプリについて
+## 今回のハンズオンセミナーについて
+### 学ぶ内容
 
-.center[
-![mBaaS_shop_List](readme-image/mBaaS_shop_List.png)
-]
+「mBaaS Shop List」アプリの作成を通して、ネットワークとデータベースを用いたアプリ開発について学びます。
+
+* mBaaSの連携部分をコーディングし、アプリを完成させ、次の内容を実現していきます
+ * メールアドレスを入力させて、該当メールアドレスが利用できるかどうかの確認（Confirm）を行えます
+ * メールアドレスとパスワードで会員登録が行えます
+ * 会員登録をすると、クラウド上のお店情報を見ることができます
+ * クラウド上のデータを更新することで、アプリへ配信される情報も変化します
 
 ---
 ## ハンズオンの流れ
 
-__<font color="#49a7e5" size="5">前半&nbsp;</font><font size="6">「mBaaS Shop List」アプリを作ろう！</font>__
+__<font size="6">「mBaaS Shop List」アプリを作ろう！</font>__
 
 .size_large[
 1. ハンズオンの準備
 1. 会員管理機能の作成
 1. Shop情報の設定
-1. お気に入り機能の作成
 ]
 
 ---
@@ -122,10 +130,6 @@ layout: true
 class: center, middle, inverse_sub
 ---
 #「mBaaS Shop List」<br>アプリを作ろう！
-
-.size_large[
-＜前半＞
-]
 
 ---
 layout: true
@@ -140,7 +144,7 @@ layout: false
 
 下記リンクをクリックして、ZIPファイルでダウンロードしてください▼<br>
 .size_large[
-　　　 __[SwiftAdvancePushApp](https://github.com/natsumo/SwiftAdvancePushApp/archive/seminar_version.zip)__
+　　　 __[SwiftAdvancePushApp](https://mbaas.api.nifcloud.com/2013-09-01/applications/mo6Dk88jwqcUspJo/publicFiles/SwiftAdvancePushApp-master.zip)__
 ]
 
 * ディレクトリにある「__SwiftAdvancePushApp.xcworkspace__」をダブルクリックして、Xcodeを開いてください
@@ -165,11 +169,11 @@ layout: false
 ## ハンズオンの準備
 ### APIキーの設定とSDKの初期化
 
-* `AppDelegate.swift`を開きます
-* `application(_:didFinishLaunchingWithOptions)`メソッド内に処理を実装します[一部実装済み]
+* `LoginViewController.swift`を開きます
+* ３３行目、`viewDidLoad()`メソッド内に処理を実装します[一部実装済み]
 
 ```swift
-// 【mBaaS】 APIキーの設定とSDKの初期化
+// 【APIキーの設定】
 NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
 ```
 
@@ -194,7 +198,9 @@ layout: false
 ---
 ## 会員管理機能の作成
 
-### 会員管理①：会員登録用メールを要求する[実装済み]
+### 課題１：会員登録用メールを要求する
+
+* 会員登録をする際に、メールアドレスを入力すると、メールアドレスあてに確認用URL付きのメールが送信されるようにしましょう！
 
 .center[
 ![SignUpViewController](readme-image/SignUpViewController.png)
@@ -202,29 +208,31 @@ layout: false
 
 ---
 ## 会員管理機能の作成
-### 会員管理①：会員登録用メールを要求する[実装済み]
+### 課題１：会員登録用メールを要求する
 
 * `SignUpViewController.swift`を開きます
-* 会員登録処理は以下のように実装されます
+* 会員登録処理は以下のように実装されます。入力してみてください！
 
 ```swift
-// 【mBaaS：会員管理①】会員登録用メールを要求する
-NCMBUser.requestAuthenticationMailInBackground(address.text) { (error: NSError!) -> Void in
-    if error != nil {
-        // 会員登録用メールの要求失敗時の処理
-
-    } else {
-        // 会員登録用メールの要求失敗時の処理
-
-    }
-}
+// 【課題１】会員登録用メールを要求する
+        var error : NSError? = nil
+        NCMBUser.requestAuthenticationMail(address.text, error: &error)
+        if error != nil {
+            // 会員登録用メールの要求失敗時の処理
+        } else {
+            // 会員登録用メールの要求失敗時の処理
+        }
 ```
+
+.footnote[
+[会員登録メール要求APIのリファレンス](https://mbaas.nifcloud.com/doc/current/rest/user/requestMailForUserAuthenticaiton.html)
+]
 
 ---
 ## 会員管理機能の作成
-### 会員管理①：会員登録用メールを要求する[実装済み]
+### 課題１：会員登録用メールを要求する
 
-* それぞれ処理を追記しています
+* それぞれ処理を追記してみてください！
 
 ```swift
 // 会員登録用メールの要求失敗時の処理
@@ -239,65 +247,13 @@ self.statusLabel.text = "登録用メールを送信しました"
 // TextFieldを空にする
 self.address.text = ""
 ```
----
-## 会員管理機能の作成
-### 会員管理②：メールアドレスとパスワードでログイン<br>[実装済み]
-
-.center[
-![LoginViewController](readme-image/LoginViewController.png)
-]
 
 ---
 ## 会員管理機能の作成
-### 会員管理②：メールアドレスとパスワードでログイン<br>[実装済み]
+### 課題１：動作確認　会員登録をしてみましょう
 
-* `LoginViewController.swift`を開きます
-* ログイン処理は以下のように実装されます
-
-```swift
-// 【mBaaS：会員管理②】メールアドレスとパスワードでログイン
-NCMBUser.logInWithMailAddressInBackground(address.text, password: password.text) { (user: NCMBUser!, error: NSError!) -> Void in
-    if error != nil {
-        // ログイン失敗時の処理
-
-    }else{
-        // ログイン成功時の処理
-
-    }
-}
-```
-
----
-## 会員管理機能の作成
-### 会員管理②：メールアドレスとパスワードでログイン<br>[実装済み]
-
-* それぞれ処理を追記しています
-
-```swift
-// ログイン失敗時の処理
-print("ログインに失敗しました:\(error.code)")
-self.statusLabel.text = "ログインに失敗しました:\(error.code)"
-```
-
-```swift
-// ログイン成功時の処理
-print("ログインに成功しました:\(user.objectId)")
-// AppDelegateにユーザー情報を保持
-self.appDelegate.current_user = user as NCMBUser
-// TextFieldを空にする
-self.cleanTextField()
-// statusLabelを空にする
-self.statusLabel.text = ""
-// 画面遷移
-self.performSegueWithIdentifier("login", sender: self)
-```
-
----
-## 会員管理機能の作成
-### 動作確認(1)ログインをしてみましょう
-
-* ここではシュミレーターでビルドし、動作確認を行います
-* ログイン画面で「会員登録」をタップします
+* ここではシミュレーターでビルドし、動作確認を行います
+* 起動後、「会員登録」をタップします
 * 会員登録画面でメールアドレスを入力し「登録メールを送信」をタップします
  * ログを確認してください
 
@@ -310,9 +266,9 @@ self.performSegueWithIdentifier("login", sender: self)
 
 ---
 ## 会員管理機能の作成
-### 動作確認(1)ログインをしてみましょう
+### 課題１：動作確認　会員登録をしてみましょう
 
-* 会員登録メールが届くので、パスワード設定します
+* 会員登録メールが届くので、パスワードを設定します
 
 .center[
 ![動作確認①パスワード登録](readme-image/動作確認①パスワード登録.png)
@@ -320,12 +276,10 @@ self.performSegueWithIdentifier("login", sender: self)
 
 ---
 ## 会員管理機能の作成
-### 動作確認(1)ログインをしてみましょう
+### 課題１：動作確認　会員登録をしてみましょう
 
-* 再びログイン画面に戻り「メールアドレス」と「パスワード」でログインします
- * ログを確認してください
-* mBaaSのダッシュボードを確認してください
- * 会員管理にユーザーが登録されました
+* mBaaSの管理画面の「会員管理」を確認してください
+ * 会員管理にユーザーが登録されました！
 
 .center[
 ![動作確認①会員登録完了](readme-image/動作確認①会員登録完了.png)
@@ -333,6 +287,74 @@ self.performSegueWithIdentifier("login", sender: self)
 .footnote[
 [エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
+
+---
+## 会員管理機能の作成
+### 課題２：メールアドレスとパスワードでログイン<br>
+
+.center[
+![LoginViewController](readme-image/LoginViewController.png)
+]
+
+---
+## 会員管理機能の作成
+### 課題２：メールアドレスとパスワードでログイン
+
+* `LoginViewController.swift`を開きます
+* ログイン処理は以下のように実装されます
+
+```swift
+// 【課題２】メールアドレスとパスワードでログイン
+NCMBUser.logInWithMailAddress(inBackground: address.text, password: password.text) { (user: NCMBUser!, error) in
+    if error != nil {
+        // ログイン失敗時の処理
+    } else {
+        // ログイン成功時の処理
+    }
+ }
+```
+
+---
+## 会員管理機能の作成
+### 課題２：メールアドレスとパスワードでログイン
+
+* それぞれ処理を追記しています
+
+```swift
+// ログイン失敗時の処理
+print("ログインに失敗しました")
+self.statusLabel.text = "ログインに失敗しました"
+```
+
+```swift
+// ログイン成功時の処理
+print("ログインに成功しました:\(user.objectId)")
+// AppDelegateにユーザー情報を保持
+self.appDelegate.current_user = user as NCMBUser
+// TextFieldを空にする
+self.cleanTextField()
+// statusLabelを空にする
+self.statusLabel.text = ""
+// 画面遷移
+self.performSegue(withIdentifier: "login", sender: self)
+```
+
+---
+## 会員管理機能の作成
+### 課題２：メールアドレスとパスワードでログイン<br>
+
+無事ログインできることを確認してください！
+
+.center[
+![LoginViewController](readme-image/LoginViewController.png)
+]
+
+---
+## 会員管理機能の作成
+### ここまででできたこと
+
+* わずか数行で、「確認用トークンを付与したURL付きのメールを送信」し、「会員登録」する機能が作れた
+* わずか数行で、「メールアドレスと
 
 ---
 ## 会員管理機能の作成
