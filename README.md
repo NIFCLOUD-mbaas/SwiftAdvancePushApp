@@ -2,7 +2,7 @@ name: inverse
 layout: true
 class: center, middle, inverse
 ---
-# <span style="font-size: 30%">【Swift編】</span><br>ショップアプリ<br>を作ろう！__</span>
+# <span style="font-size: 30%">【Swift編】</span><br>ショップアプリ<br>を作ろう！</span>
 
 @富士通クラウドテクノロジーズ
 
@@ -417,7 +417,7 @@ self.performSegue(withIdentifier: "login", sender: self)
 
 * {0} is duplication.	重複エラー。重複したデータが存在している。
 * つまり、「同じメールアドレスは登録できません」ということ。
-＊　クラウドとのやりとりは、「サーバーからのレスポンスコード」を読みながら対話するように行う必要があります。困ったことがあったら、ぜひエラーコード一覧表とにらめっこしながら解決してください！
+* クラウドとのやりとりは、「サーバーからのレスポンスコード」を読みながら対話するように行う必要があります。困ったことがあったら、ぜひエラーコード一覧表とにらめっこしながら解決してください！
 
 .footnote[
 [エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html)
@@ -460,8 +460,8 @@ layout: false
 * ダウンロードしたサンプルプロジェクトにあるSettingフォルダ内の「icon」内にあるファイルをすべてをアップロードします
 * 見つけられない人は、下記にも配置してあります。
 
-.center[
-![画像ファイル置き場](https://github.com/MaenoRyuko/SwiftAdvancePushApp/tree/gh-pages)
+.footnote[
+[画像ファイル置き場](https://github.com/MaenoRyuko/SwiftAdvancePushApp/tree/gh-pages)
 ]
 
 ---
@@ -469,6 +469,7 @@ layout: false
 ### mBaaSにShop情報を用意する（ファイルストア）
 
 * こんな感じでアップロードされます
+* ※イメージです。行数はこれより少ないです。
 
 .center[
 ![UploadImage](readme-image/UploadImage.png)
@@ -564,17 +565,10 @@ layout: false
                 // icon画像を設定
                 self.iconImageView_top.image = UIImage.init(data: data!)
 ```
----
-## Shop情報の設定
-### 課題４：Shop画像の取得
-
-.center[
-![Shop](readme-image/Shop.png)
-]
 
 ---
 ## Shop情報の設定
-### 課題４
+### 課題３
 
 * 再びシミュレーターでビルドし、動作確認を行います
 * ログイン後初回のみ、ユーザー情報登録画面が表示されます
@@ -608,7 +602,7 @@ layout: false
 ---
 ## まとめ
 
-＊ もしもクラウドを利用しなかった場合、たくさんのサーバーの構築・開発を行う必要がありました。
+* もしもクラウドを利用しなかった場合、たくさんのサーバーの構築・開発を行う必要がありました。
 * 近年、PaaS、BaaSと呼ばれるようなさまざまなAPIが提供されており、それらを「マッシュアップ（組み合わせ）」するだけで、さまざまなサービスを開発することができます。
 * ぜひ、エラーコードやリファレンスを読むことに慣れて、世界中のさまざまなAPIに触れてみてください！
 
