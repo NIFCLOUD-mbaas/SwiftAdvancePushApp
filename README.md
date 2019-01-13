@@ -2,17 +2,25 @@ name: inverse
 layout: true
 class: center, middle, inverse
 ---
-# <span style="font-size: 30%">【Swift編】</span><br>__クーポン配信アプリ<br>を作ろう！__</span>
+# <span style="font-size: 30%">【Swift編】</span><br>ショップアプリ<br>を作ろう！__</span>
 
 @富士通クラウドテクノロジーズ
 
 .footnote[
 20190115 前野 粒子
 ]
+
+---
+## まずはじめに
+
+本資料は、下記に配置してあります。
+* https://maenoryuko.github.io/SwiftAdvancePushApp
+
 ---
 layout: false
 ## サービス登録
-まず最初に、ニフクラ mobile backendの登録を行います。<br>
+
+ニフクラ mobile backendの登録を行います。<br>
 [ホームページ](https://mbaas.nifcloud.com/about.htm)右上にある「無料登録」ボタンをクリックして、<br>
 アカウント登録を実施してください
 
@@ -144,7 +152,7 @@ layout: false
 
 下記リンクをクリックして、ZIPファイルでダウンロードしてください▼<br>
 .size_large[
-　　　 __[SwiftAdvancePushApp](https://mbaas.api.nifcloud.com/2013-09-01/applications/mo6Dk88jwqcUspJo/publicFiles/SwiftAdvancePushApp-master.zip)__
+　　　 __[SwiftAdvancePushApp](https://mbaas.api.nifcloud.com/2013-09-01/applications/mo6Dk88jwqcUspJo/publicFiles/SwiftAdvancePushApp-base.zip)__
 ]
 
 * ディレクトリにある「__SwiftAdvancePushApp.xcworkspace__」をダブルクリックして、Xcodeを開いてください
@@ -220,7 +228,7 @@ layout: false
         if error != nil {
             // 会員登録用メールの要求失敗時の処理
         } else {
-            // 会員登録用メールの要求失敗時の処理
+            // 会員登録用メールの要求成功時の処理
         }
 ```
 
@@ -241,7 +249,7 @@ self.statusLabel.text = "エラーが発生しました：\(error!.code)"
 ```
 
 ```swift
-// 会員登録用メールの要求失敗時の処理
+// 会員登録用メールの要求成功時の処理
 print("登録用メールを送信しました")
 self.statusLabel.text = "登録用メールを送信しました"
 // TextFieldを空にする
@@ -290,7 +298,20 @@ self.address.text = ""
 
 ---
 ## 会員管理機能の作成
+### 時間が余ったかたは…
+
+会員に送信するメールの内容や、メールアドレス確認ページの内容を変更することができます！
+管理画面のアプリ設定より変更してみましょう。
+
+.footnote[
+[会員に送信するメールの内容を編集する](https://mbaas.nifcloud.com/doc/current/user/authorize_email_ios.html#%E4%BC%9A%E5%93%A1%E3%81%AB%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%83%A1%E3%83%BC%E3%83%AB%E3%81%AE%E5%86%85%E5%AE%B9%E3%82%92%E7%B7%A8%E9%9B%86%E3%81%99%E3%82%8B)
+]
+
+---
+## 会員管理機能の作成
 ### 課題２：メールアドレスとパスワードでログイン<br>
+
+会員登録した内容でログインができるようにしましょう。
 
 .center[
 ![LoginViewController](readme-image/LoginViewController.png)
@@ -351,86 +372,56 @@ self.performSegue(withIdentifier: "login", sender: self)
 
 ---
 ## 会員管理機能の作成
-### ここまででできたこと
+### 時間が余った方は・・・
 
-* わずか数行で、「確認用トークンを付与したURL付きのメールを送信」し、「会員登録」する機能が作れた
-* わずか数行で、「メールアドレスと
+* REST API ツールを用いることで、パスワードの確認メールを送ることも可能です。
+* 少し応用的な内容になります！APIリファレンスも読みながら、考えてみてください。
 
----
-## 会員管理機能の作成
-### 会員管理③：ユーザー情報更新
-
-.center[
-![UserInfoRegistration](readme-image/UserInfoRegistration.png)
+.footnote[
+[REST APIツールの使い方](https://mbaas.nifcloud.com/doc/current/dashboard/restapitool.html)
 ]
 
 ---
 ## 会員管理機能の作成
-### 会員管理③：ユーザー情報更新
+### ここまででできたこと
 
-
-* `TopViewController.swift`を開きます
-* 初回のみ表示されるユーザー情報登録画面に入力した情報をmBaaSのユーザー情報に追加する処理を実装します
-* コメントの下にコードを追記していきます
-
-```swift
-// 【mBaaS：会員管理③】ユーザー情報更新
-
-```
-
-* かなり下の方にあります
+* わずか数行で、「確認用トークンを付与したURL付きのメールを送信」し、「会員登録」する機能が作れた
+* わずか数行で、「メールアドレスとパスワードでログイン」する機能が作れた
 
 ---
 ## 会員管理機能の作成
-### 会員管理③：ユーザー情報更新
+### もしもクラウドがなかったら・・・？
 
-```swift
-// 【mBaaS：会員管理③】ユーザー情報更新
-// ログイン中のユーザーを取得
-let user = NCMBUser.currentUser()
-// ユーザー情報を設定
-user.setObject(self.nickname.text, forKey: "nickname")
-user.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
-user.setObject(self.prefecture.text, forKey: "prefecture")
-user.setObject([] as Array<String>, forKey: "favorite")
-// user情報の更新
-user.saveInBackgroundWithBlock({(error: NSError!) -> Void in
-    if error != nil {
-        // 更新失敗時の処理
-
-    } else {
-        // 更新成功時の処理
-
-    }
-})
-```
+* クラウドがなかった場合に、課題１の「確認用トークンを付与したURL付きのメールを送信」し、「会員登録」する機能を作るためには・・・
+  * メールを送信するメールサーバーの構築が必要。
+  * 一時的なトークンを発行・管理する機能の実装が必要。
+  * Webページをホスティングするサーバーが必要。
+  * 会員登録を行う機能の実装が必要。
+  * その他、パスワードのバリデーションを考えたり、メールアドレスの形式バリデーションを実装したり・・・。
+* など、様々な実装が必要！今回はAPIを使うことで、すぐに実装できました。
 
 ---
-## 会員管理機能の作成
-### 会員管理③：ユーザー情報更新
+## エラーコードを読んでみよう
 
-* それぞれ処理を追記します
+* まず、会員登録ページにて、「すでに一度会員登録を完了したメールアドレス」を入力してみてください。
+* エラーが出たと思います。これはなぜでしょうか？
 
-```swift
-// 更新失敗時の処理
-print("ユーザー情報更新に失敗しました:\(error.code)")
-self.viewLabel.text = "登録に失敗しました（更新）:\(error.code)"
-```
+.footnote[
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html)
+]
 
-```swift
-// 更新成功時の処理
-print("ユーザー情報更新に成功しました")
-// AppDelegateに保持していたユーザー情報の更新
-self.appDelegate.current_user = user as NCMBUser
-// 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
-  /*****後でここに処理を記述します*****/
-// 画面を閉じる
-self.registerView.hidden = true
-// ニックネーム表示用ラベルの更新
-self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
-// 画面更新
-self.checkShop()
-```
+
+---
+## エラーコードを読んでみよう
+### 409001とは？
+
+* {0} is duplication.	重複エラー。重複したデータが存在している。
+* つまり、「同じメールアドレスは登録できません」ということ。
+＊　クラウドとのやりとりは、「サーバーからのレスポンスコード」を読みながら対話するように行う必要があります。困ったことがあったら、ぜひエラーコード一覧表とにらめっこしながら解決してください！
+
+.footnote[
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html)
+]
 
 ---
 layout: true
@@ -445,10 +436,10 @@ layout: false
 
 * ニフクラ mobile backendのダッシュボードから「データストア」を開き、「＋作成▼」ボタンをクリックし、「インポート」をクリックします
 * クラス名に「__Shop__」と入力します
-* ダウンロードしたサンプルプロジェクトにあるSettingフォルダ内の「__Shop.json__」を選択してアップロードします
+* 下記リンクからダウンロードした「__Shop.json__」をアップロードします
 
-.center[
-![ShopClass](readme-image/ShopClass.png)
+.footnote[
+[Shop.json置き場](https://github.com/MaenoRyuko/SwiftAdvancePushApp/blob/gh-pages/Shop.json)
 ]
 
 ---
@@ -466,10 +457,11 @@ layout: false
 ### mBaaSにShop情報を用意する（ファイルストア）
 
 * ニフクラ mobile backendのダッシュボードから「ファイルストア」を開き、「↑アップロード」ボタンをクリックします
-* ダウンロードしたサンプルプロジェクトにあるSettingフォルダ内の「icon」「Shop」「Sale」内にあるファイルをすべてをアップロードします
+* ダウンロードしたサンプルプロジェクトにあるSettingフォルダ内の「icon」内にあるファイルをすべてをアップロードします
+* 見つけられない人は、下記にも配置してあります。
 
 .center[
-![imageUpload](readme-image/imageUpload.png)
+![画像ファイル置き場](https://github.com/MaenoRyuko/SwiftAdvancePushApp/tree/gh-pages)
 ]
 
 ---
@@ -490,19 +482,17 @@ layout: false
 * インポートしたShopクラスのデータを取得する処理を実装します
 
 ```swift
-// 【mBaaS：データストア】「Shop」クラスのデータを取得
-// 「Shop」クラスのクエリを作成
-let query = NCMBQuery(className: "Shop")
-// データストアを検索
-query.findObjectsInBackgroundWithBlock({ (objects: Array!, error: NSError!) -> Void in
-    if error != nil {
-        // 検索失敗時の処理
-
-    } else {
-        // 検索成功時の処理
-
-    }
-})
+        // 【課題３】「Shop」クラスのデータを取得
+        // 「Shop」クラスのクエリを作成
+        let query = NCMBQuery(className: "Shop")
+        // データストアを検索
+        query?.findObjectsInBackground({ (objects: Array!, error) in
+            if error != nil {
+                // 検索失敗時の処理
+            } else {
+                // 検索成功時の処理
+            }
+        })
 ```
 
 ---
@@ -512,22 +502,22 @@ query.findObjectsInBackgroundWithBlock({ (objects: Array!, error: NSError!) -> V
 * それぞれ処理を追記します
 
 ```swift
-// 検索失敗時の処理
-print("検索に失敗しました:\(error.code)")
+                // 検索失敗時の処理
+                print("検索に失敗しました")
 ```
 
 ```swift
-// 検索成功時の処理
-print("検索に成功しました")
-// AppDelegateに「Shop」クラスの情報を保持
-self.appDelegate.shopList = objects as! Array
-// テーブルの更新
-self.shopTableView.reloadData()
+                // 検索成功時の処理
+                print("検索に成功しました")
+                // AppDelegateに「Shop」クラスの情報を保持
+                self.appDelegate.shopList = objects as! Array
+                // テーブルの更新
+                self.shopTableView.reloadData()
 ```
 
 ---
 ## Shop情報の設定
-### ファイルストア①：icon画像の取得
+### 課題3：icon画像の取得
 
 .center[
 ![icon](readme-image/icon.png)
@@ -535,50 +525,48 @@ self.shopTableView.reloadData()
 
 ---
 ## Shop情報の設定
-### ファイルストア①：icon画像の取得
+### 課題3：icon画像の取得
 
 * `CustomCell.swift`を開きます
  * `CustomCell.swift`はテーブルのセルを作成するファイルです
 * トップ画面に各ショップのアイコンをmBaaSから取得して表示する処理を実装します
 
 ```swift
-// 【mBaaS：ファイルストア①】icon画像の取得
-// 取得した「Shop」クラスデータからicon名を取得
-let imageName = object.objectForKey("icon_image") as! String
-// ファイル名を設定
-let imageFile = NCMBFile.fileWithName(imageName, data: nil)
-// ファイルを検索
-imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Void in
-    if error != nil {
-        // ファイル取得失敗時の処理
-
-    } else {
-        // ファイル取得成功時の処理
-
-    }
-}
+        // 【課題3】icon画像の取得
+        // 取得した「Shop」クラスデータからicon名を取得
+        let imageName = object.object(forKey: "icon_image") as! String
+        // ファイル名を設定
+        let imageFile = NCMBFile.file(withName: imageName, data: nil) as! NCMBFile
+        // ファイルを検索
+        imageFile.getDataInBackground { (data, error) in
+            if error != nil {
+                // ファイル取得失敗時の処理
+            } else {
+                // ファイル取得成功時の処理
+            }
+        }
 ```
 
 ---
 ## Shop情報の設定
-### ファイルストア①：icon画像の取得
+### 課題3：icon画像の取得
 
 * それぞれ処理を追記します
 
 ```swift
-// ファイル取得失敗時の処理
-print("icon画像の取得に失敗しました:\(error.code)")
+                // ファイル取得失敗時の処理
+                print("icon画像の取得に失敗しました")
 ```
 
 ```swift
-// ファイル取得成功時の処理
-print("icon画像の取得に成功しました")
-// icon画像を設定
-self.iconImageView_top.image = UIImage.init(data: data)
+                // ファイル取得成功時の処理
+                print("icon画像の取得に成功しました")
+                // icon画像を設定
+                self.iconImageView_top.image = UIImage.init(data: data!)
 ```
 ---
 ## Shop情報の設定
-### ファイルストア②：Shop画像の取得
+### 課題４：Shop画像の取得
 
 .center[
 ![Shop](readme-image/Shop.png)
@@ -586,34 +574,9 @@ self.iconImageView_top.image = UIImage.init(data: data)
 
 ---
 ## Shop情報の設定
-### ファイルストア②：Shop画像の取得[実装済み]
+### 課題４
 
-* `ShopViewController.swift`を開きます
-* Shop画面に各ショップの画像をmBaaSから取得して表示する処理も同様に実装できます
-
-```swift
-// 【mBaaS：ファイルストア②】Shop画像の取得
-// 取得した「Shop」クラスデータからshop画面用の画像名を取得
-let imageName = appDelegate.shopList[shopIndex].objectForKey("shop_image") as! String
-// ファイル名を設定
-let imageFile = NCMBFile.fileWithName(imageName, data: nil)
-// ファイルを検索
-imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Void in
-    if error != nil {
-        // ファイル取得失敗時の処理
-        /* 省略 */
-    } else {
-        // ファイル取得成功時の処理
-        /* 省略 */
-    }
-}
-```
-
----
-## Shop情報の設定
-### 動作確認(2)会員情報登録とShop情報表示
-
-* 再びシュミレーターでビルドし、動作確認を行います
+* 再びシミュレーターでビルドし、動作確認を行います
 * ログイン後初回のみ、ユーザー情報登録画面が表示されます
 * 入力し「登録」をタップします
  * このとき、会員情報が更新されますので、mBaaSのダッシュボードを確認してみましょう
@@ -622,111 +585,6 @@ imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Voi
 .center[
 ![動作確認②ユーザー情報追加](readme-image/動作確認②ユーザー情報追加.png)
 ]
-.footnote[
-[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
-]
-
----
-## Shop情報の設定
-### 動作確認(2)会員情報登録とShop情報表示
-
-* トップ画面に「icon画像」「Shop名」「カテゴリ」が表示されます
-* Shopを１つ選んでタップします
- * mBaaSに登録されているimageにアクセスし、Shopページ（画像）が表示されます
-* 会員ページをタップします
- * ユーザー情報が表示されます
-
-.center[
-![動作確認②](readme-image/動作確認②.png)
-]
-.footnote[
-[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
-]
-
----
-layout: true
-class: center, middle, inverse
----
-# 4.お気に入り機能の作成
-
----
-layout: false
-## お気に入り機能の作成
-### お気に入り機能について
-
-* お気に入り機能は好きなShopをお気に入りとして保存できる機能です
- * 「お気に入り」画面ではSwitchと「登録」ボタンで設定します
- * 「Shop」画面では右上のハートマークをタップすることでShop単位で設定できます(♥…ON,♡…OFF)
-
-.center[
-![favorite](readme-image/favorite.png)
-]
-
----
-## お気に入り機能の作成
-### 会員管理④：ユーザー情報の更新[実装済み]
-
-* `FavoriteViewController.swift`を開きます
-* お気に入り画面からfavoriteデータの更新処理はユーザー情報の登録と同様にして実装できます
-
-```swift
-// 【mBaaS：会員管理④】ユーザー情報の更新
-// ログイン中のユーザーを取得
-let user = NCMBUser.currentUser()
-// favoriteに更新された値を設定
-user.setObject(appDelegate.favoriteObjectIdTemporaryArray, forKey: "favorite")
-// ユーザー情報を更新
-user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
-    if error != nil {
-        // 更新に失敗した場合の処理
-        /* 省略 */
-    } else {
-        // 更新に成功した場合の処理
-        /* 省略 */
-    }
-}
-```
-
----
-## お気に入り機能の作成
-
-### 会員管理⑤：ユーザー情報の更新[実装済み]
-
-* `ShopViewController.swift`を開きます
-* Shop画面からもfavoriteデータの更新処理はユーザー情報の登録と同様にして実装できます
-
-```swift
-// 【mBaaS：会員管理⑤】ユーザー情報の更新
-// ログイン中のユーザーを取得
-let user = NCMBUser.currentUser()
-// 更新された値を設定
-user.setObject(favoriteObjectIdArray, forKey: "favorite")
-// ユーザー情報を更新
-user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
-    if error != nil {
-        // 更新に失敗した場合の処理
-        /* 省略 */
-    } else {
-        // 更新に成功した場合の処理
-        /* 省略 */
-    }
-}
-```
-
----
-## お気に入り機能の作成
-### 動作確認(3)お気に入り情報登録・更新
-
-* 再びシュミレーターでビルドし、動作確認を行います
-* ログイン後トップ画面下の「お気に入り」をタップします
-* お気に入り画面からお気に入り登録をしてみましょう
-* 各Shop画面からも同様に登録してみましょう
- * ログを確認してください
-
-.center[
-![動作確認③](readme-image/動作確認③.png)
-]
-
 .footnote[
 [エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
@@ -748,12 +606,15 @@ layout: false
  * ファイルストア
 
 ---
+## まとめ
+
+＊ もしもクラウドを利用しなかった場合、たくさんのサーバーの構築・開発を行う必要がありました。
+* 近年、PaaS、BaaSと呼ばれるようなさまざまなAPIが提供されており、それらを「マッシュアップ（組み合わせ）」するだけで、さまざまなサービスを開発することができます。
+* ぜひ、エラーコードやリファレンスを読むことに慣れて、世界中のさまざまなAPIに触れてみてください！
+
+---
 ## 参考
 
-* 開催中の[セミナー](https://mbaas.nifcloud.com/seminar.htm)のご案内
- * 随時新しいセミナーを実施していきますのでぜひチェックしてください！
 * ハンズオン内容が実装された完全版プロジェクト
- * __[SwiftAdvancePushApp【完成版】](https://github.com/natsumo/SwiftAdvancePushApp/archive/master.zip)__
-* コードは[GitHub](https://github.com/natsumo/SwiftAdvancePushApp)に公開しています
- * __master__：完成版
- * __seminar_version__：セミナー版
+ * __[SwiftAdvancePushApp【完成版】](https://mbaas.api.nifcloud.com/2013-09-01/applications/mo6Dk88jwqcUspJo/publicFiles/SwiftAdvancePushApp-master.zip)に公開しています
+
