@@ -4,7 +4,7 @@ class: center, middle, inverse
 ---
 # <span style="font-size: 30%">【Swift編】</span><br>ショップアプリ<br>を作ろう！</span>
 
-@富士通クラウドテクノロジーズ kousin
+@富士通クラウドテクノロジーズ
 
 .footnote[
 20190115 前野 粒子
