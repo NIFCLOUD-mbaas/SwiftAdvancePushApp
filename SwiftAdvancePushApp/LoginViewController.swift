@@ -17,7 +17,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     // ステータス表示用ラベル
     @IBOutlet weak var statusLabel: UILabel!
     // AppDelegate
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     // インスタンス化された直後、初回のみ実行されるメソッド
     override func viewDidLoad() {
@@ -26,11 +26,11 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
         address.delegate = self
         password.delegate = self
         // Passwordをセキュリティ入力に設定
-        password.secureTextEntry = true
+        password.isSecureTextEntry = true
     }
 
     // 「ログイン」ボタン押下時の処理
-    @IBAction func login(sender: UIButton) {
+    @IBAction func login(_ sender: UIButton) {
         // キーボードを閉じる
         closeKeyboad()
         // 入力確認
@@ -42,28 +42,34 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             return
         }
         // 【mBaaS：会員管理②】メールアドレスとパスワードでログイン
-        NCMBUser.logInWithMailAddressInBackground(address.text, password: password.text) { (user: NCMBUser!, error: NSError!) -> Void in
-            if error != nil {
-                // ログイン失敗時の処理
-                print("ログインに失敗しました:\(error.code)")
-                self.statusLabel.text = "ログインに失敗しました:\(error.code)"
-            }else{
-                // ログイン成功時の処理
-                print("ログインに成功しました:\(user.objectId)")
-                // AppDelegateにユーザー情報を保持
-                self.appDelegate.current_user = user as NCMBUser
-                // TextFieldを空にする
-                self.cleanTextField()
-                // statusLabelを空にする
-                self.statusLabel.text = ""
-                // 画面遷移
-                self.performSegueWithIdentifier("login", sender: self)
-            }
-        }
+        NCMBUser.logInInBackground(mailAddress: address.text!, password: password.text!, callback: { result in
+            
+            switch result {
+                case .success:
+                    if let user = NCMBUser.currentUser {
+                        print("ログインしています。ユーザー: \(user.objectId!)")
+                    } else {
+                        print("ログインしていません")
+                    }
+                    // AppDelegateにユーザー情報を保持
+                    self.appDelegate.current_user = NCMBUser.currentUser
+                    // statusLabelを空にする
+                    self.statusLabel.text = ""
+                    // 画面遷移
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: "login", sender: self)
+                    }
+                
+                case let .failure(error):
+                    print("ログインに失敗しました:\(error)")
+                    self.statusLabel.text = "ログインに失敗しました:\(error)"
+                }
+        })
     }
     
+    
     // 「会員登録」ボタン押下時の処理
-    @IBAction func toSignUp(sender: UIButton) {
+    @IBAction func toSignUp(_ sender: UIButton) {
         // TextFieldを空にする
         cleanTextField()
         // statusLabelを空にする
@@ -73,7 +79,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     // 背景タップ時にキーボードを隠す
-    @IBAction func tapScreen(sender: UITapGestureRecognizer) {
+    func tapScreen(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
     
@@ -90,7 +96,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     // キーボードの「Return」押下時の処理
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // キーボードを閉じる
         textField.resignFirstResponder()
         

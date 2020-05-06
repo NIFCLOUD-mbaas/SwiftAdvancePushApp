@@ -20,15 +20,15 @@ class UserInfoViewController: UIViewController {
     @IBOutlet weak var prefecture: UILabel!
     // AppDelegate
     
-    var appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     // インスタンス化された直後、初回のみ実行されるメソッド
     override func viewDidLoad() {
         super.viewDidLoad()
         // 各ラベルに値を設定
-        mailAddress.text = appDelegate.current_user.objectForKey("mailAddress") as? String
-        nickname.text = appDelegate.current_user.objectForKey("nickname") as? String
-        gender.text = appDelegate.current_user.objectForKey("gender") as? String
-        prefecture.text = appDelegate.current_user.objectForKey("prefecture") as? String
+        mailAddress.text = appDelegate.current_user["mailAddress"]
+        nickname.text = appDelegate.current_user["nickname"]
+        gender.text = appDelegate.current_user["gender"]
+        prefecture.text = appDelegate.current_user["prefecture"]
     }
 }

@@ -8,9 +8,11 @@
 
 import UIKit
 import NCMB
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+
 
     var window: UIWindow?
     // mBaaSから取得した「Shop」クラスのデータ格納用
@@ -20,65 +22,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // お気に入り情報一時格納用
     var favoriteObjectIdTemporaryArray: Array<String>!
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // 【mBaaS】 APIキーの設定とSDKの初期化
-        NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
+    // APIキーの設定
+    let applicationkey = "YOUR_NCMB_APPLICATIONKEY"
+    let clientkey      = "YOUR_NCMB_CLIENTKEY"
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Override point for customization after application launch.
         
+        // SDKの初期化
+        NCMB.initialize(applicationKey: applicationkey, clientKey: clientkey)
         
-        // 【mBaaS：プッシュ通知①】デバイストークンの取得
-        // デバイストークンの要求
-        if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
-            /** iOS8以上 **/
-             //通知のタイプを設定したsettingを用意
-            let setting = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-            //通知のタイプを設定
-            application.registerUserNotificationSettings(setting)
-            //DevoceTokenを要求
-            application.registerForRemoteNotifications()
-        }else{
-            /** iOS8未満 **/
-            let type : UIRemoteNotificationType = [.Alert, .Badge, .Sound]
-            UIApplication.sharedApplication().registerForRemoteNotificationTypes(type)
-        }
+        // Register notification
+        registerForPushNotifications()
         
-        if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
-            // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
-            NCMBPush.handleRichPush(remoteNotification as [NSObject : AnyObject])
-            
-            // 【mBaaS：プッシュ通知⑧】アプリが起動されたときにプッシュ通知の情報（ペイロード）からデータを取得する
-            // プッシュ通知情報の取得
-            if let deliveryTime = remoteNotification.objectForKey("deliveryTime") as? String {
-                if let message = remoteNotification.objectForKey("message") as? String {
-                    // ローカルプッシュ配信
-                    localNotificationDeliver(deliveryTime, message: message)
-                }
-                
-            }
+        // MARK: アプリが起動されるときに実行される処理を追記する場所
+        if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
+            NCMBPush.handleRichPush(userInfo: notification)
         }
         
         return true
     }
     
-    // 【mBaaS：プッシュ通知②】デバイストークンの取得後に呼び出されるメソッド
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData){
-        // 端末情報を扱うNCMBInstallationのインスタンスを作成
-        let installation = NCMBInstallation.currentInstallation()
-        // デバイストークンの設定
-        installation.setDeviceTokenFromData(deviceToken)
-        // 端末情報をデータストアに登録
-        installation.saveInBackgroundWithBlock { (error: NSError!) -> Void in
-            if (error != nil){
-                // 端末情報の登録に失敗した時の処理
-                print("デバイストークン取得に失敗しました:\(error.code)")
-            }else{
-                // 端末情報の登録に成功した時の処理
-                print("デバイストークン取得に成功しました")
-            }
+    // デバイストークンが取得されたら呼び出されるメソッド
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+        let token = tokenParts.joined()
+        print("Device Token: \(token)")
+        
+        let installation = NCMBInstallation()
+        installation.setDeviceTokenFromData(data: deviceToken)
+        installation.saveInBackground { (error) in
+            
         }
     }
     
-    // 【mBaaS：プッシュ通知⑦】アプリが起動中にプッシュ通知の情報（ペイロード）からデータを取得する
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+    
+    func application(
+        _ application: UIApplication,
+        didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register: \(error)")
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         // プッシュ通知情報の取得
         let deliveryTime = userInfo["deliveryTime"] as! String
         let message = userInfo["message"] as! String
@@ -86,28 +71,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if !deliveryTime.isEmpty && !message.isEmpty  {
             print("ペイロードを取得しました：deliveryTime[\(deliveryTime)],message[\(message)]")
             // ローカルプッシュ配信
-            localNotificationDeliver(deliveryTime, message: message)
+            localNotificationDeliver(deliveryTime: deliveryTime, message: message)
+        }
+        
+        if let notiData = userInfo as? [String : AnyObject] {
+            NCMBPush.handleRichPush(userInfo: notiData)
         }
     }
     
-    // プッシュ通知が許可された場合に呼ばれるメソッド
-    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        let allowedType = notificationSettings.types
-        switch allowedType {
-        case UIUserNotificationType.None:
-            print("端末側でプッシュ通知が拒否されました")
-        default:
-            print("端末側でプッシュ通知が許可されました")
+    func registerForPushNotifications() {
+        UNUserNotificationCenter.current() // 1
+            .requestAuthorization(options: [.alert, .sound, .badge]) { // 2
+                granted, error in
+                print("Permission granted: \(granted)") // 3
+                guard granted else { return }
+                self.getNotificationSettings()
+        }
+    }
+    
+    func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            print("Notification settings: \(settings)")
+            guard settings.authorizationStatus == .authorized else { return }
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+            
         }
     }
     
     // LocalNotification配信
     func localNotificationDeliver (deliveryTime: String, message: String) {
         // 配信時間(String→NSDate)を設定
-        let formatter = NSDateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let deliveryTime = formatter.dateFromString(deliveryTime)
+        let deliveryTime = formatter.date(from: deliveryTime)
         // ローカルプッシュを作成
-        LocalNotificationManager.scheduleLocalNotificationAtData(deliveryTime!, alertBody: message, userInfo: nil)
+        LocalNotificationManager.scheduleLocalNotificationAtData(deliveryTime: deliveryTime! as NSDate, alertBody: message, userInfo: nil)
     }
 }

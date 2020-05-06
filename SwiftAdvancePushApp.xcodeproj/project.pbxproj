@@ -116,12 +116,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BDD82E811D2CBDCE00795557 /* Build configuration list for PBXNativeTarget "SwiftAdvancePushApp" */;
 			buildPhases = (
+				B470F5BD6CB2FF1A12496055 /* [CP] Check Pods Manifest.lock */,
 				ADC7DF340DC5EB41A347F921 /* 📦 Check Pods Manifest.lock */,
 				BDD82E6B1D2CBDCE00795557 /* Sources */,
 				BDD82E6C1D2CBDCE00795557 /* Frameworks */,
 				BDD82E6D1D2CBDCE00795557 /* Resources */,
 				CB7C23F3E8B3F0369E7CFCE6 /* 📦 Embed Pods Frameworks */,
-				4A5353860A63376708054DAF /* 📦 Copy Pods Resources */,
+				AAB40778EE8C042F85B395E0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -188,19 +189,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4A5353860A63376708054DAF /* 📦 Copy Pods Resources */ = {
+		AAB40778EE8C042F85B395E0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftAdvancePushApp/Pods-SwiftAdvancePushApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/NCMB/NCMB.framework",
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NCMB.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftAdvancePushApp/Pods-SwiftAdvancePushApp-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftAdvancePushApp/Pods-SwiftAdvancePushApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ADC7DF340DC5EB41A347F921 /* 📦 Check Pods Manifest.lock */ = {
@@ -216,6 +220,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B470F5BD6CB2FF1A12496055 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SwiftAdvancePushApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CB7C23F3E8B3F0369E7CFCE6 /* 📦 Embed Pods Frameworks */ = {
@@ -365,11 +391,12 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SwiftAdvancePushApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.natsumo.ikeda.ncmb.push.SwiftAdvancePushApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "161189b0-8aaf-478a-b43e-07692ac86333";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -381,11 +408,12 @@
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SwiftAdvancePushApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.natsumo.ikeda.ncmb.push.SwiftAdvancePushApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "161189b0-8aaf-478a-b43e-07692ac86333";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
