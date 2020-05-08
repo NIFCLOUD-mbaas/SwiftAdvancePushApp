@@ -145,7 +145,7 @@
 				TargetAttributes = {
 					BDD82E6E1D2CBDCE00795557 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 796KW2587D;
+						DevelopmentTeam = MG2552XA6Q;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -390,12 +390,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = MG2552XA6Q;
 				INFOPLIST_FILE = SwiftAdvancePushApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = jp.natsumo.ikeda.ncmb.push.SwiftAdvancePushApp;
+				PRODUCT_BUNDLE_IDENTIFIER = asia.vitalify.vfatestpush;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "161189b0-8aaf-478a-b43e-07692ac86333";
+				PROVISIONING_PROFILE_SPECIFIER = VFATestPush;
 				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
@@ -407,12 +409,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = MG2552XA6Q;
 				INFOPLIST_FILE = SwiftAdvancePushApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = jp.natsumo.ikeda.ncmb.push.SwiftAdvancePushApp;
+				PRODUCT_BUNDLE_IDENTIFIER = asia.vitalify.vfatestpush;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "161189b0-8aaf-478a-b43e-07692ac86333";
+				PROVISIONING_PROFILE_SPECIFIER = VFATestPush;
 				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
