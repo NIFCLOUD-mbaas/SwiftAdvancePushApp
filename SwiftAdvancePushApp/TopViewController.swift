@@ -97,9 +97,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     // cellを選択したときの処理
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 画面遷移
-        DispatchQueue.main.async {
-            performSegue(withIdentifier: "toShopPage", sender: indexPath.row)
-        }
+        performSegue(withIdentifier: "toShopPage", sender: indexPath.row)
     }
 
     // segueの設定（全てのsegueで呼ばれるメソッド）
@@ -113,7 +111,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     }
 
     // 「ログアウト」ボタン押下時の処理
-    @IBAction func logOut(sender: UIBarButtonItem) {
+    @IBAction func logOut(_ sender: UIButton) {
         // ログアウト
         NCMBUser.logOut()
         // 画面を閉じる
@@ -153,7 +151,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         genderLabel.font = UIFont.boldSystemFont(ofSize: 10)
         genderSegCon = UISegmentedControl(items: GENDER_CONFIG as [AnyObject])
         genderSegCon.frame = CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.44, width: (self.view.bounds.size.width)*0.65, height: 30)
-        genderSegCon.addTarget(self, action: Selector(("segConChanged:")), for: UIControl.Event.valueChanged)
+        genderSegCon.addTarget(self, action:#selector(segConChanged), for: UIControl.Event.valueChanged)
         genderSegCon.tintColor = UIColor(red: 0.243, green: 0.627, blue: 0.929, alpha: 1) // R:62 G:160 B:237
         // prefectureLabelを生成
         let prefectureLabel = UILabel(frame: CGRect(x: (self.view.bounds.size.width/2)*0.35, y: (self.view.bounds.size.height)*0.52, width: 75, height: 20))
@@ -176,9 +174,11 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
         let regsterButton = UIButton(frame: CGRect(x: 0, y: 0, width: 115, height: 48))
         regsterButton.center = CGPoint(x: self.view.bounds.size.width/2, y: (self.view.bounds.size.height)*0.8)
         regsterButton.setImage(UIImage(named: "setup"), for: UIControl.State.normal)
-        regsterButton.addTarget(self, action: Selector(("userInfoRegister:")), for: .touchUpInside)
+        regsterButton.addTarget(self, action:#selector(userInfoRegister), for: .touchUpInside)
+
         // gestureを生成
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector(("tapScreen:")))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(tapScreen))
+
         // Viewに設定
         self.view.addSubview(registerView)
         self.registerView.addSubview(titleLabel)
@@ -194,7 +194,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     }
 
     // genderSegConの値が変わったときに呼び出されるメソッド
-    internal func segConChanged(sender: UISegmentedControl) {
+    @objc internal func segConChanged(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
             print("男性")
@@ -206,7 +206,7 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
     }
 
     // 「登録」ボタン押下時の処理
-    internal func userInfoRegister(sender: UIButton) {
+    @objc internal func userInfoRegister(sender: UIButton) {
         // キーボードを閉じる
         closeKeyboad()
         // 入力確認
@@ -234,9 +234,11 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
                     // 使用中端末のinstallation取得
                     let installation = NCMBInstallation.currentInstallation
                     // ユーザー情報を設定
-                    installation["nickname"] = self.nickname.text
-                    installation["gender"] = self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex]
-                    installation["prefecture"] = self.prefecture.text
+                    DispatchQueue.main.async {
+                        installation["nickname"] = self.nickname.text
+                        installation["gender"] = self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex]
+                        installation["prefecture"] = self.prefecture.text
+                    }
                     installation["favorite"] = [] as Array<String>
                     // installation情報の更新
                     installation.saveInBackground(callback: { result in
@@ -244,11 +246,14 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
                         case .success:
                             // installation更新成功時の処理
                             print("installation更新(ユーザー登録)に成功しました")
-                            // 画面を閉じる
-                            self.registerView.isHidden = true
-                            // ニックネーム表示用ラベルの更新
-                            let nickname = NCMBUser.currentUser!["nickname"]! as String
-                            self.nicknameLabel.text = "\(nickname)さん、こんにちは！"
+
+                            DispatchQueue.main.async {
+                                // 画面を閉じる
+                                self.registerView.isHidden = true
+                                // ニックネーム表示用ラベルの更新
+                                let nickname = NCMBUser.currentUser!["nickname"]! as String
+                                self.nicknameLabel.text = "\(nickname)さん、こんにちは！"
+                            }
                             // 画面更新
                             self.checkShop()
                         case let .failure(error):
@@ -259,14 +264,16 @@ class TopViewController: UIViewController, UITextFieldDelegate, UITableViewDeleg
                 case let .failure(error):
                     // 更新失敗時の処理
                     print("ユーザー情報更新に失敗しました:\(error)")
-                    self.viewLabel.text = "登録に失敗しました（更新）:\(error)"
+                    DispatchQueue.main.async {
+                        self.viewLabel.text = "登録に失敗しました（更新）:\(error)"
+                    }
                 }
         })
     }
     /** ▲初回ユーザー情報登録画面の処理▲ **/
 
     // 背景タップ時にキーボードを隠す
-    func tapScreen(sender: UITapGestureRecognizer) {
+    @objc func tapScreen(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
 

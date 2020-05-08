@@ -24,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		027C68E7B2D9E50C79928C09 /* Pods-SwiftAdvancePushApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftAdvancePushApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftAdvancePushApp/Pods-SwiftAdvancePushApp.debug.xcconfig"; sourceTree = "<group>"; };
+		176E3E76246A586D0002A111 /* SwiftAdvancePushApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftAdvancePushApp.entitlements; sourceTree = "<group>"; };
 		1876869848503DACE78BA26F /* Pods-SwiftAdvancePushApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftAdvancePushApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftAdvancePushApp/Pods-SwiftAdvancePushApp.release.xcconfig"; sourceTree = "<group>"; };
 		7DA8A9C5FBCC63DBBE3C3DBF /* Pods_SwiftAdvancePushApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftAdvancePushApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD10C9431D372D3500320945 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
@@ -92,6 +93,7 @@
 		BDD82E711D2CBDCE00795557 /* SwiftAdvancePushApp */ = {
 			isa = PBXGroup;
 			children = (
+				176E3E76246A586D0002A111 /* SwiftAdvancePushApp.entitlements */,
 				BDD82E721D2CBDCE00795557 /* AppDelegate.swift */,
 				BDF233901D488847004A7D0E /* LocalNotificationManager.swift */,
 				BDD82E741D2CBDCE00795557 /* LoginViewController.swift */,
@@ -145,7 +147,7 @@
 				TargetAttributes = {
 					BDD82E6E1D2CBDCE00795557 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = MG2552XA6Q;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -162,6 +164,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -388,16 +391,18 @@
 			baseConfigurationReference = 027C68E7B2D9E50C79928C09 /* Pods-SwiftAdvancePushApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = SwiftAdvancePushApp/SwiftAdvancePushApp.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = MG2552XA6Q;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SwiftAdvancePushApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = asia.vitalify.vfatestpush;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mbaas.nifcloud.SwiftAdvancePushApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "161189b0-8aaf-478a-b43e-07692ac86333";
-				PROVISIONING_PROFILE_SPECIFIER = VFATestPush;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
@@ -407,16 +412,18 @@
 			baseConfigurationReference = 1876869848503DACE78BA26F /* Pods-SwiftAdvancePushApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_ENTITLEMENTS = SwiftAdvancePushApp/SwiftAdvancePushApp.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = MG2552XA6Q;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SwiftAdvancePushApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = asia.vitalify.vfatestpush;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mbaas.nifcloud.SwiftAdvancePushApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "161189b0-8aaf-478a-b43e-07692ac86333";
-				PROVISIONING_PROFILE_SPECIFIER = VFATestPush;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Release;

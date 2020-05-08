@@ -41,8 +41,10 @@ class CustomCell: UITableViewCell {
             case let .success(data):
                 // ファイル取得成功時の処理
                 print("icon画像の取得に成功しました")
-                // icon画像を設定
-                self.iconImageView_top.image = UIImage.init(data: data!)
+                DispatchQueue.main.async {
+                    // icon画像を設定
+                    self.iconImageView_top.image = UIImage.init(data: data!)
+                }
             case let .failure(error):
                 // ファイル取得失敗時の処理
                 print("icon画像の取得に失敗しました:\(error)")
@@ -64,7 +66,7 @@ class CustomCell: UITableViewCell {
         // objectIdを保持
         objectIdTemporary = objId
         // スイッチ選択時に実行されるメソッドの設定
-        switch_favorite.addTarget(self, action: Selector(("switchChenged:")), for: UIControl.Event.valueChanged)
+        switch_favorite.addTarget(self, action:#selector(switchChenged), for: UIControl.Event.valueChanged)
         // スイッチの初期設定
         switch_favorite.isOn = false
         // お気に入り登録されている場合はスイッチをONに設定
@@ -77,7 +79,7 @@ class CustomCell: UITableViewCell {
     }
     
     // スイッチ選択時の処理
-    func switchChenged(sender: UISwitch) {
+    @objc func switchChenged(sender: UISwitch) {
         if sender.isOn {
             // スイッチがONになったときの処理
             // 追加

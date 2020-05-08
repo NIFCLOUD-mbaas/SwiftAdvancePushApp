@@ -34,10 +34,12 @@ class ShopViewController: UIViewController {
             case let .success(data):
                 // ファイル取得成功時の処理
                 print("Shop画像の取得に成功しました")
-                // Shop画像をImageViewに設定
-                self.shopView.image = UIImage.init(data: data!)
-                // shopViewをViewに追加
-                self.view.addSubview(self.shopView)
+                DispatchQueue.main.async {
+                    // Shop画像をImageViewに設定
+                    self.shopView.image = UIImage.init(data: data!)
+                    // shopViewをViewに追加
+                    self.view.addSubview(self.shopView)
+                }
             case let .failure(error):
                 // ファイル取得失敗時の処理
                 print("Shop画像の取得に失敗しました:\(error)")
@@ -107,7 +109,8 @@ class ShopViewController: UIViewController {
                             // installation更新失敗時の処理
                             print("installation更新(お気に入り)に失敗しました:\(error)")
                         }
-                    })                }
+                    })
+                }
             case let .failure(error):
                 // 更新に失敗した場合の処理
                 print("お気に入り情報更新に失敗しました:\(error)")

@@ -32,17 +32,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // SDKの初期化
         NCMB.initialize(applicationKey: applicationkey, clientKey: clientkey)
         
-        // Register notification
+        // 【mBaaS：プッシュ通知①】デバイストークンの取得
+        // デバイストークンの要求
         registerForPushNotifications()
         
         // MARK: アプリが起動されるときに実行される処理を追記する場所
         if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
             NCMBPush.handleRichPush(userInfo: notification)
+            if let deliveryTime = notification["deliveryTime"] as? String {
+                
+            }
         }
         
         return true
     }
     
+    // 【mBaaS：プッシュ通知②】デバイストークンの取得後に呼び出されるメソッド
     // デバイストークンが取得されたら呼び出されるメソッド
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }

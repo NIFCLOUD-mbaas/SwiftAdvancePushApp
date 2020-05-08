@@ -67,9 +67,9 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
             case .success:
                 // 更新に成功した場合の処理
                 print("お気に入り情報更新に成功しました")
-                self.statusLabel.text = "お気に入り情報更新に成功しました"
                 // 3秒後にstatusLabelを空にする
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.statusLabel.text = "お気に入り情報更新に成功しました"
                     self.statusLabel.text = ""
                 }
                 // AppDelegateに保持していたユーザー情報の更新
@@ -96,9 +96,10 @@ class FavoriteViewController: UIViewController, UITableViewDelegate, UITableView
             case let .failure(error):
                 // 更新に失敗した場合の処理
                 print("お気に入り情報更新に失敗しました:\(error)")
-                self.statusLabel.text = "お気に入り情報更新に失敗しました:\(error)"
+                
                 // 3秒後にstatusLabelを空にする
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.statusLabel.text = "お気に入り情報更新に失敗しました:\(error)"
                     self.statusLabel.text = ""
                 }
                 // AppDelegateに保持していたユーザー情報を戻す

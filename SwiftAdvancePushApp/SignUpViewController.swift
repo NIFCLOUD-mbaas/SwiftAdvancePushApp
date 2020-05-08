@@ -37,13 +37,17 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 case .success:
                     // 会員登録用メールの要求失敗時の処理
                     print("登録用メールを送信しました")
-                    self.statusLabel.text = "登録用メールを送信しました"
-                    // TextFieldを空にする
-                    self.address.text = ""
+                    DispatchQueue.main.async {
+                        self.statusLabel.text = "登録用メールを送信しました"
+                        // TextFieldを空にする
+                        self.address.text = ""
+                    }
                 case let .failure(error):
                     // 会員登録用メールの要求失敗時の処理
                     print("エラーが発生しました：\(error)")
-                    self.statusLabel.text = "エラーが発生しました：\(error)"
+                    DispatchQueue.main.async {
+                        self.statusLabel.text = "エラーが発生しました：\(error)"
+                    }
             }
         })
     }

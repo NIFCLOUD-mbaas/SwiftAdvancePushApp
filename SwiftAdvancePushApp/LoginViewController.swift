@@ -48,16 +48,17 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                 case .success:
                     if let user = NCMBUser.currentUser {
                         print("ログインしています。ユーザー: \(user.objectId!)")
+                        // AppDelegateにユーザー情報を保持
+                        self.appDelegate.current_user = NCMBUser.currentUser
+
+                        DispatchQueue.main.async {
+                            // statusLabelを空にする
+                            self.statusLabel.text = ""
+                            // 画面遷移
+                            self.performSegue(withIdentifier: "login", sender: self)
+                        }
                     } else {
                         print("ログインしていません")
-                    }
-                    // AppDelegateにユーザー情報を保持
-                    self.appDelegate.current_user = NCMBUser.currentUser
-                    // statusLabelを空にする
-                    self.statusLabel.text = ""
-                    // 画面遷移
-                    DispatchQueue.main.async {
-                        self.performSegue(withIdentifier: "login", sender: self)
                     }
                 
                 case let .failure(error):
@@ -79,7 +80,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     // 背景タップ時にキーボードを隠す
-    func tapScreen(sender: UITapGestureRecognizer) {
+    @IBAction func tapScreen(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
     
