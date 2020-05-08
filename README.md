@@ -93,7 +93,7 @@ layout: false
  * 後で処理を実装します
 
 ```swift
-NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
+NCMB.initialize(applicationKey: "YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
 ```
 
 ---
@@ -203,11 +203,11 @@ layout: false
 ### APIキーの設定とSDKの初期化
 
 * `AppDelegate.swift`を開きます
-* `application(_:didFinishLaunchingWithOptions)`メソッド内に処理を実装します[一部実装済み]
+* `application(_ application: UIApplication, didFinishLaunchingWithOptions`メソッド内に処理を実装します[一部実装済み]
 
 ```swift
 // 【mBaaS】 APIキーの設定とSDKの初期化
-NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
+NCMB.initialize(applicationKey: "YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
 ```
 
 * 初期化処理の「`YOUR_NCMB_APPLICATIONKEY`」，「`YOUR_NCMB_CLIENTKEY`」の部分をアプリ作成時に発行されたAPIキーに書き換えてください
@@ -246,15 +246,14 @@ layout: false
 
 ```swift
 // 【mBaaS：会員管理①】会員登録用メールを要求する
-NCMBUser.requestAuthenticationMailInBackground(address.text) { (error: NSError!) -> Void in
-    if error != nil {
-        // 会員登録用メールの要求失敗時の処理
-
-    } else {
-        // 会員登録用メールの要求失敗時の処理
-
+NCMBUser.requestAuthenticationMailInBackground(mailAddress: address.text!, callback: { result in
+    switch result {
+        case .success:
+            // 会員登録用メールの要求失敗時の処理
+        case let .failure(error):
+            // 会員登録用メールの要求失敗時の処理
     }
-}
+})
 ```
 
 ---
@@ -293,15 +292,14 @@ self.address.text = ""
 
 ```swift
 // 【mBaaS：会員管理②】メールアドレスとパスワードでログイン
-NCMBUser.logInWithMailAddressInBackground(address.text, password: password.text) { (user: NCMBUser!, error: NSError!) -> Void in
-    if error != nil {
-        // ログイン失敗時の処理
-
-    }else{
-        // ログイン成功時の処理
-
-    }
-}
+ NCMBUser.logInInBackground(mailAddress: address.text!, password: password.text!, callback: { result in
+    switch result {
+        case .success:
+            // ログイン成功時の処理
+        case let .failure(error):
+            // ログイン失敗時の処理
+        }
+})
 ```
 
 ---
@@ -312,21 +310,21 @@ NCMBUser.logInWithMailAddressInBackground(address.text, password: password.text)
 
 ```swift
 // ログイン失敗時の処理
-print("ログインに失敗しました:\(error.code)")
-self.statusLabel.text = "ログインに失敗しました:\(error.code)"
+print("ログインに失敗しました:\(error)")
+self.statusLabel.text = "ログインに失敗しました:\(error)"
 ```
 
 ```swift
 // ログイン成功時の処理
-print("ログインに成功しました:\(user.objectId)")
+print("ログインに成功しました:\(user.objectId!)")
 // AppDelegateにユーザー情報を保持
-self.appDelegate.current_user = user as NCMBUser
-// TextFieldを空にする
-self.cleanTextField()
+self.appDelegate.current_user = NCMBUser.currentUser
 // statusLabelを空にする
 self.statusLabel.text = ""
 // 画面遷移
-self.performSegueWithIdentifier("login", sender: self)
+DispatchQueue.main.async {
+    self.performSegue(withIdentifier: "login", sender: self)
+}
 ```
 
 ---
@@ -402,20 +400,19 @@ self.performSegueWithIdentifier("login", sender: self)
 ```swift
 // 【mBaaS：会員管理③】ユーザー情報更新
 // ログイン中のユーザーを取得
-let user = NCMBUser.currentUser()
+let user:NCMBUser = NCMBUser.currentUser!
 // ユーザー情報を設定
-user.setObject(self.nickname.text, forKey: "nickname")
-user.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
-user.setObject(self.prefecture.text, forKey: "prefecture")
-user.setObject([] as Array<String>, forKey: "favorite")
+user["nickname"] = self.nickname.text
+user["gender"] = self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex]
+user["prefecture"] = self.prefecture.text
+user["favorite"] = [] as Array<String>
 // user情報の更新
-user.saveInBackgroundWithBlock({(error: NSError!) -> Void in
-    if error != nil {
-        // 更新失敗時の処理
-
-    } else {
-        // 更新成功時の処理
-
+user.saveInBackground(callback: { result in
+    switch result {
+        case .success:
+            // 更新成功時の処理
+        case let .failure(error):
+            // 更新失敗時の処理
     }
 })
 ```
@@ -428,8 +425,8 @@ user.saveInBackgroundWithBlock({(error: NSError!) -> Void in
 
 ```swift
 // 更新失敗時の処理
-print("ユーザー情報更新に失敗しました:\(error.code)")
-self.viewLabel.text = "登録に失敗しました（更新）:\(error.code)"
+print("ユーザー情報更新に失敗しました:\(error)")
+self.viewLabel.text = "登録に失敗しました（更新）:\(error)"
 ```
 
 ```swift
@@ -440,9 +437,10 @@ self.appDelegate.current_user = user as NCMBUser
 // 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
   /*****後でここに処理を記述します*****/
 // 画面を閉じる
-self.registerView.hidden = true
+self.registerView.isHidden = true
 // ニックネーム表示用ラベルの更新
-self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
+let nickname = NCMBUser.currentUser!["nickname"]! as String
+self.nicknameLabel.text = "\(nickname)さん、こんにちは！"
 // 画面更新
 self.checkShop()
 ```
@@ -507,15 +505,14 @@ layout: false
 ```swift
 // 【mBaaS：データストア】「Shop」クラスのデータを取得
 // 「Shop」クラスのクエリを作成
-let query = NCMBQuery(className: "Shop")
+query =  NCMBQuery.getQuery(className: "Shop")
 // データストアを検索
-query.findObjectsInBackgroundWithBlock({ (objects: Array!, error: NSError!) -> Void in
-    if error != nil {
+query.findInBackground(callback: { result in
+    switch result {
+    case let .success(array):
+       // 検索成功時の処理
+    case let .failure(error):
         // 検索失敗時の処理
-
-    } else {
-        // 検索成功時の処理
-
     }
 })
 ```
@@ -528,16 +525,18 @@ query.findObjectsInBackgroundWithBlock({ (objects: Array!, error: NSError!) -> V
 
 ```swift
 // 検索失敗時の処理
-print("検索に失敗しました:\(error.code)")
+print("検索に失敗しました:\(error)")
 ```
 
 ```swift
 // 検索成功時の処理
 print("検索に成功しました")
 // AppDelegateに「Shop」クラスの情報を保持
-self.appDelegate.shopList = objects as! Array
+self.appDelegate.shopList = array
 // テーブルの更新
-self.shopTableView.reloadData()
+DispatchQueue.main.async {
+    self.shopTableView.reloadData()
+}
 ```
 
 ---
@@ -572,6 +571,16 @@ imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Voi
 
     }
 }
+let imageName = object._fields["icon_image"] as! String
+let file : NCMBFile = NCMBFile(fileName: imageName)
+file.fetchInBackground(callback: { result in
+    switch result {
+    case let .success(data):
+        // ファイル取得成功時の処理
+    case let .failure(error):
+        // ファイル取得失敗時の処理
+    }
+})
 ```
 
 ---
@@ -582,14 +591,14 @@ imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Voi
 
 ```swift
 // ファイル取得失敗時の処理
-print("icon画像の取得に失敗しました:\(error.code)")
+print("icon画像の取得に失敗しました:\(error)")
 ```
 
 ```swift
 // ファイル取得成功時の処理
 print("icon画像の取得に成功しました")
 // icon画像を設定
-self.iconImageView_top.image = UIImage.init(data: data)
+self.iconImageView_top.image = UIImage.init(data: data!)
 ```
 ---
 ## Shop情報の設定
@@ -609,19 +618,19 @@ self.iconImageView_top.image = UIImage.init(data: data)
 ```swift
 // 【mBaaS：ファイルストア②】Shop画像の取得
 // 取得した「Shop」クラスデータからshop画面用の画像名を取得
-let imageName = appDelegate.shopList[shopIndex].objectForKey("shop_image") as! String
+let shop = appDelegate.shopList[shopIndex]
+let imageName = shop._fields["shop_image"] as! String
 // ファイル名を設定
-let imageFile = NCMBFile.fileWithName(imageName, data: nil)
+let imageFile = NCMBFile(fileName:imageName)
 // ファイルを検索
-imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Void in
-    if error != nil {
-        // ファイル取得失敗時の処理
-        /* 省略 */
-    } else {
+imageFile.fetchInBackground(callback: { result in
+    switch result {
+    case let .success(data):
         // ファイル取得成功時の処理
-        /* 省略 */
+    case let .failure(error):
+        // ファイル取得失敗時の処理
     }
-}
+})
 ```
 
 ---
@@ -687,19 +696,18 @@ layout: false
 ```swift
 // 【mBaaS：会員管理④】ユーザー情報の更新
 // ログイン中のユーザーを取得
-let user = NCMBUser.currentUser()
-// favoriteに更新された値を設定
-user.setObject(appDelegate.favoriteObjectIdTemporaryArray, forKey: "favorite")
+let user = NCMBUser.currentUser
+// 更新された値を設定
+user!["favorite"] = appDelegate.favoriteObjectIdTemporaryArray
 // ユーザー情報を更新
-user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
-    if error != nil {
-        // 更新に失敗した場合の処理
-        /* 省略 */
-    } else {
-        // 更新に成功した場合の処理
-        /* 省略 */
+user!.saveInBackground(callback: { result in
+    switch result {
+        case .success:
+            // 更新に成功した場合の処理
+        case let .failure(error):
+            // 更新に失敗した場合の処理
     }
-}
+})
 ```
 
 ---
@@ -713,19 +721,18 @@ user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
 ```swift
 // 【mBaaS：会員管理⑤】ユーザー情報の更新
 // ログイン中のユーザーを取得
-let user = NCMBUser.currentUser()
+let user = NCMBUser.currentUser!
 // 更新された値を設定
-user.setObject(favoriteObjectIdArray, forKey: "favorite")
+user["favorite"] = favoriteObjectIdArray
 // ユーザー情報を更新
-user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
-    if error != nil {
-        // 更新に失敗した場合の処理
-        /* 省略 */
-    } else {
+user.saveInBackground(callback: { result in
+    switch result {
+    case .success:
         // 更新に成功した場合の処理
-        /* 省略 */
+    case let .failure(error):
+        // 更新に失敗した場合の処理
     }
-}
+})
 ```
 
 ---
@@ -793,19 +800,17 @@ layout: false
 ```swift
 // 【mBaaS：プッシュ通知①】デバイストークンの取得
 // デバイストークンの要求
-if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
-    /** iOS8以上 **/
-    //通知のタイプを設定したsettingを用意
-    let type : UIUserNotificationType = [.Alert, .Badge, .Sound]
-    let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
-    //通知のタイプを設定
-    application.registerUserNotificationSettings(setting)
-    //DevoceTokenを要求
-    application.registerForRemoteNotifications()
-}else{
-    /** iOS8未満 **/
-    let type : UIRemoteNotificationType = [.Alert, .Badge, .Sound]
-    UIApplication.sharedApplication().registerForRemoteNotificationTypes(type)
+UNUserNotificationCenter.current()
+    .requestAuthorization(options: [.alert, .sound, .badge]) {
+        granted, error in
+        print("Permission granted: \(granted)")
+        guard granted else { return }
+        self.getNotificationSettings()
+}
+
+// MARK: アプリが起動されるときに実行される処理を追記する場所
+if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
+    NCMBPush.handleRichPush(userInfo: notification)
 }
 ```
 
@@ -814,24 +819,19 @@ if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
 ### プッシュ通知②：デバイストークンの取得後に呼び出されるメソッド
 
 * 続けて`AppDelegate.swift`を編集します
-* `application(_:didFinishLaunchingWithOptions)`メソッド下(外)に次のメソッドを実装します
+* `application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken`メソッド下(外)に次のメソッドを実装します
 
 ```swift
 // 【mBaaS：プッシュ通知②】デバイストークンの取得後に呼び出されるメソッド
-func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData){
-    // 端末情報を扱うNCMBInstallationのインスタンスを作成
-    let installation = NCMBInstallation.currentInstallation()
-    // デバイストークンの設定
-    installation.setDeviceTokenFromData(deviceToken)
-    // 端末情報をデータストアに登録
-    installation.saveInBackgroundWithBlock { (error: NSError!) -> Void in
-        if error != nil {
-            // 端末情報の登録に失敗した時の処理
-
-        }else{
-            // 端末情報の登録に成功した時の処理
-
-        }
+func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+    let token = tokenParts.joined()
+    print("Device Token: \(token)")
+    
+    let installation = NCMBInstallation()
+    installation.setDeviceTokenFromData(data: deviceToken)
+    installation.saveInBackground { (error) in
+        
     }
 }
 ```
@@ -844,7 +844,7 @@ func application(application: UIApplication, didRegisterForRemoteNotificationsWi
 
 ```swift
 // 端末情報の登録に失敗した時の処理
-print("デバイストークン取得に失敗しました:\(error.code)")
+print("デバイストークン取得に失敗しました:\(error)")
 ```
 
 ```swift
@@ -873,7 +873,8 @@ layout: false
 // 画面を閉じる
 self.registerView.hidden = true
 // ニックネーム表示用ラベルの更新
-self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
+let nickname = NCMBUser.currentUser!["nickname"]! as String
+self.nicknameLabel.text = "\(nickname)さん、こんにちは！"
 // 画面更新
 self.checkShop()
 ```
@@ -893,22 +894,21 @@ self.checkShop()
 ```swift
 // 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
 // 使用中端末のinstallation取得
-let installation: NCMBInstallation? = NCMBInstallation.currentInstallation()
-if installation != nil {
+let installation = NCMBInstallation.currentInstallation
 // ユーザー情報を設定
-    installation!.setObject(self.nickname.text, forKey: "nickname")
-    installation!.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
-    installation!.setObject([] as Array<String>, forKey: "favorite")
-    installation!.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
-        if error != nil {
-            // installation更新失敗時の処理
-
-        } else {
-            // installation更新成功時の処理
-
-        }
-    })
-}
+installation["nickname"] = self.nickname.text
+installation["gender"] = self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex]
+installation["prefecture"] = self.prefecture.text
+installation["favorite"] = [] as Array<String>
+// installation情報の更新
+installation.saveInBackground(callback: { result in
+    switch result {
+    case .success:
+        // installation更新成功時の処理
+    case let .failure(error):
+        // installation更新失敗時の処理
+    }
+})
 ```
 
 ---
@@ -919,7 +919,7 @@ if installation != nil {
 
 ```swift
 // installation更新失敗時の処理
-print("installation更新(ユーザー登録)に失敗しました:\(error.code)")
+print("installation更新(ユーザー登録)に失敗しました:\(error)")
 ```
 
 ```swift
@@ -928,7 +928,8 @@ print("installation更新(ユーザー登録)に成功しました")
 // 画面を閉じる
 self.registerView.hidden = true
 // ニックネーム表示用ラベルの更新
-self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
+let nickname = NCMBUser.currentUser!["nickname"]! as String
+self.nicknameLabel.text = "\(nickname)さん、こんにちは！"
 // 画面更新
 self.checkShop()
 ```
@@ -942,19 +943,18 @@ self.checkShop()
 
 ```swift
 // 【mBaaS：プッシュ通知④】installationにユーザー情報を紐づける
-let installation: NCMBInstallation? = NCMBInstallation.currentInstallation()
-if installation != nil {
-    // お気に入り情報を設定
-    installation!.setObject(self.appDelegate.favoriteObjectIdTemporaryArray, forKey: "favorite")
-    // installation情報の更新
-    installation!.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
-        if error != nil {
-            // installation更新失敗時の処理
-        } else {
-            // installation更新成功時の処理
-        }
-    })
-}
+let installation = NCMBInstallation.currentInstallation
+// お気に入り情報を設定
+installation["favorite"] = self.appDelegate.favoriteObjectIdTemporaryArray
+// installation情報の更新
+installation.saveInBackground(callback: { result in
+    switch result {
+    case .success:
+        // installation更新成功時の処理
+    case let .failure(error):
+        // installation更新失敗時の処理
+    }
+})
 ```
 
 ---
@@ -966,16 +966,17 @@ if installation != nil {
 
 ```swift
 // 【mBaaS：プッシュ通知⑤】installationにユーザー情報を紐づける
-let installation: NCMBInstallation? = NCMBInstallation.currentInstallation()
+let installation: NCMBInstallation? = NCMBInstallation.currentInstallation
 if installation != nil {
     // お気に入り情報を設定
-    installation!.setObject(favoriteObjectIdArray, forKey: "favorite")
+    installation!["favorite"] = favoriteObjectIdArray
     // installation情報の更新
-    installation!.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
-        if error != nil {
-            // installation更新失敗時の処理
-        } else {
+    installation!.saveInBackground(callback: { result in
+        switch result {
+        case .success:
             // installation更新成功時の処理
+        case let .failure(error):
+            // installation更新失敗時の処理
         }
     })
 }
@@ -1163,15 +1164,14 @@ layout: false
 ### プッシュ通知⑥：リッチプッシュ通知を表示させる処理
 
 * `AppDelegate.swift`を開きます
-* `application(_:didFinishLaunchingWithOptions)`メソッド内、`【プッシュ通知①】デバイストークンの取得`の下に処理を実装します
+* `application(_ application: UIApplication, didFinishLaunchingWithOptions`メソッド内、`【プッシュ通知①】デバイストークンの取得`の下に処理を実装します
 
 ```swift
-if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
+if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
     // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
       /* ここに書きます */
 
     // 【mBaaS：プッシュ通知⑧】アプリが起動されたときにプッシュ通知からデータを取得する
-
 }
 ```
 
@@ -1183,7 +1183,7 @@ if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotif
 
 ```swift
 // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
-NCMBPush.handleRichPush(remoteNotification as [NSObject : AnyObject])
+    NCMBPush.handleRichPush(userInfo: notification)
 ```
 
 ---
@@ -1247,21 +1247,25 @@ layout: false
 ### プッシュ通知⑦：アプリが起動中にプッシュ通知からデータを取得する
 
 * `AppDelegate.swift`を開きます
-* `application(_:didFinishLaunchingWithOptions)`メソッド外に次のメソッドを実装します
+* `application(_ application: UIApplication, didReceiveRemoteNotification`メソッド外に次のメソッドを実装します
 
 ```swift
 // 【mBaaS：プッシュ通知⑦】アプリが起動中にプッシュ通知からデータを取得する
-func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-    // プッシュ通知情報の取得
-    let deliveryTime = userInfo["deliveryTime"] as! String
-    let message = userInfo["message"] as! String
-    // 値を取得した後の処理
-    if !deliveryTime.isEmpty && !message.isEmpty  {
-        print("ペイロードを取得しました：deliveryTime[\(deliveryTime)],message[\(message)]")
-        // ローカルプッシュ配信
-        localNotificationDeliver(deliveryTime, message: message)
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        // プッシュ通知情報の取得
+        let deliveryTime = userInfo["deliveryTime"] as! String
+        let message = userInfo["message"] as! String
+        // 値を取得した後の処理
+        if !deliveryTime.isEmpty && !message.isEmpty  {
+            print("ペイロードを取得しました：deliveryTime[\(deliveryTime)],message[\(message)]")
+            // ローカルプッシュ配信
+            localNotificationDeliver(deliveryTime: deliveryTime, message: message)
+        }
+        
+        if let notiData = userInfo as? [String : AnyObject] {
+            NCMBPush.handleRichPush(userInfo: notiData)
+        }
     }
-}
 ```
 
 ---
@@ -1269,16 +1273,18 @@ func application(application: UIApplication, didReceiveRemoteNotification userIn
 ### プッシュ通知⑧：アプリが起動されたときにプッシュ通知からデータを取得する
 
 * `AppDelegate.swift`を開きます
-* `application(_:didFinishLaunchingWithOptions)`メソッド内、`【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理`の下に処理を実装します
+* `application(_ application: UIApplication, didReceiveRemoteNotification`メソッド内、`【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理`の下に処理を実装します
 
 ```swift
 // 【mBaaS：プッシュ通知⑧】アプリが起動されたときにプッシュ通知からデータを取得する
 // プッシュ通知情報の取得
-if let deliveryTime = remoteNotification.objectForKey("deliveryTime") as? String {
-    if let message = remoteNotification.objectForKey("message") as? String {
-        // ローカルプッシュ配信
-        localNotificationDeliver(deliveryTime, message: message)
-    }
+let deliveryTime = userInfo["deliveryTime"] as! String
+let message = userInfo["message"] as! String
+// 値を取得した後の処理
+if !deliveryTime.isEmpty && !message.isEmpty  {
+    print("ペイロードを取得しました：deliveryTime[\(deliveryTime)],message[\(message)]")
+    // ローカルプッシュ配信
+    localNotificationDeliver(deliveryTime: deliveryTime, message: message)
 }
 ```
 
@@ -1290,11 +1296,11 @@ if let deliveryTime = remoteNotification.objectForKey("deliveryTime") as? String
 // LocalNotification配信
 func localNotificationDeliver (deliveryTime: String, message: String) {
     // 配信時間(String→NSDate)を設定
-    let formatter = NSDateFormatter()
+    let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-    let deliveryTime = formatter.dateFromString(deliveryTime)
+    let deliveryTime = formatter.date(from: deliveryTime)
     // ローカルプッシュを作成
-    LocalNotificationManager.scheduleLocalNotificationAtData(deliveryTime!, alertBody: message, userInfo: nil)
+    LocalNotificationManager.scheduleLocalNotificationAtData(deliveryTime: deliveryTime! as NSDate, alertBody: message, userInfo: nil)
 }
 ```
 
