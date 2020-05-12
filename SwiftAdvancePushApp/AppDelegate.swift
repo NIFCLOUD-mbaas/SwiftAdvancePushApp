@@ -36,11 +36,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // デバイストークンの要求
         registerForPushNotifications()
         
-        // MARK: アプリが起動されるときに実行される処理を追記する場所
+        // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
         if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
             NCMBPush.handleRichPush(userInfo: notification)
+            // 【mBaaS：プッシュ通知⑧】アプリが起動されたときにプッシュ通知の情報（ペイロード）からデータを取得する
+            // プッシュ通知情報の取得
             if let deliveryTime = notification["deliveryTime"] as? String {
-                
+                if let message = notification["message"] as? String {
+                    // ローカルプッシュ配信
+                    localNotificationDeliver(deliveryTime: deliveryTime, message: message)
+                }
             }
         }
         
