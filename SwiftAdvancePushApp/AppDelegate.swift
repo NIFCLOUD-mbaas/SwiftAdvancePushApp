@@ -75,13 +75,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         // プッシュ通知情報の取得
-        let deliveryTime = userInfo["deliveryTime"] as! String
-        let message = userInfo["message"] as! String
-        // 値を取得した後の処理
-        if !deliveryTime.isEmpty && !message.isEmpty  {
-            print("ペイロードを取得しました：deliveryTime[\(deliveryTime)],message[\(message)]")
-            // ローカルプッシュ配信
-            localNotificationDeliver(deliveryTime: deliveryTime, message: message)
+        if let deliveryTime = userInfo["deliveryTime"] as? String {
+            if let message = userInfo["message"] as? String {
+                // 値を取得した後の処理
+                print("ペイロードを取得しました：deliveryTime[\(deliveryTime)],message[\(message)]")
+                // ローカルプッシュ配信
+                localNotificationDeliver(deliveryTime: deliveryTime, message: message)
+            }
         }
         
         if let notiData = userInfo as? [String : AnyObject] {
