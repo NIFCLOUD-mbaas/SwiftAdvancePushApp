@@ -2,23 +2,30 @@ name: inverse
 layout: true
 class: center, middle, inverse
 ---
-# <span style="font-size: 30%">【Swift編】ニフティクラウドmobile backend レベルアップセミナー</span><br>__クーポン配信アプリ<br>を作ろう！__</span>
+# <span style="font-size: 30%">【Swift編】ニフクラ mobile レベルアップセミナー</span><br>__クーポン配信アプリ<br>を作ろう！__</span>
 
-@ニフティ株式会社
+@ニフクラ株式会社
 
 .footnote[
-20160804作成(20160913更新)
+20160804作成(20200513更新)
 ]
 ---
 layout: false
 ## 事前準備
-ニフティクラウドmobile backendのアカウント登録がお済みでない方は、<br>
-[ホームページ](http://mb.cloud.nifty.com/about.htm)右上にある「無料登録」ボタンをクリックして、<br>
+ニフクラ mobileのアカウント登録がお済みでない方は、<br>
+[ホームページ](https://mbaas.nifcloud.com/about.htm)右上にある「無料登録」ボタンをクリックして、<br>
 アカウント登録を実施してください
 
 ![mBaaS検索](readme-image/mBaaS検索.png)
 
 ![mBaaS無料登録](readme-image/mBaaS無料登録.png)
+
+---
+## 動作環境
+* Xcode ver.11.3.1
+* iPhone 7 OS ver 13.3
+* Android Studio ver3.6.1
+* Android OS ver.9
 
 ---
 ## 今回のハンズオンセミナーについて
@@ -72,7 +79,7 @@ layout: false
 ]
 
 ---
-## ニフティクラウド mobile backendとは
+## ニフクラクラウド mobile backendとは
 ### サービス紹介
 
 * スマホアプリで汎用的に実装される機能を、クラウドサービスとして提供しているサービスです
@@ -83,24 +90,24 @@ layout: false
 ]
 
 ---
-## ニフティクラウド mobile backendとは
+## ニフクラクラウド mobile backendとは
 ### iOS SDKの特徴
 
 * SDKのインストールが必要です
  * 今回は実装済み
- * 参考：[クイックスタート](http://mb.cloud.nifty.com/doc/current/introduction/quickstart_ios.html)
+ * 参考：[クイックスタート](https://mbaas.nifcloud.com/doc/current/introduction/quickstart_ios.html)
 * SDKの初期化処理が必要です
  * 後で処理を実装します
 
 ```swift
-NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
+NCMB.initialize(applicationKey: "YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
 ```
 
 ---
-## ニフティクラウド mobile backendとは
+## ニフクラクラウド mobile backendとは
 ### iOS SDKの特徴
 
-* サーバへリクエスト処理には、__同期処理__と__非同期処理__があります
+* サーバへリクエスト処理には、__同期処理__ と __非同期処理__ があります
 
 ```swift
 // 例）保存の場合
@@ -177,7 +184,7 @@ layout: false
 
 下記リンクをクリックして、ZIPファイルでダウンロードしてください▼<br>
 .size_large[
-　　　 __[SwiftAdvancePushApp](https://github.com/natsumo/SwiftAdvancePushApp/archive/seminar_version.zip)__
+　　　 __[SwiftAdvancePushApp](https://github.com/NIFCLOUD-mbaas/SwiftAdvancePushApp/archive/seminar_version.zip)__
 ]
 
 * ディレクトリにある「__SwiftAdvancePushApp.xcworkspace__」をダブルクリックして、Xcodeを開いてください
@@ -194,7 +201,7 @@ layout: false
 ## ハンズオンの準備
 ### mBaaSの準備
 
-* [mBaaS](http://mb.cloud.nifty.com)にログインしてアプリを作成します
+* [mBaaS](https://mbaas.nifcloud.com)にログインしてアプリを作成します
 
 ![mBaaSアプリ作成](readme-image/mBaaSアプリ作成.png)
 
@@ -203,11 +210,11 @@ layout: false
 ### APIキーの設定とSDKの初期化
 
 * `AppDelegate.swift`を開きます
-* `application(_:didFinishLaunchingWithOptions)`メソッド内に処理を実装します[一部実装済み]
+* `application(_ application: UIApplication, didFinishLaunchingWithOptions`メソッド内に処理を実装します[一部実装済み]
 
 ```swift
 // 【mBaaS】 APIキーの設定とSDKの初期化
-NCMB.setApplicationKey("YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
+NCMB.initialize(applicationKey: "YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCMB_CLIENTKEY")
 ```
 
 * 初期化処理の「`YOUR_NCMB_APPLICATIONKEY`」，「`YOUR_NCMB_CLIENTKEY`」の部分をアプリ作成時に発行されたAPIキーに書き換えてください
@@ -246,15 +253,14 @@ layout: false
 
 ```swift
 // 【mBaaS：会員管理①】会員登録用メールを要求する
-NCMBUser.requestAuthenticationMailInBackground(address.text) { (error: NSError!) -> Void in
-    if error != nil {
-        // 会員登録用メールの要求失敗時の処理
-
-    } else {
-        // 会員登録用メールの要求失敗時の処理
-
+NCMBUser.requestAuthenticationMailInBackground(mailAddress: address.text!, callback: { result in
+    switch result {
+        case .success:
+            // 会員登録用メールの要求失敗時の処理
+        case let .failure(error):
+            // 会員登録用メールの要求失敗時の処理
     }
-}
+})
 ```
 
 ---
@@ -293,15 +299,14 @@ self.address.text = ""
 
 ```swift
 // 【mBaaS：会員管理②】メールアドレスとパスワードでログイン
-NCMBUser.logInWithMailAddressInBackground(address.text, password: password.text) { (user: NCMBUser!, error: NSError!) -> Void in
-    if error != nil {
-        // ログイン失敗時の処理
-
-    }else{
-        // ログイン成功時の処理
-
-    }
-}
+ NCMBUser.logInInBackground(mailAddress: address.text!, password: password.text!, callback: { result in
+    switch result {
+        case .success:
+            // ログイン成功時の処理
+        case let .failure(error):
+            // ログイン失敗時の処理
+        }
+})
 ```
 
 ---
@@ -312,21 +317,21 @@ NCMBUser.logInWithMailAddressInBackground(address.text, password: password.text)
 
 ```swift
 // ログイン失敗時の処理
-print("ログインに失敗しました:\(error.code)")
-self.statusLabel.text = "ログインに失敗しました:\(error.code)"
+print("ログインに失敗しました:\(error)")
+self.statusLabel.text = "ログインに失敗しました:\(error)"
 ```
 
 ```swift
 // ログイン成功時の処理
-print("ログインに成功しました:\(user.objectId)")
+print("ログインに成功しました:\(user.objectId!)")
 // AppDelegateにユーザー情報を保持
-self.appDelegate.current_user = user as NCMBUser
-// TextFieldを空にする
-self.cleanTextField()
+self.appDelegate.current_user = NCMBUser.currentUser
 // statusLabelを空にする
 self.statusLabel.text = ""
 // 画面遷移
-self.performSegueWithIdentifier("login", sender: self)
+DispatchQueue.main.async {
+    self.performSegue(withIdentifier: "login", sender: self)
+}
 ```
 
 ---
@@ -342,7 +347,7 @@ self.performSegueWithIdentifier("login", sender: self)
 ![動作確認①ログイン](readme-image/動作確認①ログイン.png)
 ]
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
@@ -368,7 +373,7 @@ self.performSegueWithIdentifier("login", sender: self)
 ![動作確認①会員登録完了](readme-image/動作確認①会員登録完了.png)
 ]
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
@@ -402,20 +407,19 @@ self.performSegueWithIdentifier("login", sender: self)
 ```swift
 // 【mBaaS：会員管理③】ユーザー情報更新
 // ログイン中のユーザーを取得
-let user = NCMBUser.currentUser()
+let user:NCMBUser = NCMBUser.currentUser!
 // ユーザー情報を設定
-user.setObject(self.nickname.text, forKey: "nickname")
-user.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
-user.setObject(self.prefecture.text, forKey: "prefecture")
-user.setObject([] as Array<String>, forKey: "favorite")
+user["nickname"] = self.nickname.text
+user["gender"] = self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex]
+user["prefecture"] = self.prefecture.text
+user["favorite"] = [] as Array<String>
 // user情報の更新
-user.saveInBackgroundWithBlock({(error: NSError!) -> Void in
-    if error != nil {
-        // 更新失敗時の処理
-
-    } else {
-        // 更新成功時の処理
-
+user.saveInBackground(callback: { result in
+    switch result {
+        case .success:
+            // 更新成功時の処理
+        case let .failure(error):
+            // 更新失敗時の処理
     }
 })
 ```
@@ -428,8 +432,8 @@ user.saveInBackgroundWithBlock({(error: NSError!) -> Void in
 
 ```swift
 // 更新失敗時の処理
-print("ユーザー情報更新に失敗しました:\(error.code)")
-self.viewLabel.text = "登録に失敗しました（更新）:\(error.code)"
+print("ユーザー情報更新に失敗しました:\(error)")
+self.viewLabel.text = "登録に失敗しました（更新）:\(error)"
 ```
 
 ```swift
@@ -440,9 +444,10 @@ self.appDelegate.current_user = user as NCMBUser
 // 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
   /*****後でここに処理を記述します*****/
 // 画面を閉じる
-self.registerView.hidden = true
+self.registerView.isHidden = true
 // ニックネーム表示用ラベルの更新
-self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
+let nickname = NCMBUser.currentUser!["nickname"]! as String
+self.nicknameLabel.text = "\(nickname)さん、こんにちは！"
 // 画面更新
 self.checkShop()
 ```
@@ -458,7 +463,7 @@ layout: false
 ## Shop情報の設定
 ### mBaaSにShop情報を用意する（データストア）
 
-* ニフティクラウド mobile backendのダッシュボードから「データストア」を開き、「＋作成▼」ボタンをクリックし、「インポート」をクリックします
+* ニフクラクラウド mobile backendのダッシュボードから「データストア」を開き、「＋作成▼」ボタンをクリックし、「インポート」をクリックします
 * クラス名に「__Shop__」と入力します
 * ダウンロードしたサンプルプロジェクトにあるSettingフォルダ内の「__Shop.json__」を選択してアップロードします
 
@@ -480,7 +485,7 @@ layout: false
 ## Shop情報の設定
 ### mBaaSにShop情報を用意する（ファイルストア）
 
-* ニフティクラウド mobile backendのダッシュボードから「ファイルストア」を開き、「↑アップロード」ボタンをクリックします
+* ニフクラクラウド mobile backendのダッシュボードから「ファイルストア」を開き、「↑アップロード」ボタンをクリックします
 * ダウンロードしたサンプルプロジェクトにあるSettingフォルダ内の「icon」「Shop」「Sale」内にあるファイルをすべてをアップロードします
 
 .center[
@@ -507,15 +512,14 @@ layout: false
 ```swift
 // 【mBaaS：データストア】「Shop」クラスのデータを取得
 // 「Shop」クラスのクエリを作成
-let query = NCMBQuery(className: "Shop")
+query =  NCMBQuery.getQuery(className: "Shop")
 // データストアを検索
-query.findObjectsInBackgroundWithBlock({ (objects: Array!, error: NSError!) -> Void in
-    if error != nil {
+query.findInBackground(callback: { result in
+    switch result {
+    case let .success(array):
+       // 検索成功時の処理
+    case let .failure(error):
         // 検索失敗時の処理
-
-    } else {
-        // 検索成功時の処理
-
     }
 })
 ```
@@ -528,16 +532,18 @@ query.findObjectsInBackgroundWithBlock({ (objects: Array!, error: NSError!) -> V
 
 ```swift
 // 検索失敗時の処理
-print("検索に失敗しました:\(error.code)")
+print("検索に失敗しました:\(error)")
 ```
 
 ```swift
 // 検索成功時の処理
 print("検索に成功しました")
 // AppDelegateに「Shop」クラスの情報を保持
-self.appDelegate.shopList = objects as! Array
+self.appDelegate.shopList = array
 // テーブルの更新
-self.shopTableView.reloadData()
+DispatchQueue.main.async {
+    self.shopTableView.reloadData()
+}
 ```
 
 ---
@@ -572,6 +578,16 @@ imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Voi
 
     }
 }
+let imageName = object._fields["icon_image"] as! String
+let file : NCMBFile = NCMBFile(fileName: imageName)
+file.fetchInBackground(callback: { result in
+    switch result {
+    case let .success(data):
+        // ファイル取得成功時の処理
+    case let .failure(error):
+        // ファイル取得失敗時の処理
+    }
+})
 ```
 
 ---
@@ -582,14 +598,14 @@ imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Voi
 
 ```swift
 // ファイル取得失敗時の処理
-print("icon画像の取得に失敗しました:\(error.code)")
+print("icon画像の取得に失敗しました:\(error)")
 ```
 
 ```swift
 // ファイル取得成功時の処理
 print("icon画像の取得に成功しました")
 // icon画像を設定
-self.iconImageView_top.image = UIImage.init(data: data)
+self.iconImageView_top.image = UIImage.init(data: data!)
 ```
 ---
 ## Shop情報の設定
@@ -609,19 +625,19 @@ self.iconImageView_top.image = UIImage.init(data: data)
 ```swift
 // 【mBaaS：ファイルストア②】Shop画像の取得
 // 取得した「Shop」クラスデータからshop画面用の画像名を取得
-let imageName = appDelegate.shopList[shopIndex].objectForKey("shop_image") as! String
+let shop = appDelegate.shopList[shopIndex]
+let imageName = shop._fields["shop_image"] as! String
 // ファイル名を設定
-let imageFile = NCMBFile.fileWithName(imageName, data: nil)
+let imageFile = NCMBFile(fileName:imageName)
 // ファイルを検索
-imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Void in
-    if error != nil {
-        // ファイル取得失敗時の処理
-        /* 省略 */
-    } else {
+imageFile.fetchInBackground(callback: { result in
+    switch result {
+    case let .success(data):
         // ファイル取得成功時の処理
-        /* 省略 */
+    case let .failure(error):
+        // ファイル取得失敗時の処理
     }
-}
+})
 ```
 
 ---
@@ -638,7 +654,7 @@ imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Voi
 ![動作確認②ユーザー情報追加](readme-image/動作確認②ユーザー情報追加.png)
 ]
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
@@ -655,7 +671,7 @@ imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Voi
 ![動作確認②](readme-image/動作確認②.png)
 ]
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
@@ -687,19 +703,18 @@ layout: false
 ```swift
 // 【mBaaS：会員管理④】ユーザー情報の更新
 // ログイン中のユーザーを取得
-let user = NCMBUser.currentUser()
-// favoriteに更新された値を設定
-user.setObject(appDelegate.favoriteObjectIdTemporaryArray, forKey: "favorite")
+let user = NCMBUser.currentUser
+// 更新された値を設定
+user!["favorite"] = appDelegate.favoriteObjectIdTemporaryArray
 // ユーザー情報を更新
-user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
-    if error != nil {
-        // 更新に失敗した場合の処理
-        /* 省略 */
-    } else {
-        // 更新に成功した場合の処理
-        /* 省略 */
+user!.saveInBackground(callback: { result in
+    switch result {
+        case .success:
+            // 更新に成功した場合の処理
+        case let .failure(error):
+            // 更新に失敗した場合の処理
     }
-}
+})
 ```
 
 ---
@@ -713,19 +728,18 @@ user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
 ```swift
 // 【mBaaS：会員管理⑤】ユーザー情報の更新
 // ログイン中のユーザーを取得
-let user = NCMBUser.currentUser()
+let user = NCMBUser.currentUser!
 // 更新された値を設定
-user.setObject(favoriteObjectIdArray, forKey: "favorite")
+user["favorite"] = favoriteObjectIdArray
 // ユーザー情報を更新
-user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
-    if error != nil {
-        // 更新に失敗した場合の処理
-        /* 省略 */
-    } else {
+user.saveInBackground(callback: { result in
+    switch result {
+    case .success:
         // 更新に成功した場合の処理
-        /* 省略 */
+    case let .failure(error):
+        // 更新に失敗した場合の処理
     }
-}
+})
 ```
 
 ---
@@ -743,7 +757,7 @@ user.saveInBackgroundWithBlock { (error: NSError!) -> Void in
 ]
 
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
@@ -771,7 +785,7 @@ layout: false
  * デバッグ用の実機
  * プッシュ通知用証明書(p12形式)
 * 証明書の取得がまだの場合は下記をご参照ください
- * [【サンプル】アプリにプッシュ通知を組み込もう！](https://github.com/NIFTYCloud-mbaas/SwiftPushApp)
+ * [【サンプル】アプリにプッシュ通知を組み込もう！](https://github.com/NIFCLOUD-mbaas/SwiftPushApp)
 
 ---
 ## プッシュ通知の準備
@@ -793,19 +807,17 @@ layout: false
 ```swift
 // 【mBaaS：プッシュ通知①】デバイストークンの取得
 // デバイストークンの要求
-if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
-    /** iOS8以上 **/
-    //通知のタイプを設定したsettingを用意
-    let type : UIUserNotificationType = [.Alert, .Badge, .Sound]
-    let setting = UIUserNotificationSettings(forTypes: type, categories: nil)
-    //通知のタイプを設定
-    application.registerUserNotificationSettings(setting)
-    //DevoceTokenを要求
-    application.registerForRemoteNotifications()
-}else{
-    /** iOS8未満 **/
-    let type : UIRemoteNotificationType = [.Alert, .Badge, .Sound]
-    UIApplication.sharedApplication().registerForRemoteNotificationTypes(type)
+UNUserNotificationCenter.current()
+    .requestAuthorization(options: [.alert, .sound, .badge]) {
+        granted, error in
+        print("Permission granted: \(granted)")
+        guard granted else { return }
+        self.getNotificationSettings()
+}
+
+// MARK: アプリが起動されるときに実行される処理を追記する場所
+if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
+    NCMBPush.handleRichPush(userInfo: notification)
 }
 ```
 
@@ -814,24 +826,19 @@ if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1){
 ### プッシュ通知②：デバイストークンの取得後に呼び出されるメソッド
 
 * 続けて`AppDelegate.swift`を編集します
-* `application(_:didFinishLaunchingWithOptions)`メソッド下(外)に次のメソッドを実装します
+* `application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken`メソッド下(外)に次のメソッドを実装します
 
 ```swift
 // 【mBaaS：プッシュ通知②】デバイストークンの取得後に呼び出されるメソッド
-func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData){
-    // 端末情報を扱うNCMBInstallationのインスタンスを作成
-    let installation = NCMBInstallation.currentInstallation()
-    // デバイストークンの設定
-    installation.setDeviceTokenFromData(deviceToken)
-    // 端末情報をデータストアに登録
-    installation.saveInBackgroundWithBlock { (error: NSError!) -> Void in
-        if error != nil {
-            // 端末情報の登録に失敗した時の処理
-
-        }else{
-            // 端末情報の登録に成功した時の処理
-
-        }
+func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
+    let token = tokenParts.joined()
+    print("Device Token: \(token)")
+    
+    let installation = NCMBInstallation()
+    installation.setDeviceTokenFromData(data: deviceToken)
+    installation.saveInBackground { (error) in
+        
     }
 }
 ```
@@ -844,7 +851,7 @@ func application(application: UIApplication, didRegisterForRemoteNotificationsWi
 
 ```swift
 // 端末情報の登録に失敗した時の処理
-print("デバイストークン取得に失敗しました:\(error.code)")
+print("デバイストークン取得に失敗しました:\(error)")
 ```
 
 ```swift
@@ -873,7 +880,8 @@ layout: false
 // 画面を閉じる
 self.registerView.hidden = true
 // ニックネーム表示用ラベルの更新
-self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
+let nickname = NCMBUser.currentUser!["nickname"]! as String
+self.nicknameLabel.text = "\(nickname)さん、こんにちは！"
 // 画面更新
 self.checkShop()
 ```
@@ -893,22 +901,21 @@ self.checkShop()
 ```swift
 // 【mBaaS：プッシュ通知③】installationにユーザー情報を紐づける
 // 使用中端末のinstallation取得
-let installation: NCMBInstallation? = NCMBInstallation.currentInstallation()
-if installation != nil {
+let installation = NCMBInstallation.currentInstallation
 // ユーザー情報を設定
-    installation!.setObject(self.nickname.text, forKey: "nickname")
-    installation!.setObject(self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex], forKey: "gender")
-    installation!.setObject([] as Array<String>, forKey: "favorite")
-    installation!.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
-        if error != nil {
-            // installation更新失敗時の処理
-
-        } else {
-            // installation更新成功時の処理
-
-        }
-    })
-}
+installation["nickname"] = self.nickname.text
+installation["gender"] = self.GENDER_CONFIG[self.genderSegCon.selectedSegmentIndex]
+installation["prefecture"] = self.prefecture.text
+installation["favorite"] = [] as Array<String>
+// installation情報の更新
+installation.saveInBackground(callback: { result in
+    switch result {
+    case .success:
+        // installation更新成功時の処理
+    case let .failure(error):
+        // installation更新失敗時の処理
+    }
+})
 ```
 
 ---
@@ -919,7 +926,7 @@ if installation != nil {
 
 ```swift
 // installation更新失敗時の処理
-print("installation更新(ユーザー登録)に失敗しました:\(error.code)")
+print("installation更新(ユーザー登録)に失敗しました:\(error)")
 ```
 
 ```swift
@@ -928,7 +935,8 @@ print("installation更新(ユーザー登録)に成功しました")
 // 画面を閉じる
 self.registerView.hidden = true
 // ニックネーム表示用ラベルの更新
-self.nicknameLabel.text = "\(self.appDelegate.current_user.objectForKey("nickname"))さん、こんにちは！"
+let nickname = NCMBUser.currentUser!["nickname"]! as String
+self.nicknameLabel.text = "\(nickname)さん、こんにちは！"
 // 画面更新
 self.checkShop()
 ```
@@ -942,19 +950,18 @@ self.checkShop()
 
 ```swift
 // 【mBaaS：プッシュ通知④】installationにユーザー情報を紐づける
-let installation: NCMBInstallation? = NCMBInstallation.currentInstallation()
-if installation != nil {
-    // お気に入り情報を設定
-    installation!.setObject(self.appDelegate.favoriteObjectIdTemporaryArray, forKey: "favorite")
-    // installation情報の更新
-    installation!.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
-        if error != nil {
-            // installation更新失敗時の処理
-        } else {
-            // installation更新成功時の処理
-        }
-    })
-}
+let installation = NCMBInstallation.currentInstallation
+// お気に入り情報を設定
+installation["favorite"] = self.appDelegate.favoriteObjectIdTemporaryArray
+// installation情報の更新
+installation.saveInBackground(callback: { result in
+    switch result {
+    case .success:
+        // installation更新成功時の処理
+    case let .failure(error):
+        // installation更新失敗時の処理
+    }
+})
 ```
 
 ---
@@ -966,16 +973,17 @@ if installation != nil {
 
 ```swift
 // 【mBaaS：プッシュ通知⑤】installationにユーザー情報を紐づける
-let installation: NCMBInstallation? = NCMBInstallation.currentInstallation()
+let installation: NCMBInstallation? = NCMBInstallation.currentInstallation
 if installation != nil {
     // お気に入り情報を設定
-    installation!.setObject(favoriteObjectIdArray, forKey: "favorite")
+    installation!["favorite"] = favoriteObjectIdArray
     // installation情報の更新
-    installation!.saveInBackgroundWithBlock({ (error: NSError!) -> Void in
-        if error != nil {
-            // installation更新失敗時の処理
-        } else {
+    installation!.saveInBackground(callback: { result in
+        switch result {
+        case .success:
             // installation更新成功時の処理
+        case let .failure(error):
+            // installation更新失敗時の処理
         }
     })
 }
@@ -1010,7 +1018,7 @@ if installation != nil {
 ]
 
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
@@ -1025,14 +1033,14 @@ if installation != nil {
 ![動作確認④installation追加](readme-image/動作確認④installation追加.png)
 ]
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 
 ---
 ## プッシュ通知を送信：セグメント配信
 ### 動作確認(4)セグメント配信
 
-__shopB__をお気に入り登録しているユーザーに絞り込んでプッシュ通知を配信してみましょう！
+__shopB__ をお気に入り登録しているユーザーに絞り込んでプッシュ通知を配信してみましょう！
 
 * あらかじめshopBをお気に入りに設定しておきます(アプリ側)
 * mBaaSのダッシュボードからShopクラスのデータを開き、shopBの「objectId」をコピーします
@@ -1163,15 +1171,14 @@ layout: false
 ### プッシュ通知⑥：リッチプッシュ通知を表示させる処理
 
 * `AppDelegate.swift`を開きます
-* `application(_:didFinishLaunchingWithOptions)`メソッド内、`【プッシュ通知①】デバイストークンの取得`の下に処理を実装します
+* `application(_ application: UIApplication, didFinishLaunchingWithOptions`メソッド内、`【プッシュ通知①】デバイストークンの取得`の下に処理を実装します
 
 ```swift
-if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
+if let notification = launchOptions?[.remoteNotification] as? [String: AnyObject] {
     // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
       /* ここに書きます */
 
     // 【mBaaS：プッシュ通知⑧】アプリが起動されたときにプッシュ通知からデータを取得する
-
 }
 ```
 
@@ -1183,7 +1190,7 @@ if let remoteNotification = launchOptions?[UIApplicationLaunchOptionsRemoteNotif
 
 ```swift
 // 【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理
-NCMBPush.handleRichPush(remoteNotification as [NSObject : AnyObject])
+    NCMBPush.handleRichPush(userInfo: notification)
 ```
 
 ---
@@ -1247,21 +1254,25 @@ layout: false
 ### プッシュ通知⑦：アプリが起動中にプッシュ通知からデータを取得する
 
 * `AppDelegate.swift`を開きます
-* `application(_:didFinishLaunchingWithOptions)`メソッド外に次のメソッドを実装します
+* `application(_ application: UIApplication, didReceiveRemoteNotification`メソッド外に次のメソッドを実装します
 
 ```swift
 // 【mBaaS：プッシュ通知⑦】アプリが起動中にプッシュ通知からデータを取得する
-func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-    // プッシュ通知情報の取得
-    let deliveryTime = userInfo["deliveryTime"] as! String
-    let message = userInfo["message"] as! String
-    // 値を取得した後の処理
-    if !deliveryTime.isEmpty && !message.isEmpty  {
-        print("ペイロードを取得しました：deliveryTime[\(deliveryTime)],message[\(message)]")
-        // ローカルプッシュ配信
-        localNotificationDeliver(deliveryTime, message: message)
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        // プッシュ通知情報の取得
+        let deliveryTime = userInfo["deliveryTime"] as! String
+        let message = userInfo["message"] as! String
+        // 値を取得した後の処理
+        if !deliveryTime.isEmpty && !message.isEmpty  {
+            print("ペイロードを取得しました：deliveryTime[\(deliveryTime)],message[\(message)]")
+            // ローカルプッシュ配信
+            localNotificationDeliver(deliveryTime: deliveryTime, message: message)
+        }
+        
+        if let notiData = userInfo as? [String : AnyObject] {
+            NCMBPush.handleRichPush(userInfo: notiData)
+        }
     }
-}
 ```
 
 ---
@@ -1269,16 +1280,18 @@ func application(application: UIApplication, didReceiveRemoteNotification userIn
 ### プッシュ通知⑧：アプリが起動されたときにプッシュ通知からデータを取得する
 
 * `AppDelegate.swift`を開きます
-* `application(_:didFinishLaunchingWithOptions)`メソッド内、`【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理`の下に処理を実装します
+* `application(_ application: UIApplication, didReceiveRemoteNotification`メソッド内、`【mBaaS：プッシュ通知⑥】リッチプッシュ通知を表示させる処理`の下に処理を実装します
 
 ```swift
 // 【mBaaS：プッシュ通知⑧】アプリが起動されたときにプッシュ通知からデータを取得する
 // プッシュ通知情報の取得
-if let deliveryTime = remoteNotification.objectForKey("deliveryTime") as? String {
-    if let message = remoteNotification.objectForKey("message") as? String {
-        // ローカルプッシュ配信
-        localNotificationDeliver(deliveryTime, message: message)
-    }
+let deliveryTime = userInfo["deliveryTime"] as! String
+let message = userInfo["message"] as! String
+// 値を取得した後の処理
+if !deliveryTime.isEmpty && !message.isEmpty  {
+    print("ペイロードを取得しました：deliveryTime[\(deliveryTime)],message[\(message)]")
+    // ローカルプッシュ配信
+    localNotificationDeliver(deliveryTime: deliveryTime, message: message)
 }
 ```
 
@@ -1290,11 +1303,11 @@ if let deliveryTime = remoteNotification.objectForKey("deliveryTime") as? String
 // LocalNotification配信
 func localNotificationDeliver (deliveryTime: String, message: String) {
     // 配信時間(String→NSDate)を設定
-    let formatter = NSDateFormatter()
+    let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-    let deliveryTime = formatter.dateFromString(deliveryTime)
+    let deliveryTime = formatter.date(from: deliveryTime)
     // ローカルプッシュを作成
-    LocalNotificationManager.scheduleLocalNotificationAtData(deliveryTime!, alertBody: message, userInfo: nil)
+    LocalNotificationManager.scheduleLocalNotificationAtData(deliveryTime: deliveryTime! as NSDate, alertBody: message, userInfo: nil)
 }
 ```
 
@@ -1317,7 +1330,7 @@ func localNotificationDeliver (deliveryTime: String, message: String) {
 ### 動作確認(6)ペイロード（アプリ起動時）
 
 * プッシュ通知に設定するJSON形式のデータを作成します
- * JSONデータに設定する時間は、今から__５分以上未来の時間__に変更してください
+ * JSONデータに設定する時間は、今から __５分以上未来の時間__ に変更してください
  * JSONデータに設定するメッセージは、自由に変更してください
  ```text
  {"deliveryTime":"2016-09-13 17:00:00", "message":"タイムセールスタート！"}
@@ -1350,7 +1363,7 @@ func localNotificationDeliver (deliveryTime: String, message: String) {
 * 指定時間にプッシュ通知が表示されることを確認してください
 
 .footnote[
-[エラーコード一覧](http://mb.cloud.nifty.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
+[エラーコード一覧](https://mbaas.nifcloud.com/doc/current/rest/common/error.html#REST%20API%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)
 ]
 ---
 ## プッシュ通知を送信：ペイロード
@@ -1413,7 +1426,7 @@ layout: false
 * 開催中の[セミナー](https://ncmb.doorkeeper.jp/)のご案内
  * 随時新しいセミナーを実施していきますのでぜひチェックしてください！
 * ハンズオン内容が実装された完全版プロジェクト
- * __[SwiftAdvancePushApp【完成版】](https://github.com/natsumo/SwiftAdvancePushApp/archive/master.zip)__
-* コードは[GitHub](https://github.com/natsumo/SwiftAdvancePushApp)に公開しています
+ * __[SwiftAdvancePushApp【完成版】](https://github.com/NIFCLOUD-mbaas/SwiftAdvancePushApp/archive/master.zip)__
+* コードは[GitHub](https://github.com/NIFCLOUD-mbaas/SwiftAdvancePushApp)に公開しています
  * __master__：完成版
  * __seminar_version__：セミナー版
