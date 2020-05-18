@@ -4,10 +4,10 @@ class: center, middle, inverse
 ---
 # <span style="font-size: 30%">【Swift編】ニフクラ mobile レベルアップセミナー</span><br>__クーポン配信アプリ<br>を作ろう！__</span>
 
-@ニフティ株式会社
+@ニフクラ株式会社
 
 .footnote[
-20160804作成(20160913更新)
+20160804作成(20200513更新)
 ]
 ---
 layout: false
@@ -19,6 +19,13 @@ layout: false
 ![mBaaS検索](readme-image/mBaaS検索.png)
 
 ![mBaaS無料登録](readme-image/mBaaS無料登録.png)
+
+---
+## 動作環境
+* Xcode ver.11.3.1
+* iPhone 7 OS ver 13.3
+* Android Studio ver3.6.1
+* Android OS ver.9
 
 ---
 ## 今回のハンズオンセミナーについて
@@ -72,7 +79,7 @@ layout: false
 ]
 
 ---
-## ニフティクラウド mobile backendとは
+## ニフクラクラウド mobile backendとは
 ### サービス紹介
 
 * スマホアプリで汎用的に実装される機能を、クラウドサービスとして提供しているサービスです
@@ -83,7 +90,7 @@ layout: false
 ]
 
 ---
-## ニフティクラウド mobile backendとは
+## ニフクラクラウド mobile backendとは
 ### iOS SDKの特徴
 
 * SDKのインストールが必要です
@@ -97,10 +104,10 @@ NCMB.initialize(applicationKey: "YOUR_NCMB_APPLICATIONKEY", clientKey: "YOUR_NCM
 ```
 
 ---
-## ニフティクラウド mobile backendとは
+## ニフクラクラウド mobile backendとは
 ### iOS SDKの特徴
 
-* サーバへリクエスト処理には、__同期処理__と__非同期処理__があります
+* サーバへリクエスト処理には、__同期処理__ と __非同期処理__ があります
 
 ```swift
 // 例）保存の場合
@@ -456,7 +463,7 @@ layout: false
 ## Shop情報の設定
 ### mBaaSにShop情報を用意する（データストア）
 
-* ニフティクラウド mobile backendのダッシュボードから「データストア」を開き、「＋作成▼」ボタンをクリックし、「インポート」をクリックします
+* ニフクラクラウド mobile backendのダッシュボードから「データストア」を開き、「＋作成▼」ボタンをクリックし、「インポート」をクリックします
 * クラス名に「__Shop__」と入力します
 * ダウンロードしたサンプルプロジェクトにあるSettingフォルダ内の「__Shop.json__」を選択してアップロードします
 
@@ -478,7 +485,7 @@ layout: false
 ## Shop情報の設定
 ### mBaaSにShop情報を用意する（ファイルストア）
 
-* ニフティクラウド mobile backendのダッシュボードから「ファイルストア」を開き、「↑アップロード」ボタンをクリックします
+* ニフクラクラウド mobile backendのダッシュボードから「ファイルストア」を開き、「↑アップロード」ボタンをクリックします
 * ダウンロードしたサンプルプロジェクトにあるSettingフォルダ内の「icon」「Shop」「Sale」内にあるファイルをすべてをアップロードします
 
 .center[
@@ -778,7 +785,7 @@ layout: false
  * デバッグ用の実機
  * プッシュ通知用証明書(p12形式)
 * 証明書の取得がまだの場合は下記をご参照ください
- * [【サンプル】アプリにプッシュ通知を組み込もう！](https://github.com/NIFTYCloud-mbaas/SwiftPushApp)
+ * [【サンプル】アプリにプッシュ通知を組み込もう！](https://github.com/NIFCLOUD-mbaas/SwiftPushApp)
 
 ---
 ## プッシュ通知の準備
@@ -1033,7 +1040,7 @@ if installation != nil {
 ## プッシュ通知を送信：セグメント配信
 ### 動作確認(4)セグメント配信
 
-__shopB__をお気に入り登録しているユーザーに絞り込んでプッシュ通知を配信してみましょう！
+__shopB__ をお気に入り登録しているユーザーに絞り込んでプッシュ通知を配信してみましょう！
 
 * あらかじめshopBをお気に入りに設定しておきます(アプリ側)
 * mBaaSのダッシュボードからShopクラスのデータを開き、shopBの「objectId」をコピーします
@@ -1323,7 +1330,7 @@ func localNotificationDeliver (deliveryTime: String, message: String) {
 ### 動作確認(6)ペイロード（アプリ起動時）
 
 * プッシュ通知に設定するJSON形式のデータを作成します
- * JSONデータに設定する時間は、今から__５分以上未来の時間__に変更してください
+ * JSONデータに設定する時間は、今から __５分以上未来の時間__ に変更してください
  * JSONデータに設定するメッセージは、自由に変更してください
  ```text
  {"deliveryTime":"2016-09-13 17:00:00", "message":"タイムセールスタート！"}
