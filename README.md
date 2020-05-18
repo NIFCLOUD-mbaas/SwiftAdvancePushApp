@@ -3,6 +3,6 @@
 
 ▼資料はこちら▼
 
-https://natsumo.github.io/SwiftAdvancePushApp/
+https://vfa-cancc.github.io/SwiftAdvancePushApp/
 
 ※ Google Chrome または Firefox 推奨。スクリプトの読み込み許可が必要です。

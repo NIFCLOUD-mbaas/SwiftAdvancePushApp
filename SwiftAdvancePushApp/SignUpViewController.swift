@@ -23,7 +23,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     // 「登録メールを送信」ボタン押下時の処理
-    @IBAction func signUp(sender: UIButton) {
+    @IBAction func signUp(_ sender: UIButton) {
         // キーボードを閉じる
         closeKeyboad()
         if address.text!.isEmpty {
@@ -32,23 +32,28 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
         
         // 【mBaaS：会員管理①】会員登録用メールを要求する
-        NCMBUser.requestAuthenticationMailInBackground(address.text) { (error: NSError!) -> Void in
-            if error != nil {
-                // 会員登録用メールの要求失敗時の処理
-                print("エラーが発生しました：\(error!.code)")
-                self.statusLabel.text = "エラーが発生しました：\(error!.code)"
-            } else {
-                // 会員登録用メールの要求失敗時の処理
-                print("登録用メールを送信しました")
-                self.statusLabel.text = "登録用メールを送信しました"
-                // TextFieldを空にする
-                self.address.text = ""
+        NCMBUser.requestAuthenticationMailInBackground(mailAddress: address.text!, callback: { result in
+            switch result {
+                case .success:
+                    // 会員登録用メールの要求失敗時の処理
+                    print("登録用メールを送信しました")
+                    DispatchQueue.main.async {
+                        self.statusLabel.text = "登録用メールを送信しました"
+                        // TextFieldを空にする
+                        self.address.text = ""
+                    }
+                case let .failure(error):
+                    // 会員登録用メールの要求失敗時の処理
+                    print("エラーが発生しました：\(error)")
+                    DispatchQueue.main.async {
+                        self.statusLabel.text = "エラーが発生しました：\(error)"
+                    }
             }
-        }
+        })
     }
     
     // 背景タップ時にキーボードを隠す
-    @IBAction func tapScreen(sender: UITapGestureRecognizer) {
+    @IBAction func tapScreen(_ sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
     
@@ -58,7 +63,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     // キーボードの「Return」押下時の処理
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // キーボードを閉じる
         textField.resignFirstResponder()
         

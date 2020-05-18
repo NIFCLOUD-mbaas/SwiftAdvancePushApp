@@ -27,56 +27,60 @@ class CustomCell: UITableViewCell {
     var objectIdTemporary: String!
     
     // AppDelegate
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     /** Top画面のTableViewのcell **/
     func setCell_top(object: NCMBObject) {
         // 【mBaaS：ファイルストア①】icon画像の取得
         // 取得した「Shop」クラスデータからicon名を取得
-        let imageName = object.objectForKey("icon_image") as! String
-        // ファイル名を設定
-        let imageFile = NCMBFile.fileWithName(imageName, data: nil)
-        // ファイルを検索
-        imageFile.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Void in
-            if error != nil {
-                // ファイル取得失敗時の処理
-                print("icon画像の取得に失敗しました:\(error.code)")
-            } else {
+        let imageName = object._fields["icon_image"] as! String
+        
+        let file : NCMBFile = NCMBFile(fileName: imageName)
+        file.fetchInBackground(callback: { result in
+            switch result {
+            case let .success(data):
                 // ファイル取得成功時の処理
                 print("icon画像の取得に成功しました")
-                // icon画像を設定
-                self.iconImageView_top.image = UIImage.init(data: data)
+                DispatchQueue.main.async {
+                    // icon画像を設定
+                    self.iconImageView_top.image = UIImage.init(data: data!)
+                }
+            case let .failure(error):
+                // ファイル取得失敗時の処理
+                print("icon画像の取得に失敗しました:\(error)")
             }
-        }
+        })
+        // ファイルを検索
+
         // Shop名を設定
-        shopName_top.text = object.objectForKey("name") as? String
+        shopName_top.text = (object._fields["name"] as! String)
         // categoryを設定
-        category_top.text = object.objectForKey("category") as? String
+        category_top.text = (object._fields["category"] as! String)
     }
     
     /** お気に入り画面のTableViewのcell **/
     func setCell_favorite(object: NCMBObject) {
         let objId = object.objectId
         //　Shop名を設定
-        shopName_favorite.text = object.objectForKey("name") as? String
+        shopName_favorite.text = (object._fields["name"] as! String)
         // objectIdを保持
         objectIdTemporary = objId
         // スイッチ選択時に実行されるメソッドの設定
-        switch_favorite.addTarget(self, action: "switchChenged:", forControlEvents: UIControlEvents.ValueChanged)
+        switch_favorite.addTarget(self, action:#selector(switchChenged), for: UIControl.Event.valueChanged)
         // スイッチの初期設定
-        switch_favorite.on = false
+        switch_favorite.isOn = false
         // お気に入り登録されている場合はスイッチをONに設定
-        let favoriteArray = appDelegate.current_user.objectForKey("favorite") as! Array<String>
+        let favoriteArray = appDelegate.current_user!["favorite"]! as Array<String>
         for element in favoriteArray{
             if element == objId {
-                switch_favorite.on = true
+                switch_favorite.isOn = true
             }
         }
     }
     
     // スイッチ選択時の処理
-    func switchChenged(sender: UISwitch) {
-        if sender.on {
+    @objc func switchChenged(sender: UISwitch) {
+        if sender.isOn {
             // スイッチがONになったときの処理
             // 追加
             appDelegate.favoriteObjectIdTemporaryArray.append(objectIdTemporary)
@@ -86,7 +90,7 @@ class CustomCell: UITableViewCell {
             for element in appDelegate.favoriteObjectIdTemporaryArray {
                 if element == objectIdTemporary {
                     // 削除
-                    appDelegate.favoriteObjectIdTemporaryArray.removeAtIndex(i)
+                    appDelegate.favoriteObjectIdTemporaryArray.remove(at: i)
                 }
                 i += 1
             }

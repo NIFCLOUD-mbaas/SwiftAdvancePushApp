@@ -8,6 +8,7 @@
 
 import UIKit
 import NCMB
+import UserNotifications
 
 class LocalNotificationManager: NSObject {
     
@@ -19,14 +20,16 @@ class LocalNotificationManager: NSObject {
             return
         }
         // ローカルプッシュの作成
-        let localNotification = UILocalNotification()
-        // 表示時間の設定
-        localNotification.fireDate = deliveryTime
-        localNotification.timeZone = NSTimeZone.localTimeZone()
-        // 表示されるメッセージの設定
-        localNotification.alertBody = alertBody
-        // 作成したローカルプッシュを設定
-        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        let content = UNMutableNotificationContent()
+        content.body = alertBody
+        content.sound = UNNotificationSound.default
+
+        
+        let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: deliveryTime.timeIntervalSinceNow, repeats: true)
+        let request = UNNotificationRequest.init(identifier: "scheduleNof", content: content, trigger: trigger)
+        
+        let center = UNUserNotificationCenter.current()
+        center.add(request)
     }
 }
 
